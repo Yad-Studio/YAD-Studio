@@ -3,15 +3,15 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    _module()
 {
     ui->setupUi(this);
 
-    this->connect(ui->mainButton, SIGNAL(clicked()), this, SLOT(onButtonClicked()));
+
 }
 void MainWindow::onButtonClicked()
 {
-    ui->comboBox->addItem("Item Text");
 }
 
 MainWindow::~MainWindow()
