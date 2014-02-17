@@ -20,7 +20,10 @@ SOURCES += main.cpp\
     Widgets/FunctionInfoWidget.cpp \
     Widgets/GUIEditWidget.cpp \
     Widgets/TextEditWidget.cpp \
-    Widgets/TheoryEditWidget.cpp
+    Widgets/TheoryEditWidget.cpp \
+    Logic/FunctionsStorage.cpp \
+    Logic/Function.cpp \
+    Logic/Term.cpp
 
 HEADERS  += MainWindow.h \
     MyModule.h \
@@ -29,7 +32,10 @@ HEADERS  += MainWindow.h \
     Widgets/FunctionInfoWidget.h \
     Widgets/GUIEditWidget.h \
     Widgets/TextEditWidget.h \
-    Widgets/TheoryEditWidget.h
+    Widgets/TheoryEditWidget.h \
+    Logic/FunctionsStorage.h \
+    Logic/Function.h \
+    Logic/Term.h
 
 FORMS    += MainWindow.ui \
     Widgets/LeftMenuWidget.ui \
