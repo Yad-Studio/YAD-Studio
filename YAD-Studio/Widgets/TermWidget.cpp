@@ -6,9 +6,20 @@ TermWidget::TermWidget(QWidget *parent) :
     ui(new Ui::TermWidget)
 {
     ui->setupUi(this);
+
+    onChooseImplClick(2);
+
+    connect(ui->function_impl,
+            SIGNAL(activated(int)),
+            this,
+            SLOT(onChooseImplClick(int)));
 }
 
 TermWidget::~TermWidget()
 {
     delete ui;
+}
+void TermWidget::onChooseImplClick(int)
+{
+    ui->function_impl->addItem("Item1");
 }

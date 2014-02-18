@@ -17,6 +17,11 @@ public:
     
 private:
     Ui::TermWidget *ui;
+signals:
+
+public slots:
+
+    void onChooseImplClick(int);
 };
 
 #endif // TERMWIDGET_H
