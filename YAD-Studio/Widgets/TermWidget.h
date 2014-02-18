@@ -46,6 +46,12 @@ private:
      * get parameter name of function
      */
     const QString getParameterName(int function_id, int param_id);
+    /**
+     * @brief rebildChildWidgets
+     * if again we click to ComboBox
+     * we must delete all Son Widgets and Show new Widgets
+     */
+    void rebildChildWidgets();
 signals:
 
 public slots:

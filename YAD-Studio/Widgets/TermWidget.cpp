@@ -34,6 +34,9 @@ TermWidget::~TermWidget()
 }
 void TermWidget::onChooseImplClick(int)
 {
+    //TODO: delete previous child widgets, if there are
+    rebildChildWidgets();
+
     //get index of curr choosen ComboBox
     int index = ui->function_impl->currentIndex();
 
@@ -52,12 +55,8 @@ void TermWidget::onChooseImplClick(int)
             term_widget->init(param_name);
 
             ui->grid_4->addWidget(term_widget);
-
         }
-
     }
-
-
 }
 void TermWidget::addFunction(QString name)
 {
@@ -97,4 +96,18 @@ const QString TermWidget::getParameterName(int function_id,
             result = "z";
     }
     return result;
+}
+void TermWidget::rebildChildWidgets()
+{
+    //if (!ui->grid_4->children().isEmpty())
+    //{
+        //ui->grid_4->children().toStdList().clear();
+
+
+        for (int i = 0; i <  ui->grid_4->count(); ++i)
+        {
+          ui->grid_4->itemAt(i)->widget()->setVisible(false);
+        }
+
+    //}
 }
