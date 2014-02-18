@@ -17,6 +17,13 @@ public:
 
 private:
     Ui::GUIEditWidget *ui;
+
+    /**
+     * @brief getFunctionName
+     * @return QString
+     * get from Functioninfo the Function name
+     */
+    const QString getFunctionName();
 };
 
 #endif // GUIEDITWIDGET_H

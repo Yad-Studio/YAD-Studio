@@ -13,6 +13,7 @@ class TermWidget : public QWidget
     
 public:
     explicit TermWidget(QWidget *parent = 0);
+    void init(QString function_name="");
     ~TermWidget();
     
 private:
@@ -37,6 +38,14 @@ private:
      * get how many parameters has the function with id = id_in_list
      */
     int getParamNumber(int id_in_list);
+    /**
+     * @brief getParameterName
+     * @param function_id
+     * @param param_id
+     * @return QString
+     * get parameter name of function
+     */
+    const QString getParameterName(int function_id, int param_id);
 signals:
 
 public slots:

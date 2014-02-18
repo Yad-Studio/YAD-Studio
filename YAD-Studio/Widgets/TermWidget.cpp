@@ -7,8 +7,7 @@ TermWidget::TermWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //get function list - symulate
-
+    //TODO: get function list
     //two param function
     addFunction("add(x,y)");
     //trhee param function
@@ -20,6 +19,13 @@ TermWidget::TermWidget(QWidget *parent) :
             SIGNAL(activated(int)),
             this,
             SLOT(onChooseImplClick(int)));
+
+    init();
+}
+void TermWidget::init(QString function_name)
+{
+    if(function_name.size()>0)
+        ui->function_name->setText(function_name);
 }
 
 TermWidget::~TermWidget()
@@ -40,8 +46,13 @@ void TermWidget::onChooseImplClick(int)
 
         for(unsigned int i=0; i<param_num; ++i)
         {
+            QString param_name = getParameterName(index,
+                                                  i);
             TermWidget *term_widget = new TermWidget(this);
+            term_widget->init(param_name);
+
             ui->grid_4->addWidget(term_widget);
+
         }
 
     }
@@ -63,5 +74,27 @@ int TermWidget::getParamNumber(int id_in_list)
     int result = 2;
     if(id_in_list == 1)
         result  = 3;
+    return result;
+}
+const QString TermWidget::getParameterName(int function_id,
+                                           int param_id)
+{
+    QString result = "P";
+    if ( function_id == 0)
+    {
+        if (param_id == 0)
+            result = "x";
+        else
+            result = "y";
+    }
+    else if ( function_id == 1)
+    {
+        if (param_id == 0)
+            result = "x";
+        else if (param_id == 1)
+            result = "y";
+        else
+            result = "z";
+    }
     return result;
 }
