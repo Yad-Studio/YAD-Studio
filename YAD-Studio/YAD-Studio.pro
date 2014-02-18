@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     Logic/FunctionsStorage.cpp \
     Logic/Function.cpp \
     Logic/Term.cpp \
-    Widgets/TermWidget.cpp
+    Widgets/TermWidget.cpp \
+    Widgets/LeftMenuFunctionItemWidget.cpp
 
 HEADERS  += MainWindow.h \
     MyModule.h \
@@ -37,7 +38,8 @@ HEADERS  += MainWindow.h \
     Logic/FunctionsStorage.h \
     Logic/Function.h \
     Logic/Term.h \
-    Widgets/TermWidget.h
+    Widgets/TermWidget.h \
+    Widgets/LeftMenuFunctionItemWidget.h
 
 FORMS    += MainWindow.ui \
     Widgets/LeftMenuWidget.ui \
@@ -46,4 +48,5 @@ FORMS    += MainWindow.ui \
     Widgets/GUIEditWidget.ui \
     Widgets/TextEditWidget.ui \
     Widgets/TheoryEditWidget.ui \
-    Widgets/TermWidget.ui
+    Widgets/TermWidget.ui \
+    Widgets/LeftMenuFunctionItemWidget.ui
