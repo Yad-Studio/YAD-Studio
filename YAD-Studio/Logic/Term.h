@@ -4,21 +4,25 @@
 #include <memory>
 #include <vector>
 #include <string>
+#include <QString>
+#include <QVector>
+#include <QObject>
 
 class Term;
-typedef std::string FunctionName;
+typedef QString FunctionName;
 typedef int FunctionID;
 typedef int VariableIndex;
-typedef std::string ArgumentName;
-typedef std::vector<ArgumentName> Arguments;
+typedef QString ArgumentName;
+typedef QVector<ArgumentName> Arguments;
 typedef std::shared_ptr<Term> TermPtr;
-typedef std::vector<TermPtr> TermPtrList;
+typedef QVector<TermPtr> TermPtrList;
 
 /**
  * @brief Computable unit which can be computed if the initial values are given
  */
-class Term
+class Term : public QObject
 {
+    Q_OBJECT
 public:
     /**
      * @brief The term can have multiple types.
@@ -48,6 +52,12 @@ public:
         */
         Zero
     };
+signals:
+    void functionIDChanged(const FunctionID);
+    void termListChanged(const TermPtrList);
+    void variableIndexChanged(const VariableIndex);
+
+public:
 
     /**
      * @brief Creates an empty term
