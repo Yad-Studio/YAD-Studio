@@ -6,6 +6,7 @@ LeftMenuFunctionItemWidget::LeftMenuFunctionItemWidget(QWidget *parent) :
     ui(new Ui::LeftMenuFunctionItemWidget)
 {
     ui->setupUi(this);
+    
 
 }
 

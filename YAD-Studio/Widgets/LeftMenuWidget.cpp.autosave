@@ -20,7 +20,7 @@ LeftMenuWidget::LeftMenuWidget(QWidget *parent) :
     ui->setupUi(this);
     ui->verticalLayout_2->addWidget(first);
     ui->verticalLayout_2->addWidget(second);
-
+    
 }
 
 LeftMenuWidget::~LeftMenuWidget()
