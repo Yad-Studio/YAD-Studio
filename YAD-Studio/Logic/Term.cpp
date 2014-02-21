@@ -11,6 +11,7 @@ void Term::setFunctionID(const FunctionID& id)
 {
     assert(_type == Type::Function);
     _function_id = id;
+    emit functionIDChanged(id);
 }
 
 
@@ -18,6 +19,7 @@ void Term::setTermList(const TermPtrList& list)
 {
     assert(_type == Type::Function);
     _terms_list = list;
+    emit termListChanged(list);
 }
 
 
@@ -25,6 +27,7 @@ void Term::setVariableIndex(const VariableIndex index)
 {
     assert(_type == Type::Variable);
     _variable_index = index;
+    emit variableIndexChanged(index);
 }
 
 

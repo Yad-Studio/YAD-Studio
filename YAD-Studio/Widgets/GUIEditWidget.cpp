@@ -6,9 +6,14 @@ GUIEditWidget::GUIEditWidget(QWidget *parent) :
     ui(new Ui::GUIEditWidget)
 {
     ui->setupUi(this);
+    ui->widget->init(getFunctionName());
 }
 
 GUIEditWidget::~GUIEditWidget()
 {
     delete ui;
+}
+const QString GUIEditWidget::getFunctionName()
+{
+    return "MyFunction";
 }
