@@ -30,10 +30,24 @@ void Function::setMainTerm(const TermPtr& term)
     emit mainTermChanged(_main_term);
 }
 
-void Function::setArgumentsList(const Arguments& lst)
+void Function::setArgumentsNumber(const unsigned int number)
 {
-    _arguments_list = lst;
-    emit argumentsListChanged(_arguments_list);
+    if(number != _arguments_number)
+    {
+        _arguments_number = number;
+        if(_arguments_list.size() < _arguments_number)
+        {
+            _arguments_list.resize(_arguments_number);
+        }
+        emit argumentsNumberChanged(number);
+    }
+}
+
+void Function::setArgumentName(const ArgumentID id, const ArgumentName name)
+{
+    assert(id < _arguments_number);
+    _arguments_list[id] = name;
+    emit argumentNameChanged(id, name);
 }
 
 void Function::setRecursionBaseTerm(const TermPtr& term)
@@ -45,7 +59,7 @@ void Function::setRecursionBaseTerm(const TermPtr& term)
 
 const unsigned int Function::getArgumentsNumber() const
 {
-    return _arguments_list.size();
+    return _arguments_number;
 }
 
 void Function::setComment(const Comment& comment)
@@ -74,6 +88,12 @@ const TermPtr& Function::getRecursionBaseTerm() const
 {
     assert(_type == Type::Recursive);
     return _base_term;
+}
+
+const ArgumentName Function::getArgumentName(const ArgumentID id) const
+{
+    assert(id < _arguments_number);
+    return _arguments_list[id];
 }
 
 Function::Function()

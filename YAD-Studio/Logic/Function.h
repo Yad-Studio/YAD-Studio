@@ -40,11 +40,10 @@ signals:
     void functionNameChanged(const FunctionName);
     void mainTermChanged(const TermPtr);
 
-    /**
-     * @brief signal is called when the number of arguments
-     * is changed or the name of variables is changed
-     */
-    void argumentsListChanged(const Arguments);
+
+    void argumentsNumberChanged(const unsigned int number);
+    void argumentNameChanged(const ArgumentID id, const ArgumentName new_name);
+
     void recursionBaseTermChanged(const TermPtr);
     void commentChanged(const Comment);
 public:
@@ -82,9 +81,16 @@ public:
     void setMainTerm(const TermPtr&);
 
     /**
-     * @brief The list with names of arguments
+     * @brief The number of arguments of function
      */
-    void setArgumentsList(const Arguments&);
+    void setArgumentsNumber(const unsigned int number);
+
+    /**
+     * @brief Change the argument name
+     * @param id argument id (starting from 0)
+     * @param name argument name
+     */
+    void setArgumentName(const ArgumentID id, const ArgumentName name);
 
     /**
      * @brief The base term for recursion
@@ -111,6 +117,8 @@ public:
      */
     const unsigned int getArgumentsNumber() const;
 
+    const ArgumentName getArgumentName(const ArgumentID) const;
+
 private:
 
 
@@ -119,6 +127,7 @@ private:
     FunctionName _name;
     TermPtr _main_term;
     Arguments _arguments_list;
+    int _arguments_number;
 
     //_type == Recursive
     TermPtr _base_term;

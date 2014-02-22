@@ -16,7 +16,7 @@ typedef QString ArgumentName;
 typedef QVector<ArgumentName> Arguments;
 typedef std::shared_ptr<Term> TermPtr;
 typedef QVector<TermPtr> TermPtrList;
-
+typedef int ArgumentID;
 /**
  * @brief Computable unit which can be computed if the initial values are given
  */
@@ -54,7 +54,8 @@ public:
     };
 signals:
     void functionIDChanged(const FunctionID);
-    void termListChanged(const TermPtrList);
+    void termsNumberChanged(const unsigned int number);
+    void termChanged(const ArgumentID id, const TermPtr new_term);
     void variableIndexChanged(const VariableIndex);
 
 public:
@@ -74,13 +75,12 @@ public:
     void setFunctionID(const FunctionID&);
 
     /**
-     * @brief list which contains exact number of terms as the function
-     * with function_id has parameters.
-     * This terms will be evaluated and will be used as parameters
-     * for this function
-     * (type=Function ONLY)
+     * @brief Set term for a given argument
+     * (type==Function ONLY)
+     * @param id argument id
+     * @param term new term
      */
-    void setTermList(const TermPtrList&);
+    void setTerm(const ArgumentID id, const TermPtr& term);
 
     /**
      * @brief the number of argument of evaluated function which value this term will take (Projection)
@@ -102,11 +102,13 @@ public:
     const FunctionID getFunctionID() const;
 
     /**
-     * @brief @see setTermList
+     * @brief @see setTerm
      * (type=Function ONLY)
      * @return
      */
-    const TermPtrList& getTermList() const;
+    const TermPtr& getTerm(const ArgumentID term_id) const;
+
+    const unsigned int getTermsNumber() const;
 
     /**
      * @brief @see setVariableIndex
@@ -129,6 +131,11 @@ private:
 
     //_type == Variable
     VariableIndex _variable_index;
+
+    //_type == Function
+    int _term_number;
+private slots:
+    void argumentsNumberChanged(const unsigned int number);
 };
 
 
