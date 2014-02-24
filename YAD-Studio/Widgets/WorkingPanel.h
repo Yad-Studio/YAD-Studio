@@ -1,6 +1,6 @@
 #ifndef WORKINGPANEL_H
 #define WORKINGPANEL_H
-
+#include "Logic/FunctionsStorage.h"
 #include <QWidget>
 
 namespace Ui {
@@ -14,7 +14,8 @@ class WorkingPanel : public QWidget
 public:
     explicit WorkingPanel(QWidget *parent = 0);
     ~WorkingPanel();
-
+public slots:
+    void onFunctionActive(FunctionPtr function);
 private:
     Ui::WorkingPanel *ui;
 };

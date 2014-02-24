@@ -2,11 +2,15 @@
 #define FUNCTIONSSTORAGE_H
 #include <QObject>
 #include <QMap>
+#include <QSignalMapper>
+
 #include "Function.h"
 class FunctionsStorage : public QObject
 {
     Q_OBJECT
 public:
+    static FunctionID S;
+
     /**
      * @brief Returns the main Storage Instance
      * @return
@@ -27,21 +31,28 @@ public:
      * @param function
      */
     void addFunction(FunctionPtr function);
+
+    const QVector<TermPtr>& getSystemTerms();
+
+    /**
+     * @brief getAllUserFunctions
+     * @return all user functions, except system functions
+     */
+    const QVector<FunctionID> getAllUserFunctions();
 signals:
-//    void onFunctionChanged(FunctionPtr);
-//    void onNewFunctionAdded(FunctionPtr);
-//    void onNewFunctionsAdded(FunctionPtrList);
-//    void onFunctionDeleted(FunctionPtr);
+    void onFunctionChanged(int);
+    void onNewFunctionAdded(int);
+    void onFunctionDeleted(int);
 
 private:
     static FunctionID st_next_id;
     typedef QMap<FunctionID, FunctionPtr> FunctionMap;
-
+    QSignalMapper _mapper;
     FunctionMap _function_storage;
 
     FunctionsStorage();
 
-    static FunctionsStorage _instance;
+    QVector<TermPtr> _system_terms;
 };
 
 #endif // FUNCTIONSSTORAGE_H

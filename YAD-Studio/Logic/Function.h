@@ -35,7 +35,7 @@ public:
     };
 
 signals:
-    void typeChanged(const Type);
+    void typeChanged(const Function::Type);
     void IDChanged(const FunctionID);
     void functionNameChanged(const FunctionName);
     void mainTermChanged(const TermPtr);

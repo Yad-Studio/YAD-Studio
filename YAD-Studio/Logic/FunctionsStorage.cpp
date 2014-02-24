@@ -2,16 +2,53 @@
 #include <cassert>
 FunctionsStorage::FunctionsStorage()
 {
+    FunctionPtr s = Function::create();
+    s->setFunctionName("S");
+    s->setArgumentsNumber(1);
+    s->setArgumentName(0, "_x");
+    s->setComment(QObject::tr("S(_x) = _x + 1"));
+    s->setID(S);
+
+    QObject::connect(&_mapper, SIGNAL(mapped(int)),
+            this, SIGNAL(onFunctionChanged(int)));
+
+    this->addFunction(s);
+
+    TermPtr s_term = Term::create(Term::Type::Function);
+    s_term->setFunctionID(S);
+
+    _system_terms.push_back(s_term);
+    _system_terms.push_back(Term::create(Term::Type::Zero));
+    _system_terms.push_back(Term::create(Term::Type::Variable_Min));
+
+}
+
+const QVector<TermPtr>& FunctionsStorage::getSystemTerms()
+{
+    return _system_terms;
+}
+const QVector<FunctionID> FunctionsStorage::getAllUserFunctions()
+{
+    QVector<FunctionID> result;
+    result.reserve(_function_storage.size()-1);
+
+    for(auto i:_function_storage.keys())
+    {
+        if(i != S)
+            result.push_back(i);
+    }
+    return result;
 }
 
 FunctionsStorage* FunctionsStorage::getInstance()
 {
+    static FunctionsStorage _instance;
     return &_instance;
 }
 
-FunctionsStorage FunctionsStorage::_instance;
+//FunctionsStorage FunctionsStorage::_instance;
 
-FunctionID FunctionsStorage::st_next_id = 1;
+FunctionID FunctionsStorage::st_next_id = 100;
 
 FunctionPtr FunctionsStorage::getFunction(const FunctionID id)
 {
@@ -42,6 +79,26 @@ void FunctionsStorage::addFunction(FunctionPtr function)
         if(function->getID() >= st_next_id)
             st_next_id = function->getID() + 1;
 
-        _function_storage[function->getID()] = function;
+
     }
+
+
+    Function* f = &*function;
+
+    _mapper.setMapping(f, f->getID());
+
+    connect(f, SIGNAL(argumentNameChanged(ArgumentID,ArgumentName)),
+            &_mapper, SLOT(map()));
+    connect(f, SIGNAL(argumentsNumberChanged(uint)),
+            &_mapper, SLOT(map()));
+    connect(f, SIGNAL(commentChanged(Comment)),
+            &_mapper, SLOT(map()));
+    connect(f, SIGNAL(functionNameChanged(FunctionName)),
+            &_mapper, SLOT(map()));
+    connect(f, SIGNAL(typeChanged(Function::Type)),
+            &_mapper, SLOT(map()));
+
+    _function_storage[function->getID()] = function;
 }
+
+FunctionID FunctionsStorage::S = 1;

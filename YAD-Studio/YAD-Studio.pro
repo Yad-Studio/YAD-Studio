@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = YAD-Studio
 TEMPLATE = app
-
+INCLUDEPATH += $$PWD
 
 SOURCES += main.cpp\
         MainWindow.cpp \
@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     Logic/Function.cpp \
     Logic/Term.cpp \
     Widgets/TermWidget.cpp \
-    Widgets/LeftMenuFunctionItemWidget.cpp
+    Widgets/LeftMenuFunctionItemWidget.cpp \
+    Widgets/FunctionsListModel.cpp
 
 HEADERS  += MainWindow.h \
     MyModule.h \
@@ -39,7 +40,8 @@ HEADERS  += MainWindow.h \
     Logic/Function.h \
     Logic/Term.h \
     Widgets/TermWidget.h \
-    Widgets/LeftMenuFunctionItemWidget.h
+    Widgets/LeftMenuFunctionItemWidget.h \
+    Widgets/FunctionsListModel.h
 
 FORMS    += MainWindow.ui \
     Widgets/LeftMenuWidget.ui \

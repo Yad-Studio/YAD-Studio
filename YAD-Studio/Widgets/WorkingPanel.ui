@@ -43,7 +43,7 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="GUIEditWidget" name="widget_2" native="true"/>
+            <widget class="GUIEditWidget" name="guiEditWidget" native="true"/>
            </item>
           </layout>
          </widget>

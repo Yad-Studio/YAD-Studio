@@ -96,3 +96,26 @@ Term::Term(const Type type)
       _term_number(0)
 {
 }
+void Term::setType(const Type type)
+{
+    _type = type;
+    emit typeChanged(type);
+}
+const TermPtr& Term::getTerm(const ArgumentID term_id) const
+{
+    return _terms_list[term_id];
+}
+bool Term::isSame(const TermPtr term) const
+{
+    if(_type != term->_type)
+    {
+        return false;
+    }
+
+    if(_type == Type::Function)
+        return _function_id == term->_function_id;
+    if(_type == Type::Variable)
+        return _variable_index == term->_variable_index;
+
+    return false;
+}

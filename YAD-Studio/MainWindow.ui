@@ -45,7 +45,7 @@
        <widget class="LeftMenuWidget" name="widget" native="true"/>
       </item>
       <item>
-       <widget class="WorkingPanel" name="widget_2" native="true"/>
+       <widget class="WorkingPanel" name="workingPanel" native="true"/>
       </item>
      </layout>
     </item>

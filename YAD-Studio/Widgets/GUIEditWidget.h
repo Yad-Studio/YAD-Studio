@@ -1,6 +1,6 @@
 #ifndef GUIEDITWIDGET_H
 #define GUIEDITWIDGET_H
-
+#include "Logic/FunctionsStorage.h"
 #include <QWidget>
 
 namespace Ui {
@@ -15,6 +15,8 @@ public:
     explicit GUIEditWidget(QWidget *parent = 0);
     ~GUIEditWidget();
 
+public slots:
+    void onFunctionActive(FunctionPtr function);
 private:
     Ui::GUIEditWidget *ui;
 
@@ -24,6 +26,9 @@ private:
      * get from Functioninfo the Function name
      */
     const QString getFunctionName();
+
+    FunctionPtr _active_function;
+
 };
 
 #endif // GUIEDITWIDGET_H

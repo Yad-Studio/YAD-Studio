@@ -57,7 +57,7 @@ signals:
     void termsNumberChanged(const unsigned int number);
     void termChanged(const ArgumentID id, const TermPtr new_term);
     void variableIndexChanged(const VariableIndex);
-
+    void typeChanged(const Term::Type new_type);
 public:
 
     /**
@@ -67,6 +67,8 @@ public:
      * @return The object is auto released
      */
     static TermPtr create(const Type type);
+
+    void setType(const Type type);
 
     /**
      * @brief the id of function which must be called
@@ -116,6 +118,14 @@ public:
      * @return
      */
     const VariableIndex getVariableIndex() const;
+
+    /**
+     * @brief Returns true if terms are pointing to
+     * the same function of the same variable
+     * @param term
+     * @return
+     */
+    bool isSame(const TermPtr term) const;
 private:
     Term(const Type type);
 

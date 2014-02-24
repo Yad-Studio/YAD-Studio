@@ -2,6 +2,8 @@
 #define TERMWIDGET_H
 
 #include <QWidget>
+#include "Logic/FunctionsStorage.h"
+#include "FunctionsListModel.h"
 
 namespace Ui {
 class TermWidget;
@@ -13,10 +15,20 @@ class TermWidget : public QWidget
     
 public:
     explicit TermWidget(QWidget *parent = 0);
-    void init(QString function_name="");
+    //void init(QString function_name="");
     ~TermWidget();
     
+    void setFunctionPtr(const FunctionPtr function);
+    void setName(const QString name);
+    void setTerm(TermPtr term);
+
+    void buildFunctionsList();
 private:
+    TermPtr _term;
+    FunctionPtr _function_ptr;
+
+    FunctionsListModel* _model;
+
     Ui::TermWidget *ui;
     /**
      * @brief addFunction

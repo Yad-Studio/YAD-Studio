@@ -53,8 +53,8 @@ void Function::setArgumentName(const ArgumentID id, const ArgumentName name)
 void Function::setRecursionBaseTerm(const TermPtr& term)
 {
     assert(_type == Type::Recursive);
-    _main_term = term;
-    emit mainTermChanged(_main_term);
+    _base_term = term;
+    emit recursionBaseTermChanged(_base_term);
 }
 
 const unsigned int Function::getArgumentsNumber() const
@@ -98,7 +98,7 @@ const ArgumentName Function::getArgumentName(const ArgumentID id) const
 
 Function::Function()
     : _type(Type::Normal),
-      _id(-1),
+      _id(0),
       _name(),
       _main_term(nullptr),
       _arguments_list(),
