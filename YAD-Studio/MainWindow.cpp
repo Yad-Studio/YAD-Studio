@@ -1,53 +1,67 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include "Logic/FunctionsStorage.h"
+#include <QTextCursor>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    _module()
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(hide()));
 
-    FunctionPtr addition = Function::create();
-    addition->setFunctionName("plus");
-    addition->setArgumentsNumber(2);
-    addition->setType(Function::Type::Recursive);
-    addition->setArgumentName(0, "x");
-    addition->setArgumentName(1, "y");
 
-    FunctionsStorage::getInstance()->addFunction(addition);
+    //Undo
+    ui->actionUndo->setEnabled(false);
+    connect(ui->textEdit, SIGNAL(undoAvailable(bool)), ui->actionUndo,
+            SLOT(setEnabled(bool)));
+    connect(ui->actionUndo, SIGNAL(triggered()), ui->textEdit,
+            SLOT(undo()));
 
-    //=x
-    TermPtr base = Term::create(Term::Type::Variable);
-    base->setVariableIndex(0);
+    //Redo
+    ui->actionRedo->setEnabled(false);
+    connect(ui->textEdit, SIGNAL(redoAvailable(bool)), ui->actionRedo,
+            SLOT(setEnabled(bool)));
+    connect(ui->actionRedo, SIGNAL(triggered()), ui->textEdit,
+            SLOT(redo()));
 
-    //=S(?)
-    TermPtr step = Term::create(Term::Type::Function);
-    step->setFunctionID(FunctionsStorage::S);
+    //Select All
+    connect(ui->actionSelect_All, SIGNAL(triggered()), ui->textEdit,
+            SLOT(selectAll()));
 
-    //=plus(x,y)
-    TermPtr plus = Term::create(Term::Type::Function);
-    plus->setFunctionID(addition->getID());
+    //Copy
+    ui->actionCopy->setEnabled(false);
+    connect(ui->textEdit, SIGNAL(copyAvailable(bool)), ui->actionCopy,
+            SLOT(setEnabled(bool)));
+    connect(ui->actionCopy, SIGNAL(triggered()), ui->textEdit,
+            SLOT(copy()));
 
-    TermPtr x = Term::create(Term::Type::Variable);
-    x->setVariableIndex(0);
+    //Paste
+    connect(ui->actionPaste, SIGNAL(triggered()), ui->textEdit,
+            SLOT(paste()));
 
-    TermPtr y = Term::create(Term::Type::Variable);
-    y->setVariableIndex(1);
+    //Cut
+    ui->actionCut->setEnabled(false);
+    connect(ui->textEdit, SIGNAL(copyAvailable(bool)), ui->actionCut,
+            SLOT(setEnabled(bool)));
+    connect(ui->actionCut, SIGNAL(triggered()), ui->textEdit,
+            SLOT(cut()));
 
-    plus->setTerm(0, x);
-    plus->setTerm(1, y);
+    //Delete
+    ui->actionDelete->setEnabled(false);
+    connect(ui->textEdit, SIGNAL(copyAvailable(bool)), ui->actionDelete,
+            SLOT(setEnabled(bool)));
+    connect(ui->actionDelete, SIGNAL(triggered()), this,
+            SLOT(actionDeleteClicked()));
 
-    step->setTerm(0, plus);
-
-    addition->setRecursionBaseTerm(base);
-    addition->setMainTerm(step);
-
-    ui->workingPanel->onFunctionActive(addition);
 
 }
+
+void MainWindow::actionDeleteClicked()
+{
+    QTextCursor cursor = ui->textEdit->textCursor();
+    cursor.removeSelectedText();
+    ui->textEdit->setTextCursor(cursor);
+}
+
 void MainWindow::onButtonClicked()
 {
 }

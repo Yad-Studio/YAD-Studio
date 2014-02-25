@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "MyModule.h"
 
 namespace Ui {
 class MainWindow;
@@ -20,10 +19,11 @@ signals:
 
 private:
     Ui::MainWindow *ui;
-    MyModule _module;
 
 private slots:
     void onButtonClicked();
+
+    void actionDeleteClicked();
 };
 
 #endif // MAINWINDOW_H
