@@ -43,19 +43,15 @@
         <height>298</height>
        </rect>
       </property>
-      <widget class="QLabel" name="label">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>53</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>testWord</string>
-       </property>
-      </widget>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="word">
+         <property name="text">
+          <string>testWord</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>
