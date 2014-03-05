@@ -10,22 +10,22 @@ MarkovRule::MarkovRule(const QString& left_patr,
     _line_number(line_number)
 {
 }
-bool MarkovRule::isFinalRule()
+bool MarkovRule::isFinalRule() const
 {
     return _is_final_rule;
 }
 
-const QString& MarkovRule::getLeftPart()
+const QString& MarkovRule::getLeftPart() const
 {
     return _pattern;
 }
 
-const QString& MarkovRule::getRightPart()
+const QString& MarkovRule::getRightPart() const
 {
     return _substitution;
 }
 
-int MarkovRule::getLineNumber()
+int MarkovRule::getLineNumber() const
 {
     return _line_number;
 }

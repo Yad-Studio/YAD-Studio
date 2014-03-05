@@ -8,10 +8,10 @@ public:
     MarkovRule(const QString& left_patr="", const QString& right_part="",
                bool is_final = false, int line_number=-1);
 
-    bool isFinalRule();
-    const QString& getLeftPart();
-    const QString& getRightPart();
-    int getLineNumber();
+    bool isFinalRule() const;
+    const QString& getLeftPart() const;
+    const QString& getRightPart() const;
+    int getLineNumber() const;
 
     void setFinalRule(bool is_final);
     void setLeftPart(const QString& str);
