@@ -55,14 +55,13 @@ void MarkovWordWidget::removeHighlight()
     //QString color = "\"black\"";
     //QString text_code = "<font color="+color+">"+text+"</font>";
 
-    //ui->word->
     ui->word->setText(result);
 }
 QString MarkovWordWidget::find(QString source)
 {
     //replace green or red --> black
     QString result ="";
-    for(unsigned int i=0; i<source.size(); ++i)
+    for(int i=0; i<source.size(); ++i)
     {
         if(source[i] == 'g' && i+4 != source.size())
         {
