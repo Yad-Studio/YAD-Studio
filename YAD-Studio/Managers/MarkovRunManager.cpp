@@ -19,13 +19,19 @@ MarkovRunManager::MarkovRunManager():
 }
 int MarkovRunManager::getStepNumberOfValue(QString word)
 {
-    QSet<StepResult>::iterator i;
-    for (i = _steps_history.begin(); i != _steps_history.end(); ++i)
-    {
-        StepResult curr = *i;
-        if(curr._output == word)
-            return curr._step_id;
-    }
+//    QSet<StepResult>::iterator i;
+//    for (i = _steps_history.begin(); i != _steps_history.end(); ++i)
+//    {
+//        StepResult curr = *i;
+//        if(curr._output == word)
+//            return curr._step_id;
+//    }
+
+    QSet<StepResult>::iterator it = qFind(_steps_history.begin(),
+                                          _steps_history.end(),
+                                          StepResult(word,0));
+     if (it != _steps_history.end())
+         return (*it)._step_id;
     return -1;
 }
 bool MarkovRunManager::choseAndUseRule(QString& word,
@@ -193,37 +199,76 @@ void MarkovRunManager::setCanRunSourceCode(bool can)
 
 void MarkovRunManager::runWithoutDebug(QString input_word)
 {
+    _steps_made = 0;
+    _steps_history.clear();
+    _input_word = input_word;
+    _word_after_last_step = input_word;
+    _is_debug_mode = false;
 
+    while(findAndApplyNextRule())
+    {
+        if(_steps_made%100 == 0)
+        {
+            emit runStepsMade(_steps_made);
+        }
+    }
 }
 
 void MarkovRunManager::runWithDebug(QString input_word)
 {
+    _steps_made = 0;
+    _steps_history.clear();
+    _input_word = input_word;
+    _word_after_last_step = input_word;
+    _is_debug_mode = true;
 
+    while(findAndApplyNextRule())
+    {
+    }
 }
 
 void MarkovRunManager::addBreakPoint(int line_number)
 {
-
+    _break_points.insert(line_number);
 }
 
 void MarkovRunManager::removeBreakPoint(int line_number)
 {
-
+    QSet<int>::iterator i = _break_points.begin();
+    while (i != _break_points.end())
+    {
+        if ((*i)== line_number)
+        {
+            i = _break_points.erase(i);
+        }
+    }
 }
 
 void MarkovRunManager::debugNextStep()
 {
-
+     findAndApplyNextRule();
 }
 
 void MarkovRunManager::debugContinue()
 {
+    while(findAndApplyNextRule())
+    {
 
+    }
 }
 
 void MarkovRunManager::debugStop()
 {
-
+    if(_is_debug_mode)
+    {
+        RunError error("Debug stopped by the user","",103);
+        emit debugFinishFail(_input_word,error,_steps_made);
+    }
+    else
+    {
+        RunError error("Debug stopped by the user","",103);
+        emit runWithoutDebugFinishFail(_input_word, error,_steps_made);
+    }
 }
 bool operator<(const StepResult& a, const StepResult& b)
 {
