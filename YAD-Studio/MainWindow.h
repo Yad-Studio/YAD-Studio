@@ -14,16 +14,57 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    void closeEvent(QCloseEvent *);
+public slots:
+    /**
+     * @brief emitted when the name of source file changed.
+     * @param new_name
+     */
+    void fileNameChanged(QString new_name);
+
+    /**
+     * @brief emitted to notify whether there is unsaved data.
+     * @param has_unsaved_data
+     */
+    void hasUnsavedData(bool has_unsaved_data);
+
+    /**
+     * @brief shows or hides redo button
+     */
+    void redoAvaliable(bool);
+
+    /**
+     * @brief shows or hides undo button
+     */
+    void undoAvaliable(bool);
+
+    /**
+     * @brief shows or hides copy, cut, delete selection buttons
+     */
+    void copyAvaliable(bool);
+
 signals:
-    void myAction();
+    void undo();
+    void redo();
+    void selectAll();
+    void copy();
+    void paste();
+    void cut();
+    void deleteSelection();
+    void newFile();
+    void open();
+    void save();
+    void saveAs();
 
 private:
     Ui::MainWindow *ui;
+    bool _has_unsaved_data;
+    QString _current_file;
 
+    void updateWindowTitle();
 private slots:
-    void onButtonClicked();
 
-    void actionDeleteClicked();
 };
 
 #endif // MAINWINDOW_H

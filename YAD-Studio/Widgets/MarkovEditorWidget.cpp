@@ -6,7 +6,8 @@
 
 MarkovEditorWidget::MarkovEditorWidget(QWidget *parent) :
     QPlainTextEdit(parent),
-    _can_run(false)
+    _can_run(false),
+    _last_source_code("")
 {
     connect(this, SIGNAL(textChanged()), this, SLOT(userChangedSourceCode()));
 
@@ -24,7 +25,7 @@ MarkovEditorWidget::MarkovEditorWidget(QWidget *parent) :
     this->setTabStopWidth(4 * metrics.width(' '));
 
 
-    this->newSourceCode("T = {a,b,c}\na->b");
+    this->newSourceCode("//Alphabet\nT = {}\n\n//Rules\n//a -> b", true);
 }
 
 MarkovEditorWidget::~MarkovEditorWidget()
@@ -32,8 +33,10 @@ MarkovEditorWidget::~MarkovEditorWidget()
 }
 
 
-void MarkovEditorWidget::newSourceCode(QString source_code)
+void MarkovEditorWidget::newSourceCode(QString source_code, bool user_change)
 {
+    if(!user_change)
+        _last_source_code = source_code;
     this->setPlainText(source_code);
 }
 
@@ -55,19 +58,23 @@ void MarkovEditorWidget::setCanRun(bool new_value)
 void MarkovEditorWidget::userChangedSourceCode()
 {
     QString source_code = this->toPlainText();
-    emit sourceCodeChanged(source_code);
-
-    bool res = MarkovParser::parseSourceCode(source_code, _algorithm, _errors);
-
-    if(res)
+    if(_last_source_code != source_code)
     {
-        emit markovAlgorithmChanged(_algorithm);
-        setCanRun(true);
-    }
-    else
-    {
-        setCanRun(false);
-        updateErrors();
+        _last_source_code = source_code;
+        emit sourceCodeChanged(source_code);
+
+        bool res = MarkovParser::parseSourceCode(source_code, _algorithm, _errors);
+
+        if(res)
+        {
+            emit markovAlgorithmChanged(_algorithm);
+            setCanRun(true);
+        }
+        else
+        {
+            setCanRun(false);
+            updateErrors();
+        }
     }
 }
 

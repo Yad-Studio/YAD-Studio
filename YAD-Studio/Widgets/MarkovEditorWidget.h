@@ -18,8 +18,9 @@ public slots:
      * @brief when source code from file is loaded this slot will be called.
      * Source code should be put to QTextEditor.
      * @param source_code
+     * @param user_change if true then change in source will be treated like user has changet id
      */
-    void newSourceCode(QString source_code);
+    void newSourceCode(QString source_code, bool user_change=false);
 
     /**
      * @brief the text which is selected should be deleted.
@@ -67,6 +68,8 @@ private:
      * MUST BE CHANGED ONLY BY setCanRun(bool)
      */
     bool _can_run;
+
+    QString _last_source_code;
 private slots:
     void userChangedSourceCode();
     void updateErrors();
