@@ -1,9 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>RunWidget</class>
- <widget name="RunWidget" class="QWidget">
+ <widget class="QWidget" name="RunWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,7 +13,79 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Run</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0" columnstretch="0,10">
+      <item row="0" column="1">
+       <widget class="QToolButton" name="closeButton">
+        <property name="text">
+         <string>close</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="inputWord">
+        <property name="text">
+         <string>Input Word</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="MarkovWordWidget" name="widget" native="true"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="outputWord">
+        <property name="text">
+         <string>Output Word</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="steps">
+        <property name="text">
+         <string>Steps made:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>200</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
  </widget>
- <pixmapfunction/>
+ <customwidgets>
+  <customwidget>
+   <class>MarkovWordWidget</class>
+   <extends>QWidget</extends>
+   <header>MarkovWordWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
  <connections/>
 </ui>
