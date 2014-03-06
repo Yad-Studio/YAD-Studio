@@ -58,7 +58,9 @@ void HistoryWidget::showContextMenu(const QPoint& pos)
        }
 
        //signal that we would like to delete world from the history
-       emit removeFromHistory(slist[0]);
+       if(!slist.empty())
+           emit removeFromHistory(slist[0]);
+
     }
 }
 void HistoryWidget::doubleClick(QModelIndex index)
