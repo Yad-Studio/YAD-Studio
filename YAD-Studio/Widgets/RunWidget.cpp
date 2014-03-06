@@ -1,5 +1,8 @@
 #include "RunWidget.h"
 #include "ui_RunWidget.h"
+#include "QObject"
+#include "algorithm"
+#include "MarkovWordWidget.h"
 
 RunWidget::RunWidget(QWidget *parent) :
     QWidget(parent),
@@ -8,7 +11,20 @@ RunWidget::RunWidget(QWidget *parent) :
     ui->setupUi(this);
     ui->outputWord->clear();
 
-    runStepsMade(101);
+//    runFailed("abcd", RunError("Error My","Diff error",105),205);
+
+//    runSuccess("ssrr","outputoutput",1234);
+
+    ui->errorDescription->clear();
+    ui->errorTitle->clear();
+
+    ui->outputWord->clear();
+    ui->outputWidget->close();
+
+    connect(ui->closeButton,
+            SIGNAL(clicked()),
+            this,
+            SLOT(onCloseClicked()));
 }
 
 RunWidget::~RunWidget()
@@ -18,7 +34,12 @@ RunWidget::~RunWidget()
 void RunWidget::runStarted(QString input_word)
 {
     ui->inputWidget->setWord(input_word);
+
+    ui->errorDescription->clear();
+    ui->errorTitle->clear();
+
     ui->outputWord->clear();
+    ui->outputWidget->close();
 }
 
 void RunWidget::runStepsMade(int steps_make)
@@ -33,8 +54,11 @@ void RunWidget::runSuccess(QString input_word,
     ui->inputWidget->setWord(input_word);
     ui->stepsNumber->setText(QString::number(steps_made));
 
-    //add new widget
+    ui->outputWord->setText("Output Word:");
+    ui->outputWidget->setWord(output_word);
 
+    ui->errorDescription->clear();
+    ui->errorTitle->clear();
 }
 
 void RunWidget::runFailed(QString input_word,
@@ -42,11 +66,23 @@ void RunWidget::runFailed(QString input_word,
                int steps_made)
 {
     ui->inputWidget->setWord(input_word);
-    ui->outputWord->setText("Error:");
     ui->stepsNumber->setText(QString::number(steps_made));
 
-    QLabel* i_label;
-    i_label->setText(error.getFullErrorInfo());
+    ui->errorTitle->setText("Error");
+    ui->errorDescription->setText(error.getFullErrorInfo());
 
-    ui->gridLayout->addWidget(i_label);
+    QPalette palette = ui->errorTitle->palette();
+    palette.setColor(ui->errorDescription->foregroundRole(), Qt::red);
+    ui->errorTitle->setPalette(palette);
+
+    QPalette palette2 = ui->errorDescription->palette();
+    palette2.setColor(ui->errorDescription->foregroundRole(), Qt::red);
+    ui->errorDescription->setPalette(palette2);
+
+    ui->outputWord->clear();
+    ui->outputWidget->close();
+}
+void RunWidget::onCloseClicked()
+{
+    this->close();
 }
