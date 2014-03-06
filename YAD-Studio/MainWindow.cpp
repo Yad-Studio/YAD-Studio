@@ -114,6 +114,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->editorWindow, SIGNAL(sourceCodeChanged(QString)),
             source_manager, SLOT(setSourceCode(QString)));
 
+    //Connect InputWidget and FileManager
+    connect(ui->input, SIGNAL(save()), file_manager, SLOT(save()));
+
     //Read file to open from command line
     QStringList arguments = QCoreApplication::arguments();
     if(arguments.size() >= 2)
