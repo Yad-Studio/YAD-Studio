@@ -3,5 +3,6 @@
         <file>debug.png</file>
         <file>run.png</file>
         <file>save.png</file>
+        <file>close.png</file>
     </qresource>
 </RCC>

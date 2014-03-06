@@ -30,6 +30,8 @@ public slots:
     void runFailed(QString input_word,
                    RunError error,
                    int steps_made);
+
+    void onCloseClicked();
 };
 
 #endif // RUNWIDGET_H
