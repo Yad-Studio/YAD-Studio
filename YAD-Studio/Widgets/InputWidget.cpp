@@ -21,6 +21,12 @@ InputWidget::InputWidget(QWidget *parent) :
             SIGNAL(clicked()),
             this,
             SLOT(runWithDebugClicked()));
+
+    //save clicked
+    connect(ui->saveButton,
+            SIGNAL(clicked()),
+            this,
+            SLOT(saveCliked()));
 }
 
 InputWidget::~InputWidget()
@@ -58,9 +64,6 @@ void InputWidget::canRunAlgorithm(bool can_run)
 }
 void InputWidget::runCliked(bool )
 {
-    int i=0;
-    ++i;
-    i+=2;
     emit run(ui->lineEdit->text());
     emit addToHistory(ui->lineEdit->text());
 }
@@ -68,4 +71,8 @@ void InputWidget::runWithDebugClicked()
 {
     emit runWithDebug(ui->lineEdit->text());
     emit addToHistory(ui->lineEdit->text());
+}
+void InputWidget::saveCliked()
+{
+    emit save();
 }

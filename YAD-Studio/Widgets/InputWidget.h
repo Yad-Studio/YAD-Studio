@@ -34,6 +34,10 @@ public slots:
     //should be disabled
     void canRunAlgorithm(bool can_run);
 
+    void runCliked(bool);
+    void runWithDebugClicked();
+    void saveCliked();
+
 signals:
     //should be emitted when user clicks run.
     //The value of Input Word field should be passed as argument
@@ -54,8 +58,6 @@ private:
 
     bool _can_run_algorythm;
 
-    void runCliked(bool);
-    void runWithDebugClicked();
 };
 
 #endif // INPUTWIDGET_H
