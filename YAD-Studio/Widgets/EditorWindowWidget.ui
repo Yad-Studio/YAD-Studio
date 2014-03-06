@@ -27,7 +27,14 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="MarkovEditorWidget" name="textEdit"/>
+    <widget class="MarkovEditorWidget" name="plainTextEdit">
+     <property name="font">
+      <font>
+       <family>Courier</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="LineInfoWidget" name="widget" native="true"/>
@@ -36,15 +43,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MarkovEditorWidget</class>
-   <extends>QTextEdit</extends>
-   <header>MarkovEditorWidget.h</header>
-  </customwidget>
-  <customwidget>
    <class>LineInfoWidget</class>
    <extends>QWidget</extends>
    <header>LineInfoWidget.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MarkovEditorWidget</class>
+   <extends>QPlainTextEdit</extends>
+   <header>MarkovEditorWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
