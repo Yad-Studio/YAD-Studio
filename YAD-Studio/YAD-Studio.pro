@@ -64,3 +64,6 @@ FORMS    += MainWindow.ui \
     Widgets/HistoryWidget.ui \
     Widgets/LineInfoWidget.ui \
     Widgets/EditorWindowWidget.ui
+
+RESOURCES += \
+    Resources.qrc

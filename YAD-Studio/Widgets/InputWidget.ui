@@ -52,8 +52,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>C:/Users/Diana/YandexDisk/YAD-Studio/save.png</normaloff>C:/Users/Diana/YandexDisk/YAD-Studio/save.png</iconset>
+           <iconset resource="../Resources.qrc">
+            <normaloff>:/new/prefix1/save.png</normaloff>:/new/prefix1/save.png</iconset>
           </property>
          </widget>
         </item>
@@ -63,8 +63,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>C:/Users/Diana/YandexDisk/YAD-Studio/run.png</normaloff>C:/Users/Diana/YandexDisk/YAD-Studio/run.png</iconset>
+           <iconset resource="../Resources.qrc">
+            <normaloff>:/new/prefix1/run.png</normaloff>:/new/prefix1/run.png</iconset>
           </property>
          </widget>
         </item>
@@ -74,8 +74,8 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset>
-            <normaloff>C:/Users/Diana/YandexDisk/YAD-Studio/debug.png</normaloff>C:/Users/Diana/YandexDisk/YAD-Studio/debug.png</iconset>
+           <iconset resource="../Resources.qrc">
+            <normaloff>:/new/prefix1/debug.png</normaloff>:/new/prefix1/debug.png</iconset>
           </property>
          </widget>
         </item>
@@ -96,6 +96,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
