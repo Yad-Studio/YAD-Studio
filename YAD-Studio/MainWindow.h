@@ -12,6 +12,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     
 public:
+    static MainWindow* getInstance();
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
@@ -61,7 +62,7 @@ private:
     Ui::MainWindow *ui;
     bool _has_unsaved_data;
     QString _current_file;
-
+    static MainWindow* _window;
     void updateWindowTitle();
 private slots:
 

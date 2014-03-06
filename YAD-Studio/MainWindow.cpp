@@ -27,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent) :
     undoAvailable(false);
     copyAvailable(false);
 
+    _window = this;
+
     //Connect MainWindow menu
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
     connect(ui->actionUndo, SIGNAL(triggered()), this, SIGNAL(undo()));
@@ -185,6 +187,7 @@ void MainWindow::copyAvailable(bool v)
 
 MainWindow::~MainWindow()
 {
+    _window = nullptr;
     delete ui;
 }
 
@@ -218,4 +221,10 @@ void MainWindow::closeEvent(QCloseEvent * event)
     {
         QMainWindow::closeEvent(event);
     }
+}
+
+MainWindow* MainWindow::_window = nullptr;
+MainWindow* MainWindow::getInstance()
+{
+    return _window;
 }

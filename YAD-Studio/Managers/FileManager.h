@@ -99,7 +99,7 @@ private:
     bool _has_unsaved_data;
 
 
-
+    void saveToFile(QString file_name);
 };
 
 #endif // FILEMANAGER_H

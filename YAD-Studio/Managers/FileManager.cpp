@@ -1,6 +1,15 @@
 #include "FileManager.h"
+#include <QException>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QCoreApplication>
+#include <QProcess>
 
+#include "Logic/YadFile.h"
+#include "Managers/HistoryManager.h"
+#include "Managers/SourceCodeManager.h"
 
+#include "MainWindow.h"
 FileManager* FileManager::getInstance()
 {
     static FileManager* instance = nullptr;
@@ -16,29 +25,95 @@ bool FileManager::hasUnsavedData()
 
 void FileManager::openFile(QString file_name)
 {
+    try
+    {
+        YadFile file = YadFile::readFromFile(file_name);
 
+        setCurrentFilePath(file_name);
+        emit newSourceCodeLoaded(file.getSourceCode());
+        emit newHistoryLoaded(file.getHistory());
+
+        setHasUnsavedData(false);
+    }
+    catch(std::exception e)
+    {
+        QMessageBox msgBox;
+        msgBox.setText(tr("<b>Can't open file %1</b>").arg(file_name));
+        msgBox.setInformativeText(e.what());
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+    }
 }
 
 void FileManager::open()
 {
-
+    QString file_name = QFileDialog::getOpenFileName(MainWindow::getInstance(),
+                                                    tr("Open File"),
+                                                    "",
+                                                    tr("Yad File (*.yad)"));
+    if(file_name.size() > 0)
+    {
+        openFile(file_name);
+    }
 }
 
 void FileManager::save()
 {
-
+    if(_current_file_path.size() == 0)
+    {
+        saveAs();
+    }
+    else
+    {
+        saveToFile(_current_file_path);
+    }
 }
 
 void FileManager::saveAs()
 {
+    QString file_name = QFileDialog::getSaveFileName(
+                MainWindow::getInstance(),
+                tr("Save As"),
+                "",
+                tr("Yad File (*.yad)"));
 
+    if(file_name.size() > 0)
+    {
+        saveToFile(file_name);
+    }
 }
 
 void FileManager::newFile()
 {
-
+    QString current_exe = QCoreApplication::applicationFilePath();
+    QProcess process;
+    process.startDetached(current_exe);
 }
 
+void FileManager::saveToFile(QString file_name)
+{
+    QString source_code = SourceCodeManager::getInstance()->getSourceCode();
+    QVector<QString> history = HistoryManager::getInstance()->getHistory();
+
+    YadFile file(source_code, history);
+
+    try
+    {
+        file.saveToFile(file_name);
+        setCurrentFilePath(file_name);
+        setHasUnsavedData(false);
+    }
+    catch(std::exception e)
+    {
+        QMessageBox msgBox;
+        msgBox.setText(tr("<b>Can't save file %1</b>").arg(file_name));
+        msgBox.setInformativeText(e.what());
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setDefaultButton(QMessageBox::Ok);
+        msgBox.exec();
+    }
+}
 
 void FileManager::sourceCodeChanged()
 {
