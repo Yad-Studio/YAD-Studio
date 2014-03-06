@@ -10,7 +10,7 @@ CompilerError::CompilerError(const QString &title,
     _line_numer(line_numer)
 {
 }
-int CompilerError::getErrorNumner()
+int CompilerError::getErrorNumber()
 {
     return _error_number;
 }

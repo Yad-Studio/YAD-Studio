@@ -5,12 +5,12 @@
 class CompilerError
 {
 public:
-    CompilerError( const QString& title,
-                   const QString& description,
-                   int error_number,
+    CompilerError( const QString& title="",
+                   const QString& description="",
+                   int error_number=-1,
                    int line_numer=-1);
 
-    int getErrorNumner();
+    int getErrorNumber();
     int getLineNumber();
     const QString& getErrorTitle();
     const QString& getErrorDescription();

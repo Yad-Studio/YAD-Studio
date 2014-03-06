@@ -1,15 +1,17 @@
 #ifndef MARKOVALPHABET_H
 #define MARKOVALPHABET_H
-#include <qvector.h>
+
+#include <QSet>
+#include <QChar>
 
 class MarkovAlphabet
 {
 public:
-    MarkovAlphabet(const QVector<char>& alphabeth);
+    MarkovAlphabet(const QSet<QChar>& alphabeth);
 
-    bool isInAlphabet(char c);
+    bool isInAlphabet(QChar c) const;
 private:
-    QVector<char> _chars;
+    QSet<QChar> _chars;
 };
 
 #endif // MARKOVALPHABET_H
