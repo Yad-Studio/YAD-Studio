@@ -95,6 +95,8 @@ bool isCharsInAlphabet(int line_number, QString text,
                        QVector<CompilerError>& errors,
                        QSet<QChar>& alphabet_q)
 {
+    text = text.replace("$", "");
+
     bool res = true;
     for(int i = 0; i<text.size(); ++i)
     {
