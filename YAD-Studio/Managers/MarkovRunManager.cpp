@@ -19,13 +19,19 @@ MarkovRunManager::MarkovRunManager():
 }
 int MarkovRunManager::getStepNumberOfValue(QString word)
 {
-    QSet<StepResult>::iterator i;
-    for (i = _steps_history.begin(); i != _steps_history.end(); ++i)
-    {
-        StepResult curr = *i;
-        if(curr._output == word)
-            return curr._step_id;
-    }
+//    QSet<StepResult>::iterator i;
+//    for (i = _steps_history.begin(); i != _steps_history.end(); ++i)
+//    {
+//        StepResult curr = *i;
+//        if(curr._output == word)
+//            return curr._step_id;
+//    }
+
+    QSet<StepResult>::iterator it = qFind(_steps_history.begin(),
+                                          _steps_history.end(),
+                                          StepResult(word,0));
+     if (it != _steps_history.end())
+         return (*it)._step_id;
     return -1;
 }
 bool MarkovRunManager::choseAndUseRule(QString& word,
@@ -33,13 +39,13 @@ bool MarkovRunManager::choseAndUseRule(QString& word,
 {
     //get rule
     const MarkovRule*  markov_rule = _algorithm.getRuleFor(word);
-    rule = *markov_rule;
-
     QString res="";
 
     //use rule
     if(markov_rule != nullptr)
     {
+        rule = *markov_rule;
+
         res = _algorithm.useRule(word,rule);
         word = res;
         return true;
@@ -50,38 +56,6 @@ bool MarkovRunManager::choseAndUseRule(QString& word,
 
 bool MarkovRunManager::findAndApplyNextRule()
 {
-    if (_steps_history.contains(StepResult(_word_after_last_step,0)))
-    {
-        if(_is_debug_mode)
-        {
-            int prev_same_stem = getStepNumberOfValue(_input_word);
-
-            QString description = "The result of step#"+prev_same_stem;
-            description+=" is same as on the step #";
-            description+=_steps_made;
-
-            RunError error("Algorithm never terminates",
-                           description,
-                           102);
-            emit debugFinishFail(_input_word,error,_steps_made);
-        }
-        else
-        {
-            int prev_same_stem = getStepNumberOfValue(_input_word);
-
-            QString description = "The result of step#"+prev_same_stem;
-            description+=" is same as on the step #";
-            description+=_steps_made;
-
-            RunError error("Algorithm never terminates",
-                           description,
-                           102);
-            emit runWithoutDebugFinishFail(_input_word,error,_steps_made);
-        }
-
-        return false;
-    }
-
     if(_word_after_last_step.size()>2000)
     {
         if(_is_debug_mode)
@@ -135,6 +109,8 @@ bool MarkovRunManager::findAndApplyNextRule()
 
     ++_steps_made;
 
+
+
     if(_is_debug_mode)
     {
         emit debugStepFinished(_steps_made,
@@ -144,6 +120,38 @@ bool MarkovRunManager::findAndApplyNextRule()
     }
 
     _word_after_last_step = word;
+
+    if (_steps_history.contains(StepResult(_word_after_last_step,0)))
+    {
+        if(_is_debug_mode)
+        {
+            int prev_same_stem = getStepNumberOfValue(_input_word);
+
+            QString description = "The result of step#"+prev_same_stem;
+            description+=" is same as on the step #";
+            description+=_steps_made;
+
+            RunError error("Algorithm never terminates",
+                           description,
+                           102);
+            emit debugFinishFail(_input_word,error,_steps_made);
+        }
+        else
+        {
+            int prev_same_stem = getStepNumberOfValue(_input_word);
+
+            QString description = "The result of step#"+prev_same_stem;
+            description+=" is same as on the step #";
+            description+=_steps_made;
+
+            RunError error("Algorithm never terminates",
+                           description,
+                           102);
+            emit runWithoutDebugFinishFail(_input_word,error,_steps_made);
+        }
+
+        return false;
+    }
 
     _steps_history.insert(StepResult(_word_after_last_step,_steps_made));
 
@@ -193,37 +201,76 @@ void MarkovRunManager::setCanRunSourceCode(bool can)
 
 void MarkovRunManager::runWithoutDebug(QString input_word)
 {
+    _steps_made = 0;
+    _steps_history.clear();
+    _input_word = input_word;
+    _word_after_last_step = input_word;
+    _is_debug_mode = false;
 
+    while(findAndApplyNextRule())
+    {
+        if(_steps_made%100 == 0)
+        {
+            emit runStepsMade(_steps_made);
+        }
+    }
 }
 
 void MarkovRunManager::runWithDebug(QString input_word)
 {
+    _steps_made = 0;
+    _steps_history.clear();
+    _input_word = input_word;
+    _word_after_last_step = input_word;
+    _is_debug_mode = true;
 
+    while(findAndApplyNextRule())
+    {
+    }
 }
 
 void MarkovRunManager::addBreakPoint(int line_number)
 {
-
+    _break_points.insert(line_number);
 }
 
 void MarkovRunManager::removeBreakPoint(int line_number)
 {
-
+    QSet<int>::iterator i = _break_points.begin();
+    while (i != _break_points.end())
+    {
+        if ((*i)== line_number)
+        {
+            i = _break_points.erase(i);
+        }
+    }
 }
 
 void MarkovRunManager::debugNextStep()
 {
-
+     findAndApplyNextRule();
 }
 
 void MarkovRunManager::debugContinue()
 {
+    while(findAndApplyNextRule())
+    {
 
+    }
 }
 
 void MarkovRunManager::debugStop()
 {
-
+    if(_is_debug_mode)
+    {
+        RunError error("Debug stopped by the user","",103);
+        emit debugFinishFail(_input_word,error,_steps_made);
+    }
+    else
+    {
+        RunError error("Debug stopped by the user","",103);
+        emit runWithoutDebugFinishFail(_input_word, error,_steps_made);
+    }
 }
 bool operator<(const StepResult& a, const StepResult& b)
 {
