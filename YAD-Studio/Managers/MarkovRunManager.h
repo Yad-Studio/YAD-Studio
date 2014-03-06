@@ -69,7 +69,6 @@ private:
     int getStepNumberOfValue(QString word);
     bool choseAndUseRule(QString &word, MarkovRule &rule);
 
-
 public slots:
     //called when new compiled algorithm is available.
     void setAlgorithm(MarkovAlgorithm algorithm);

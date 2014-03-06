@@ -19,15 +19,34 @@ MarkovRunManager::MarkovRunManager():
 }
 int MarkovRunManager::getStepNumberOfValue(QString word)
 {
-    //TODO: implement
-    return 2;
+    QSet<StepResult>::iterator i;
+    for (i = _steps_history.begin(); i != _steps_history.end(); ++i)
+    {
+        StepResult curr = *i;
+        if(curr._output == word)
+            return curr._step_id;
+    }
+    return -1;
 }
 bool MarkovRunManager::choseAndUseRule(QString& word,
                                        MarkovRule& rule)
 {
-    //TODO: implement
-    return true;
+    //get rule
+    const MarkovRule*  markov_rule = _algorithm.getRuleFor(word);
+    rule = *markov_rule;
+
+    QString res="";
+
+    //use rule
+    if(markov_rule != nullptr)
+    {
+        res = _algorithm.useRule(word,rule);
+        word = res;
+        return true;
+    }
+    return false;
 }
+
 
 bool MarkovRunManager::findAndApplyNextRule()
 {
