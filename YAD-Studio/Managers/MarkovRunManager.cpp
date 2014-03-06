@@ -39,13 +39,13 @@ bool MarkovRunManager::choseAndUseRule(QString& word,
 {
     //get rule
     const MarkovRule*  markov_rule = _algorithm.getRuleFor(word);
-    rule = *markov_rule;
-
     QString res="";
 
     //use rule
     if(markov_rule != nullptr)
     {
+        rule = *markov_rule;
+
         res = _algorithm.useRule(word,rule);
         word = res;
         return true;
@@ -56,38 +56,6 @@ bool MarkovRunManager::choseAndUseRule(QString& word,
 
 bool MarkovRunManager::findAndApplyNextRule()
 {
-    if (_steps_history.contains(StepResult(_word_after_last_step,0)))
-    {
-        if(_is_debug_mode)
-        {
-            int prev_same_stem = getStepNumberOfValue(_input_word);
-
-            QString description = "The result of step#"+prev_same_stem;
-            description+=" is same as on the step #";
-            description+=_steps_made;
-
-            RunError error("Algorithm never terminates",
-                           description,
-                           102);
-            emit debugFinishFail(_input_word,error,_steps_made);
-        }
-        else
-        {
-            int prev_same_stem = getStepNumberOfValue(_input_word);
-
-            QString description = "The result of step#"+prev_same_stem;
-            description+=" is same as on the step #";
-            description+=_steps_made;
-
-            RunError error("Algorithm never terminates",
-                           description,
-                           102);
-            emit runWithoutDebugFinishFail(_input_word,error,_steps_made);
-        }
-
-        return false;
-    }
-
     if(_word_after_last_step.size()>2000)
     {
         if(_is_debug_mode)
@@ -141,6 +109,8 @@ bool MarkovRunManager::findAndApplyNextRule()
 
     ++_steps_made;
 
+
+
     if(_is_debug_mode)
     {
         emit debugStepFinished(_steps_made,
@@ -150,6 +120,38 @@ bool MarkovRunManager::findAndApplyNextRule()
     }
 
     _word_after_last_step = word;
+
+    if (_steps_history.contains(StepResult(_word_after_last_step,0)))
+    {
+        if(_is_debug_mode)
+        {
+            int prev_same_stem = getStepNumberOfValue(_input_word);
+
+            QString description = "The result of step#"+prev_same_stem;
+            description+=" is same as on the step #";
+            description+=_steps_made;
+
+            RunError error("Algorithm never terminates",
+                           description,
+                           102);
+            emit debugFinishFail(_input_word,error,_steps_made);
+        }
+        else
+        {
+            int prev_same_stem = getStepNumberOfValue(_input_word);
+
+            QString description = "The result of step#"+prev_same_stem;
+            description+=" is same as on the step #";
+            description+=_steps_made;
+
+            RunError error("Algorithm never terminates",
+                           description,
+                           102);
+            emit runWithoutDebugFinishFail(_input_word,error,_steps_made);
+        }
+
+        return false;
+    }
 
     _steps_history.insert(StepResult(_word_after_last_step,_steps_made));
 
