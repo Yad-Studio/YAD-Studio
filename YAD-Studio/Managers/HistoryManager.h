@@ -27,6 +27,8 @@ signals:
     // emitted when the history was changed.
     void historyChanged(QVector<QString> new_words);
 
+    //When word was selected
+    void wordSelected(QString input_word);
 private:
     //it is a singletone
     HistoryManager();

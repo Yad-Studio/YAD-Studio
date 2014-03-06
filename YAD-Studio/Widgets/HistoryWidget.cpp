@@ -12,8 +12,8 @@ HistoryWidget::HistoryWidget(QWidget *parent) :
     ui->setupUi(this);
 
     QVector<QString> vec;
-    vec.push_back("test1");
-    vec.push_back("test2");
+    //vec.push_back("test1");
+    //vec.push_back("test2");
     historyChanged(vec);
 
     //make do not editable listView

@@ -63,7 +63,7 @@
        <widget class="InputWidget" name="input" native="true"/>
       </item>
       <item>
-       <widget class="HistoryWidget" name="widget" native="true"/>
+       <widget class="HistoryWidget" name="history" native="true"/>
       </item>
       <item>
        <spacer name="verticalSpacer">

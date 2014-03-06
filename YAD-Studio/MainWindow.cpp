@@ -2,11 +2,34 @@
 #include "ui_MainWindow.h"
 #include <QTextCursor>
 
+#include "Widgets/InputWidget.h"
+#include "Widgets/HistoryWidget.h"
+#include "Managers/HistoryManager.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+
+
+    //Connect InputWidget and HistoryManager
+    HistoryManager* history_manager = HistoryManager::getInstance();
+
+    connect(ui->input, SIGNAL(addToHistory(QString)),
+            history_manager, SLOT(addToHistory(QString)));
+    connect(history_manager, SIGNAL(wordSelected(QString)),
+            ui->input, SLOT(setInput(QString)));
+
+    //Connect HistoryWidget and HistoryManager
+    connect(ui->history, SIGNAL(inputWordSelected(QString)),
+            history_manager, SIGNAL(wordSelected(QString)));
+    connect(ui->history, SIGNAL(removeFromHistory(QString)),
+            history_manager, SLOT(removeFromHistory(QString)));
+    connect(history_manager, SIGNAL(historyChanged(QVector<QString>)),
+            ui->history, SLOT(historyChanged(QVector<QString>)));
+
 
 
 //    //Undo
