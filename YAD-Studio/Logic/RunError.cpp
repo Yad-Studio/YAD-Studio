@@ -25,7 +25,7 @@ const QString& RunError::getErrorDescription()
 
 const QString RunError::getFullErrorInfo()
 {
-    return _title + ": " + _description;
+    return _error_number + ": " + _description;
 }
 
 void RunError::setErrorNumber(int number)
