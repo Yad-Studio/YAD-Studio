@@ -49,21 +49,33 @@
            <string notr="true"/>
           </property>
           <property name="text">
-           <string>Save</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>C:/Users/Diana/YandexDisk/YAD-Studio/save.png</normaloff>C:/Users/Diana/YandexDisk/YAD-Studio/save.png</iconset>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="runButton">
           <property name="text">
-           <string>Run</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>C:/Users/Diana/YandexDisk/YAD-Studio/run.png</normaloff>C:/Users/Diana/YandexDisk/YAD-Studio/run.png</iconset>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="runWithDebug">
           <property name="text">
-           <string>Run Debug</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>C:/Users/Diana/YandexDisk/YAD-Studio/debug.png</normaloff>C:/Users/Diana/YandexDisk/YAD-Studio/debug.png</iconset>
           </property>
          </widget>
         </item>
