@@ -58,6 +58,7 @@ public:
      */
     static RuleFitResult isRuleFits(QString input_word, const MarkovRule& rule);
 
+    static QString useRule(QString input_word, const MarkovRule& rule);
     /**
      * @brief Creates algorithm
      * @param alphabet alphabet
