@@ -11,6 +11,7 @@
 #include "Managers/HistoryManager.h"
 #include "Managers/FileManager.h"
 #include "Managers/MarkovRunManager.h"
+#include "Managers/SourceCodeManager.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -91,12 +92,10 @@ MainWindow::MainWindow(QWidget *parent) :
             run_manager, SLOT(runWithoutDebug(QString)));
     connect(ui->input, SIGNAL(runWithDebug(QString)),
             run_manager, SLOT(runWithDebug(QString)));
-
     connect(run_manager, SIGNAL(runWithoutDebugStarted(QString)),
             ui->input, SLOT(runStarted()));
     connect(run_manager, SIGNAL(debugStarted(QString)),
             ui->input, SLOT(runStarted()));
-
     connect(run_manager, SIGNAL(runWithoutDebugFinishFail(QString,RunError,int)),
             ui->input, SLOT(runFinished()));
     connect(run_manager, SIGNAL(runWithoutDebugFinishSuccess(QString,QString,int)),
@@ -108,6 +107,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(run_manager, SIGNAL(canRunSourceCode(bool)),
             ui->input, SLOT(canRunAlgorithm(bool)));
 
+    //Connect SourceCodeManager and EditorWindowWidget
+    SourceCodeManager* source_manager = SourceCodeManager::getInstance();
+    connect(source_manager, SIGNAL(newSourceCodeWasLoaded(QString)),
+            ui->editorWindow, SLOT(newSourceCode(QString)));
+    connect(ui->editorWindow, SIGNAL(sourceCodeChanged(QString)),
+            source_manager, SLOT(setSourceCode(QString)));
+
     //Read file to open from command line
     QStringList arguments = QCoreApplication::arguments();
     if(arguments.size() >= 2)
@@ -117,7 +123,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     else
     {
-        ui->editorWindow->setDefaultSourceCode(tr("//Alphabet\nT = {}\n\n//Rules\n//a -> b"));
+        source_manager->setNewSourceCodeFromFile(tr("//Alphabet\nT = {}\n\n//Rules\n//a -> b"));
     }
 
 }
