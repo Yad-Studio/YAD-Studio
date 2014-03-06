@@ -63,8 +63,8 @@ public:
      * @param alphabet alphabet
      * @param rules list of rules
      */
-    MarkovAlgorithm(MarkovAlphabet alphabet,
-                    QVector<MarkovRule> rules);
+    MarkovAlgorithm(MarkovAlphabet alphabet=MarkovAlphabet(),
+                    QVector<MarkovRule> rules=QVector<MarkovRule>());
 
     /**
      * @brief finds the rule which can be applied for input. If no rule found then nullptr is returned

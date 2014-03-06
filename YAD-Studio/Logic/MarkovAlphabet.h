@@ -7,7 +7,7 @@
 class MarkovAlphabet
 {
 public:
-    MarkovAlphabet(const QSet<QChar>& alphabeth);
+    MarkovAlphabet(const QSet<QChar>& alphabeth=QSet<QChar>());
 
     bool isInAlphabet(QChar c) const;
 private:
