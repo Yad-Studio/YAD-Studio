@@ -65,7 +65,7 @@ private:
     static MainWindow* _window;
     void updateWindowTitle();
 private slots:
-
+    void newHistoryLoaded(QVector<QString>);
 };
 
 #endif // MAINWINDOW_H

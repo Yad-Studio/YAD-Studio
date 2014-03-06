@@ -131,6 +131,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(source_manager, SIGNAL(sourceCodeChanged(QString)),
             file_manager, SLOT(sourceCodeChanged()));
 
+    //Connect FileManager and HistoryManager
+    connect(file_manager, SIGNAL(newHistoryLoaded(QVector<QString>)),
+            this, SLOT(newHistoryLoaded(QVector<QString>)));
+    connect(history_manager, SIGNAL(historyChanged(QVector<QString>)),
+            file_manager, SLOT(historyChanged()));
+
     //Read file to open from command line
     QStringList arguments = QCoreApplication::arguments();
     if(arguments.size() >= 2)
@@ -143,6 +149,11 @@ MainWindow::MainWindow(QWidget *parent) :
         source_manager->setNewSourceCodeFromFile(tr("//Alphabet\nT = {}\n\n//Rules\n//a -> b"));
     }
 
+}
+void MainWindow::newHistoryLoaded(QVector<QString> history)
+{
+    HistoryManager::getInstance()->clearHistory();
+    HistoryManager::getInstance()->addToHistory(history);
 }
 
 void MainWindow::updateWindowTitle()
