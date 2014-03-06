@@ -10,6 +10,8 @@
 #include "Widgets/HistoryWidget.h"
 #include "Managers/HistoryManager.h"
 #include "Managers/FileManager.h"
+#include "Managers/MarkovRunManager.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -82,6 +84,29 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->editorWindow, SIGNAL(copyAvailable(bool)),
             this, SLOT(copyAvailable(bool)));
 
+    //Connect InputWidget and MarkovRunManager
+    MarkovRunManager* run_manager = MarkovRunManager::getInstance();
+
+    connect(ui->input, SIGNAL(run(QString)),
+            run_manager, SLOT(runWithoutDebug(QString)));
+    connect(ui->input, SIGNAL(runWithDebug(QString)),
+            run_manager, SLOT(runWithDebug(QString)));
+
+    connect(run_manager, SIGNAL(runWithoutDebugStarted(QString)),
+            ui->input, SLOT(runStarted()));
+    connect(run_manager, SIGNAL(debugStarted(QString)),
+            ui->input, SLOT(runStarted()));
+
+    connect(run_manager, SIGNAL(runWithoutDebugFinishFail(QString,RunError,int)),
+            ui->input, SLOT(runFinished()));
+    connect(run_manager, SIGNAL(runWithoutDebugFinishSuccess(QString,QString,int)),
+            ui->input, SLOT(runFinished()));
+    connect(run_manager, SIGNAL(debugFinishFail(QString,RunError,int)),
+            ui->input, SLOT(runFinished()));
+    connect(run_manager, SIGNAL(debugFinishSuccess(QString,QString,int)),
+            ui->input, SLOT(runFinished()));
+    connect(run_manager, SIGNAL(canRunSourceCode(bool)),
+            ui->input, SLOT(canRunAlgorithm(bool)));
 
     //Read file to open from command line
     QStringList arguments = QCoreApplication::arguments();
