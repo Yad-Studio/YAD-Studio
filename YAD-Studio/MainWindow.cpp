@@ -117,6 +117,12 @@ MainWindow::MainWindow(QWidget *parent) :
     //Connect InputWidget and FileManager
     connect(ui->input, SIGNAL(save()), file_manager, SLOT(save()));
 
+    //Connect MarkovRunManager and EditorWindowWidget
+    connect(ui->editorWindow, SIGNAL(canRun(bool)),
+            run_manager, SLOT(setCanRunSourceCode(bool)));
+    connect(ui->editorWindow, SIGNAL(markovAlgorithmChanged(MarkovAlgorithm)),
+            run_manager, SLOT(setAlgorithm(MarkovAlgorithm)));
+
     //Read file to open from command line
     QStringList arguments = QCoreApplication::arguments();
     if(arguments.size() >= 2)
