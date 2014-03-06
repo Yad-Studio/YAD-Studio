@@ -2,6 +2,7 @@
 #define HISTORYWIDGET_H
 
 #include <QWidget>
+#include "QListWidgetItem"
 
 namespace Ui {
 class HistoryWidget;
@@ -18,10 +19,16 @@ public:
 private:
     Ui::HistoryWidget *ui;
 
+
+
 public slots:
     // the list in widget must be updated
     //(delete all previous history and write new QVector)
     void historyChanged(QVector<QString> list);
+
+    void showContextMenu(const QPoint& pos);
+    void doubleClick(QModelIndex index);
+    void deleteHistoryItem();
 
 signals:
     //signal is triggered when user double clicks the word in the list.
