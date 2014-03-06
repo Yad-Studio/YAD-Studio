@@ -34,7 +34,7 @@ public slots:
     //should be disabled
     void canRunAlgorithm(bool can_run);
 
-    void runCliked(bool);
+    void runCliked();
     void runWithDebugClicked();
     void saveCliked();
 

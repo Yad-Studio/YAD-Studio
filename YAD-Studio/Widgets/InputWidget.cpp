@@ -12,9 +12,9 @@ InputWidget::InputWidget(QWidget *parent) :
 
     //run button clicked
     connect(ui->runButton,
-            SIGNAL(clicked(bool)),
+            SIGNAL(clicked()),
             this,
-            SLOT(runCliked(bool)));
+            SLOT(runCliked()));
 
     //run with debug cliked
     connect(ui->runWithDebug,
@@ -62,7 +62,7 @@ void InputWidget::canRunAlgorithm(bool can_run)
 {
     _can_run_algorythm = can_run;
 }
-void InputWidget::runCliked(bool )
+void InputWidget::runCliked( )
 {
     emit run(ui->lineEdit->text());
     emit addToHistory(ui->lineEdit->text());
