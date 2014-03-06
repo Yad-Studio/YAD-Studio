@@ -32,17 +32,17 @@ public slots:
     /**
      * @brief shows or hides redo button
      */
-    void redoAvaliable(bool);
+    void redoAvailable(bool);
 
     /**
      * @brief shows or hides undo button
      */
-    void undoAvaliable(bool);
+    void undoAvailable(bool);
 
     /**
      * @brief shows or hides copy, cut, delete selection buttons
      */
-    void copyAvaliable(bool);
+    void copyAvailable(bool);
 
 signals:
     void undo();

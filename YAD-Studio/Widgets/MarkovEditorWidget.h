@@ -20,13 +20,12 @@ public slots:
      * @param source_code
      * @param user_change if true then change in source will be treated like user has changet id
      */
-    void newSourceCode(QString source_code, bool user_change=false);
+    void newSourceCode(QString source_code, bool system_change=true);
 
     /**
      * @brief the text which is selected should be deleted.
      */
     void deleteSelection();
-
 signals:
     /**
      * @brief if any changes where done to source code

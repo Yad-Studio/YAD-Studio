@@ -20,9 +20,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     updateWindowTitle();
-    redoAvaliable(false);
-    undoAvaliable(false);
-    copyAvaliable(false);
+    redoAvailable(false);
+    undoAvailable(false);
+    copyAvailable(false);
 
     //Connect MainWindow menu
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
@@ -54,6 +54,34 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(history_manager, SIGNAL(historyChanged(QVector<QString>)),
             ui->history, SLOT(historyChanged(QVector<QString>)));
 
+    //Connect MainWindows and FileManager
+    FileManager* file_manager = FileManager::getInstance();
+    connect(this, SIGNAL(newFile()), file_manager, SLOT(newFile()));
+    connect(this, SIGNAL(open()), file_manager, SLOT(open()));
+    connect(this, SIGNAL(save()), file_manager, SLOT(save()));
+    connect(this, SIGNAL(saveAs()), file_manager, SLOT(saveAs()));
+    connect(file_manager, SIGNAL(hasUnsavedData(bool)),
+            this, SLOT(hasUnsavedData(bool)));
+    connect(file_manager, SIGNAL(fileNameChanged(QString)),
+            this, SLOT(fileNameChanged(QString)));
+
+    //Connect MainWindows and EditorWindowWidget
+    connect(this, SIGNAL(undo()), ui->editorWindow, SLOT(undo()));
+    connect(this, SIGNAL(redo()), ui->editorWindow, SLOT(redo()));
+    connect(this, SIGNAL(selectAll()), ui->editorWindow, SLOT(selectAll()));
+    connect(this, SIGNAL(copy()), ui->editorWindow, SLOT(copy()));
+    connect(this, SIGNAL(paste()), ui->editorWindow, SLOT(paste()));
+    connect(this, SIGNAL(cut()), ui->editorWindow, SLOT(cut()));
+    connect(this, SIGNAL(deleteSelection()),
+            ui->editorWindow, SLOT(deleteSelection()));
+
+    connect(ui->editorWindow, SIGNAL(redoAvailable(bool)),
+            this, SLOT(redoAvailable(bool)));
+    connect(ui->editorWindow, SIGNAL(undoAvailable(bool)),
+            this, SLOT(undoAvailable(bool)));
+    connect(ui->editorWindow, SIGNAL(copyAvailable(bool)),
+            this, SLOT(copyAvailable(bool)));
+
 
     //Read file to open from command line
     QStringList arguments = QCoreApplication::arguments();
@@ -61,6 +89,10 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         QString file_name = arguments.at(1);
         FileManager::getInstance()->openFile(file_name);
+    }
+    else
+    {
+        ui->editorWindow->setDefaultSourceCode(tr("//Alphabet\nT = {}\n\n//Rules\n//a -> b"));
     }
 
 }
@@ -94,17 +126,17 @@ void MainWindow::hasUnsavedData(bool has_unsaved_data)
     updateWindowTitle();
 }
 
-void MainWindow::redoAvaliable(bool v)
+void MainWindow::redoAvailable(bool v)
 {
     ui->actionRedo->setEnabled(v);
 }
 
-void MainWindow::undoAvaliable(bool v)
+void MainWindow::undoAvailable(bool v)
 {
     ui->actionUndo->setEnabled(v);
 }
 
-void MainWindow::copyAvaliable(bool v)
+void MainWindow::copyAvailable(bool v)
 {
     ui->actionCopy->setEnabled(v);
     ui->actionCut->setEnabled(v);

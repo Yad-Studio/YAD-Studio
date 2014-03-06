@@ -63,3 +63,7 @@ void EditorWindowWidget::deleteSelection()
 {
     ui->plainTextEdit->deleteSelection();
 }
+void EditorWindowWidget::setDefaultSourceCode(QString source_code)
+{
+    ui->plainTextEdit->newSourceCode(source_code, false);
+}

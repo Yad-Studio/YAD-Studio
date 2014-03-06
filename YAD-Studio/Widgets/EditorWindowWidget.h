@@ -15,6 +15,12 @@ class EditorWindowWidget : public QWidget
 public:
     explicit EditorWindowWidget(QWidget *parent = 0);
     ~EditorWindowWidget();
+
+    /**
+     * @brief Sets the source code for new document
+     * @param source_code
+     */
+    void setDefaultSourceCode(QString source_code);
 public slots:
     void newSourceCode(QString new_source);
     void undo();

@@ -53,10 +53,16 @@ CompilerError forbiddenInAlphabet(int line, QString letter)
     return CompilerError(title, description, 205, line);
 }
 
-CompilerError notInAlphabet(int line, QString letter)
+CompilerError notInAlphabet(int line, QString letter, QSet<QChar> alphabet)
 {
+    QString old_alphabet = QObject::tr("%1").arg(letter);
+    foreach (const QChar value, alphabet)
+    {
+        old_alphabet += QObject::tr(", %1").arg(value);
+    }
+
     QString title=QObject::tr("Symbol '%1' is not in alphabet").arg(letter);
-    QString description=QObject::tr("You can add it to alphabet. Examples: 'T = {a, ..., %1}'.").arg(letter);
+    QString description=QObject::tr("You can add it to alphabet. Examples: 'T = {%1}'.").arg(old_alphabet);
 
     return CompilerError(title, description, 200, line);
 }
@@ -98,7 +104,7 @@ bool isCharsInAlphabet(int line_number, QString text,
             if(forbidden_symbols.indexOf(ch) >= 0)
                 errors.push_back(forbiddenInRule(line_number, ch));
             else
-                errors.push_back(notInAlphabet(line_number, ch));
+                errors.push_back(notInAlphabet(line_number, ch, alphabet_q));
 
             res = false;
             break;
@@ -154,37 +160,40 @@ bool parseAlphabet(int line_number, QString line, QVector<CompilerError>& errors
     }
     else
     {
-        QString letters_str = rx_alphabet.cap(1);
+        QString letters_str = trim(rx_alphabet.cap(1));
         qDebug() << "Letters: " << letters_str;
 
-        QStringList letters = letters_str.split(",");
-        for(int j=0; j<letters.size(); ++j)
+        if(letters_str.size() > 0)
         {
-            QString letter = trim(letters[j]);
+            QStringList letters = letters_str.split(",");
+            for(int j=0; j<letters.size(); ++j)
+            {
+                QString letter = trim(letters[j]);
 
-            if(letter.size() != 1)
-            {
-                errors.push_back(wrongAlphabetChar(line_number, letter));
-            }
-            else if(letter == "$")
-            {
-                errors.push_back(emptySymbolInAlphabet(line_number));
-            }
-            else if(forbidden_symbols.indexOf(letter) >= 0)
-            {
-                errors.push_back(forbiddenInAlphabet(line_number, letter));
-            }
-            else
-            {
-                //alphabet.push_back(letter);
-                QChar ch = letter[0];
-                if(alphabet_q.find(ch) != alphabet_q.end())
+                if(letter.size() != 1)
                 {
-                    errors.push_back(charAlreadyInAlphabet(line_number, letter));
+                    errors.push_back(wrongAlphabetChar(line_number, letter));
+                }
+                else if(letter == "$")
+                {
+                    errors.push_back(emptySymbolInAlphabet(line_number));
+                }
+                else if(forbidden_symbols.indexOf(letter) >= 0)
+                {
+                    errors.push_back(forbiddenInAlphabet(line_number, letter));
                 }
                 else
                 {
-                    alphabet_q.insert(ch);
+                    //alphabet.push_back(letter);
+                    QChar ch = letter[0];
+                    if(alphabet_q.find(ch) != alphabet_q.end())
+                    {
+                        errors.push_back(charAlreadyInAlphabet(line_number, letter));
+                    }
+                    else
+                    {
+                        alphabet_q.insert(ch);
+                    }
                 }
             }
         }

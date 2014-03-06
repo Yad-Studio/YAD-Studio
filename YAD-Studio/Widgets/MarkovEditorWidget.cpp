@@ -25,7 +25,7 @@ MarkovEditorWidget::MarkovEditorWidget(QWidget *parent) :
     this->setTabStopWidth(4 * metrics.width(' '));
 
 
-    this->newSourceCode("//Alphabet\nT = {}\n\n//Rules\n//a -> b", true);
+
 }
 
 MarkovEditorWidget::~MarkovEditorWidget()
@@ -33,10 +33,12 @@ MarkovEditorWidget::~MarkovEditorWidget()
 }
 
 
-void MarkovEditorWidget::newSourceCode(QString source_code, bool user_change)
+void MarkovEditorWidget::newSourceCode(QString source_code, bool system_change)
 {
-    if(!user_change)
+    if(system_change)
+    {
         _last_source_code = source_code;
+    }
     this->setPlainText(source_code);
 }
 
@@ -60,21 +62,23 @@ void MarkovEditorWidget::userChangedSourceCode()
     QString source_code = this->toPlainText();
     if(_last_source_code != source_code)
     {
-        _last_source_code = source_code;
         emit sourceCodeChanged(source_code);
+    }
 
-        bool res = MarkovParser::parseSourceCode(source_code, _algorithm, _errors);
+    _last_source_code = source_code;
 
-        if(res)
-        {
-            emit markovAlgorithmChanged(_algorithm);
-            setCanRun(true);
-        }
-        else
-        {
-            setCanRun(false);
-            updateErrors();
-        }
+
+    bool res = MarkovParser::parseSourceCode(source_code, _algorithm, _errors);
+
+    if(res)
+    {
+        emit markovAlgorithmChanged(_algorithm);
+        setCanRun(true);
+    }
+    else
+    {
+        setCanRun(false);
+        updateErrors();
     }
 }
 
