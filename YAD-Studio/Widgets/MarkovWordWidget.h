@@ -27,7 +27,6 @@ private:
         //green
         After
     };
-    QString find(QString source);
 
 public slots:
     //changes the text inside. Removes all previously set highlights
