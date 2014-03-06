@@ -125,6 +125,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->editorWindow, SIGNAL(markovAlgorithmChanged(MarkovAlgorithm)),
             run_manager, SLOT(setAlgorithm(MarkovAlgorithm)));
 
+    //Connect SourceCodeManager and FileManager
+    connect(file_manager, SIGNAL(newSourceCodeLoaded(QString)),
+            source_manager, SLOT(setNewSourceCodeFromFile(QString)));
+    connect(source_manager, SIGNAL(sourceCodeChanged(QString)),
+            file_manager, SLOT(sourceCodeChanged()));
+
     //Read file to open from command line
     QStringList arguments = QCoreApplication::arguments();
     if(arguments.size() >= 2)
