@@ -12,8 +12,8 @@ RunWidget::RunWidget(QWidget *parent) :
 
     if(!isVisible())
     {
-        //setVisible(true);
-        show();
+        setVisible(true);
+        //show();
     }
     ui->outputWord->setVisible(false);
 
@@ -39,6 +39,8 @@ RunWidget::~RunWidget()
 }
 void RunWidget::runStarted(QString input_word)
 {
+    setVisible(true);
+
     ui->inputWidget->setWord(input_word);
 
     ui->errorDescription->setVisible(false);
@@ -101,6 +103,6 @@ void RunWidget::runFailed(QString input_word,
 void RunWidget::onCloseClicked()
 {
     //this->close();
-    //setVisible(false);
-    hide();
+    setVisible(false);
+    //hide();
 }
