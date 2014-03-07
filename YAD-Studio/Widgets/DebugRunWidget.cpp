@@ -34,7 +34,7 @@ DebugRunWidget::DebugRunWidget(QWidget *parent) :
             this,
             SLOT(onContinueButtonClicked()));
 
-    //debugStepFinished(3,"aaab","bab",MarkovRule("aa","b"));
+    debugStepFinished(3,"aaab","bab",MarkovRule("aa","b"));
 }
 
 DebugRunWidget::~DebugRunWidget()
@@ -159,7 +159,8 @@ void DebugRunWidget::debugStepFinished(int step_number,
 //    Before: {word_before_rule_applied}
 //    Rule: {rule}
 //    After: {word_after_rule_applied}
-    ui->debugLog->setText(tr("Step #%1<br>Before: %2<br>Rule: %3<br>After: %4<br>").arg(QString::number(step_number)).arg(before_rule_applied).arg(applied_rule.getFullRule()).arg(after_rule_applied));
+    // <font color='red'>Some text</font>
+    ui->debugLog->setText(tr("Step #%1<br> <#ff0000> Before : %2<br>Rule: %3<br>After: %4<br>").arg(QString::number(step_number)).arg(before_rule_applied).arg(applied_rule.getFullRule()).arg(after_rule_applied));
 }
 
 void DebugRunWidget::breakPointReached(int line_number)
