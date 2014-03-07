@@ -4,6 +4,12 @@ MarkovAlphabet::MarkovAlphabet(const QSet<QChar> &alphabeth):
     _chars(alphabeth)
 {
 }
+
+QSet<QChar> MarkovAlphabet::getAlphabet() const
+{
+    return _chars;
+}
+
 bool MarkovAlphabet::isInAlphabet(QChar c) const
 {
     //empty symbol

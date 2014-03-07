@@ -5,33 +5,49 @@ MarkovRunManager* MarkovRunManager::_instance = nullptr;
 
 MarkovRunManager* MarkovRunManager::getInstance( )
 {
-      if (_instance == nullptr)
+    if (_instance == nullptr)
         _instance = new MarkovRunManager();
-     return _instance;
+    return _instance;
 }
 
 MarkovRunManager::MarkovRunManager():
-        _input_word(""),
-        _steps_made(0),
-        _word_after_last_step(""),
-        _is_debug_mode(false)
+    _input_word(""),
+    _steps_made(0),
+    _word_after_last_step(""),
+    _is_debug_mode(false)
 {
 }
+
+RunError notInAlphabet(QString letter, MarkovAlphabet alphabet_m)
+{
+    QString old_alphabet = QObject::tr("%1").arg(letter);
+    QSet<QChar> alphabet = alphabet_m.getAlphabet();
+    foreach (const QChar value, alphabet)
+    {
+        old_alphabet += QObject::tr(", %1").arg(value);
+    }
+
+    QString title=QObject::tr("Symbol '%1' is not in alphabet").arg(letter);
+    QString description=QObject::tr("You can add it to alphabet. Examples: 'T = {%1}'.").arg(old_alphabet);
+
+    return RunError(title, description, 305);
+}
+
 int MarkovRunManager::getStepNumberOfValue(QString word)
 {
-//    QSet<StepResult>::iterator i;
-//    for (i = _steps_history.begin(); i != _steps_history.end(); ++i)
-//    {
-//        StepResult curr = *i;
-//        if(curr._output == word)
-//            return curr._step_id;
-//    }
+    //    QSet<StepResult>::iterator i;
+    //    for (i = _steps_history.begin(); i != _steps_history.end(); ++i)
+    //    {
+    //        StepResult curr = *i;
+    //        if(curr._output == word)
+    //            return curr._step_id;
+    //    }
 
     QSet<StepResult>::iterator it = qFind(_steps_history.begin(),
                                           _steps_history.end(),
                                           StepResult(word,0));
-     if (it != _steps_history.end())
-         return (*it)._step_id;
+    if (it != _steps_history.end())
+        return (*it)._step_id;
     return -1;
 }
 bool MarkovRunManager::choseAndUseRule(QString& word,
@@ -74,10 +90,10 @@ bool MarkovRunManager::findAndApplyNextRule()
         return false;
     }
 
-//Go through MarkovRules and select which fits.
-//If there are no rules then emit debugFinishSuccess or
-//runWithoutDebugFinishSuccess depending on run mode.
-//Use as _word_after_last_step as output word.
+    //Go through MarkovRules and select which fits.
+    //If there are no rules then emit debugFinishSuccess or
+    //runWithoutDebugFinishSuccess depending on run mode.
+    //Use as _word_after_last_step as output word.
 
     QString word = _word_after_last_step;
     MarkovRule rule;
@@ -128,7 +144,7 @@ bool MarkovRunManager::findAndApplyNextRule()
                        102);
 
         if(_is_debug_mode)
-        {      
+        {
             emit debugFinishFail(_input_word,error,_steps_made);
         }
         else
@@ -151,9 +167,9 @@ bool MarkovRunManager::findAndApplyNextRule()
         }
     }
 
-//If rule is final then emit debugFinishSuccess or
-//runWithoutDebugFinishSuccess depending on run mode.
-//Use as _word_after_last_step as output word. return false.
+    //If rule is final then emit debugFinishSuccess or
+    //runWithoutDebugFinishSuccess depending on run mode.
+    //Use as _word_after_last_step as output word. return false.
 
     if(rule.isFinalRule())
     {
@@ -185,6 +201,22 @@ void MarkovRunManager::setCanRunSourceCode(bool can)
     emit canRunSourceCode(can);
 }
 
+bool hasSymbolsNotInAlphabet(QString input_word,
+                             MarkovAlphabet alphabet,
+                             QChar& symbol)
+{
+    for(int i=0; i<input_word.size(); ++i)
+    {
+        QChar ch = input_word[i];
+        if(!alphabet.isInAlphabet(ch))
+        {
+            symbol = ch;
+            return true;
+        }
+    }
+    return false;
+}
+
 void MarkovRunManager::runWithoutDebug(QString input_word)
 {
     _steps_made = 0;
@@ -193,11 +225,25 @@ void MarkovRunManager::runWithoutDebug(QString input_word)
     _word_after_last_step = input_word;
     _is_debug_mode = false;
 
-    while(findAndApplyNextRule())
+    emit runWithoutDebugStarted(input_word);
+
+    QChar test;
+    if(hasSymbolsNotInAlphabet(input_word,
+                               _algorithm.getAlphabet(),
+                               test))
     {
-        if(_steps_made%100 == 0)
+        emit runWithoutDebugFinishFail(input_word,
+                                       notInAlphabet(test, _algorithm.getAlphabet()),
+                                       0);
+    }
+    else
+    {
+        while(findAndApplyNextRule())
         {
-            emit runStepsMade(_steps_made);
+            if(_steps_made%100 == 0)
+            {
+                emit runStepsMade(_steps_made);
+            }
         }
     }
 }
@@ -210,8 +256,23 @@ void MarkovRunManager::runWithDebug(QString input_word)
     _word_after_last_step = input_word;
     _is_debug_mode = true;
 
-    while(findAndApplyNextRule())
+    emit debugStarted(input_word);
+
+    QChar test;
+    if(hasSymbolsNotInAlphabet(input_word,
+                               _algorithm.getAlphabet(),
+                               test))
     {
+        emit debugFinishFail(input_word,
+                             notInAlphabet(test, _algorithm.getAlphabet()),
+                             0);
+    }
+    else
+    {
+
+        while(findAndApplyNextRule())
+        {
+        }
     }
 }
 
@@ -234,7 +295,7 @@ void MarkovRunManager::removeBreakPoint(int line_number)
 
 void MarkovRunManager::debugNextStep()
 {
-     findAndApplyNextRule();
+    findAndApplyNextRule();
 }
 
 void MarkovRunManager::debugContinue()
@@ -260,7 +321,7 @@ void MarkovRunManager::debugStop()
 }
 bool operator<(const StepResult& a, const StepResult& b)
 {
-   return a._output < b._output;
+    return a._output < b._output;
 }
 bool operator==(const StepResult& a, const StepResult& b)
 {
