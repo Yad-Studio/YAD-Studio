@@ -49,6 +49,10 @@ public slots:
     //by showing buttons.
     void breakPointReached(int line_number);
 
+    void onContinueButtonClicked();
+    void onNextButtonClicked();
+    void onStopButoonCliked();
+
 signals:
     //the signal should be triggered when Next Step button is clicked.
     //When this signal is triggered then removeBreakPoint()
