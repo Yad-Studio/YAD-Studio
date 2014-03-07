@@ -72,7 +72,10 @@ void DebugRunWidget::debugFailed(QString input_word,
     ui->error->setVisible(true);
     ui->errorDescription->setVisible(true);
 
-    ui->output->setVisible(true);
+    ui->rule->setVisible(false);
+    ui->ruleText->setVisible(false);
+
+    ui->output->setVisible(false);
     ui->outputWidget->setVisible(false);
 
     ui->steps->setVisible(true);
@@ -99,10 +102,49 @@ void DebugRunWidget::debugStepFinished(int step_number,
                   QString after_rule_applied,
                   MarkovRule applied_rule)
 {
+    ui->inputWidget->setWord(before_rule_applied);
 
+    ui->error->setVisible(false);
+    ui->errorDescription->setVisible(false);
+
+    ui->output->setVisible(true);
+    ui->outputWidget->setVisible(true);
+    ui->inputWidget->setWord(after_rule_applied);
+
+    ui->steps->setVisible(true);
+    ui->stepsNumber->setVisible(true);
+    ui->stepsNumber->setText(QString::number(step_number));
+
+    ui->stopButton->setVisible(false);
+    ui->continueButton->setVisible(false);
+    ui->nextButton->setVisible(false);
+
+    ui->rule->setVisible(true);
+    ui->ruleText->setVisible(true);
+
+    ui->ruleText->setText(tr("%1 -> %2").arg(applied_rule.getLeftPart()).arg(applied_rule.getRightPart()));
 }
 
 void DebugRunWidget::breakPointReached(int line_number)
+{
+    //it is enought - because previously the debugStepFinished was called
+    ui->stopButton->setVisible(true);
+    ui->continueButton->setVisible(true);
+    ui->nextButton->setVisible(true);
+
+    emit showBreakPoint(line_number);
+}
+void DebugRunWidget::onContinueButtonClicked()
+{
+
+}
+
+void DebugRunWidget::onNextButtonClicked()
+{
+
+}
+
+void DebugRunWidget::onStopButoonCliked()
 {
 
 }

@@ -9,7 +9,13 @@ RunWidget::RunWidget(QWidget *parent) :
     ui(new Ui::RunWidget)
 {
     ui->setupUi(this);
-    ui->outputWord->clear();
+
+    if(!isVisible())
+    {
+        //setVisible(true);
+        show();
+    }
+    ui->outputWord->setVisible(false);
 
 //    runFailed("abcd", RunError("Error My","Diff error",105),205);
 
@@ -94,5 +100,7 @@ void RunWidget::runFailed(QString input_word,
 }
 void RunWidget::onCloseClicked()
 {
-    this->close();
+    //this->close();
+    //setVisible(false);
+    hide();
 }
