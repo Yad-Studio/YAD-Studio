@@ -15,11 +15,11 @@ RunWidget::RunWidget(QWidget *parent) :
 
 //    runSuccess("ssrr","outputoutput",1234);
 
-    ui->errorDescription->clear();
-    ui->errorTitle->clear();
+    ui->errorDescription->setVisible(false);
+    ui->errorTitle->setVisible(false);
 
-    ui->outputWord->clear();
-    ui->outputWidget->close();
+    ui->outputWord->setVisible(false);
+    ui->outputWidget->setVisible(false);
 
     connect(ui->closeButton,
             SIGNAL(clicked()),
@@ -35,11 +35,11 @@ void RunWidget::runStarted(QString input_word)
 {
     ui->inputWidget->setWord(input_word);
 
-    ui->errorDescription->clear();
-    ui->errorTitle->clear();
+    ui->errorDescription->setVisible(false);
+    ui->errorTitle->setVisible(false);
 
-    ui->outputWord->clear();
-    ui->outputWidget->close();
+    ui->outputWord->setVisible(false);
+    ui->outputWidget->setVisible(false);
 }
 
 void RunWidget::runStepsMade(int steps_make)
@@ -52,13 +52,17 @@ void RunWidget::runSuccess(QString input_word,
                 int steps_made)
 {
     ui->inputWidget->setWord(input_word);
+
+    ui->stepsNumber->setVisible(true);
     ui->stepsNumber->setText(QString::number(steps_made));
 
+    ui->outputWord->setVisible(true);
+    ui->outputWidget->setVisible(true);
     ui->outputWord->setText("Output Word:");
     ui->outputWidget->setWord(output_word);
 
-    ui->errorDescription->clear();
-    ui->errorTitle->clear();
+    ui->errorDescription->setVisible(false);
+    ui->errorTitle->setVisible(false);
 }
 
 void RunWidget::runFailed(QString input_word,
@@ -66,8 +70,12 @@ void RunWidget::runFailed(QString input_word,
                int steps_made)
 {
     ui->inputWidget->setWord(input_word);
+
+    ui->stepsNumber->setVisible(true);
     ui->stepsNumber->setText(QString::number(steps_made));
 
+    ui->errorDescription->setVisible(true);
+    ui->errorTitle->setVisible(true);
     ui->errorTitle->setText("Error");
     ui->errorDescription->setText(error.getFullErrorInfo());
 
@@ -79,8 +87,8 @@ void RunWidget::runFailed(QString input_word,
     palette2.setColor(ui->errorDescription->foregroundRole(), Qt::red);
     ui->errorDescription->setPalette(palette2);
 
-    ui->outputWord->clear();
-    ui->outputWidget->close();
+    ui->outputWord->setVisible(false);
+    ui->outputWidget->setVisible(false);
 }
 void RunWidget::onCloseClicked()
 {

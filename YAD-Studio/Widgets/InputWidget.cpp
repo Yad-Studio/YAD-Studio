@@ -61,6 +61,17 @@ void InputWidget::setInput(QString new_input_word)
 void InputWidget::canRunAlgorithm(bool can_run)
 {
     _can_run_algorythm = can_run;
+
+    if(!_can_run_algorythm)
+    {
+        ui->runButton->setEnabled(false);
+        ui->runWithDebug->setEnabled(false);
+    }
+    else
+    {
+        ui->runButton->setEnabled(true);
+        ui->runWithDebug->setEnabled(true);
+    }
 }
 void InputWidget::runCliked( )
 {
