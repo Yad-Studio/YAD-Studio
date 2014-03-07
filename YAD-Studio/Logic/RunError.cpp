@@ -8,7 +8,7 @@ RunError::RunError(const QString& title,
     _error_number(error_numer)
 {
 }
-int RunError::getErrorNumner()
+int RunError::getErrorNumber()
 {
     return _error_number;
 }

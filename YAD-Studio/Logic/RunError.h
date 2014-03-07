@@ -8,7 +8,7 @@ public:
     RunError(const QString& title, const QString& description,
              int error_numer);
 
-    int getErrorNumner();
+    int getErrorNumber();
     const QString& getErrorTitle();
     const QString& getErrorDescription();
     /**

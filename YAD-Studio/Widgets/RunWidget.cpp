@@ -77,7 +77,9 @@ void RunWidget::runFailed(QString input_word,
     ui->errorDescription->setVisible(true);
     ui->errorTitle->setVisible(true);
     ui->errorTitle->setText("Error");
-    ui->errorDescription->setText(error.getFullErrorInfo());
+    //ui->errorDescription->setText(error.getFullErrorInfo());
+
+    ui->errorDescription->setText(tr("<b>%1: %2</b><br>%3").arg(QString::number(error.getErrorNumber())).arg(error.getErrorTitle()).arg(error.getErrorDescription()));
 
     QPalette palette = ui->errorTitle->palette();
     palette.setColor(ui->errorTitle->foregroundRole(), Qt::red);
