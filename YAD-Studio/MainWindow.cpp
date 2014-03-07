@@ -8,6 +8,7 @@
 
 #include "Widgets/InputWidget.h"
 #include "Widgets/HistoryWidget.h"
+#include "Widgets/RunWidget.h"
 #include "Managers/HistoryManager.h"
 #include "Managers/FileManager.h"
 #include "Managers/MarkovRunManager.h"
@@ -136,6 +137,17 @@ MainWindow::MainWindow(QWidget *parent) :
             this, SLOT(newHistoryLoaded(QVector<QString>)));
     connect(history_manager, SIGNAL(historyChanged(QVector<QString>)),
             file_manager, SLOT(historyChanged()));
+
+    //Connect RunWidget and MarkovRunManager
+    connect(run_manager, SIGNAL(runWithoutDebugStarted(QString)),
+            ui->runWidget, SLOT(runStarted(QString)));
+    connect(run_manager, SIGNAL(runStepsMade(int)),
+            ui->runWidget, SLOT(runStepsMade(int)));
+    connect(run_manager, SIGNAL(runWithoutDebugFinishFail(QString,RunError,int)),
+            ui->runWidget, SLOT(runFailed(QString,RunError,int)));
+    connect(run_manager, SIGNAL(runWithoutDebugFinishSuccess(QString,QString,int)),
+            ui->runWidget, SLOT(runSuccess(QString,QString,int)));
+
 
     //Read file to open from command line
     QStringList arguments = QCoreApplication::arguments();
