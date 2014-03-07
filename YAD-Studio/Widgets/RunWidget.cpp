@@ -80,7 +80,7 @@ void RunWidget::runFailed(QString input_word,
     ui->errorDescription->setText(error.getFullErrorInfo());
 
     QPalette palette = ui->errorTitle->palette();
-    palette.setColor(ui->errorDescription->foregroundRole(), Qt::red);
+    palette.setColor(ui->errorTitle->foregroundRole(), Qt::red);
     ui->errorTitle->setPalette(palette);
 
     QPalette palette2 = ui->errorDescription->palette();
