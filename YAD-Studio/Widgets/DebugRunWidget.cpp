@@ -13,6 +13,7 @@ DebugRunWidget::DebugRunWidget(QWidget *parent) :
 
     debugStarted("");
 
+
     connect(ui->closeButton,
             SIGNAL(clicked()),
             this,
@@ -32,6 +33,8 @@ DebugRunWidget::DebugRunWidget(QWidget *parent) :
             SIGNAL(clicked()),
             this,
             SLOT(onContinueButtonClicked()));
+
+    //debugStepFinished(3,"aaab","bab",MarkovRule("aa","b"));
 }
 
 DebugRunWidget::~DebugRunWidget()
@@ -66,6 +69,7 @@ void DebugRunWidget::debugSuccess(QString input_word,
              QString output_word,
              int steps_made)
 {
+    ui->title->setTitle(tr("Debug Finished"));
     ui->inputWidget->setWord(input_word);
 
     ui->output->setVisible(true);
@@ -149,6 +153,13 @@ void DebugRunWidget::debugStepFinished(int step_number,
     ui->ruleText->setVisible(true);
 
     ui->ruleText->setText(tr("%1 -> %2").arg(applied_rule.getLeftPart()).arg(applied_rule.getRightPart()));
+
+    //ad info to Debug Log
+//    Step #{number_of_step}
+//    Before: {word_before_rule_applied}
+//    Rule: {rule}
+//    After: {word_after_rule_applied}
+    ui->debugLog->setText(tr("Step #%1<br>Before: %2<br>Rule: %3<br>After: %4<br>").arg(QString::number(step_number)).arg(before_rule_applied).arg(applied_rule.getFullRule()).arg(after_rule_applied));
 }
 
 void DebugRunWidget::breakPointReached(int line_number)

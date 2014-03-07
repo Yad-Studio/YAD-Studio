@@ -29,7 +29,10 @@ int MarkovRule::getLineNumber() const
 {
     return _line_number;
 }
-
+const QString MarkovRule::getFullRule() const
+{
+    return _pattern + "->" + _substitution;
+}
 void MarkovRule::setFinalRule(bool is_final)
 {
     _is_final_rule = is_final;
