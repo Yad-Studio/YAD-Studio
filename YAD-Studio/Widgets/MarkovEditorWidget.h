@@ -5,6 +5,9 @@
 #include "Logic/CompilerError.h"
 #include "Logic/MarkovAlgorithm.h"
 
+class LineNumberArea;
+
+
 class MarkovEditorWidget : public QPlainTextEdit
 {
     Q_OBJECT
@@ -26,6 +29,13 @@ public slots:
      * @brief the text which is selected should be deleted.
      */
     void deleteSelection();
+
+    void lineNumberAreaPaintEvent(QPaintEvent *event);
+    int lineNumberAreaWidth();
+
+protected:
+    void resizeEvent(QResizeEvent *event);
+
 signals:
     /**
      * @brief if any changes where done to source code
@@ -69,9 +79,38 @@ private:
     bool _can_run;
 
     QString _last_source_code;
+
+    QWidget *lineNumberArea;
+    QPair<int, int> m_countCache;
+    QFont _line_number_font;
+    QFontMetrics _line_number_metrics;
 private slots:
     void userChangedSourceCode();
     void updateErrors();
+
+    void updateLineNumberAreaWidth(int newBlockCount);
+    void highlightCurrentLine();
+    void updateLineNumberArea(const QRect &, int);
+};
+
+class LineNumberArea : public QWidget
+{
+public:
+    LineNumberArea(MarkovEditorWidget *editor) : QWidget(editor) {
+        codeEditor = editor;
+    }
+
+    QSize sizeHint() const {
+        return QSize(codeEditor->lineNumberAreaWidth(), 0);
+    }
+
+protected:
+    void paintEvent(QPaintEvent *event) {
+        codeEditor->lineNumberAreaPaintEvent(event);
+    }
+
+private:
+    MarkovEditorWidget *codeEditor;
 };
 
 #endif // MARKOVEDITORWIDGET_H
