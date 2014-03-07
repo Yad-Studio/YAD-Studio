@@ -31,12 +31,12 @@ public slots:
     /**
      * @brief saves current changes to file.
      */
-    void save();
+    bool save();
 
     /**
      * @brief saves file with new name. See the detailed description at the end.
      */
-    void saveAs();
+    bool saveAs();
 
     /**
      * @brief should start the new instance of the program.
@@ -99,7 +99,7 @@ private:
     bool _has_unsaved_data;
 
 
-    void saveToFile(QString file_name);
+    bool saveToFile(QString file_name);
 };
 
 #endif // FILEMANAGER_H

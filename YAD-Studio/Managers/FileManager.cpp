@@ -58,19 +58,19 @@ void FileManager::open()
     }
 }
 
-void FileManager::save()
+bool FileManager::save()
 {
     if(_current_file_path.size() == 0)
     {
-        saveAs();
+        return saveAs();
     }
     else
     {
-        saveToFile(_current_file_path);
+        return saveToFile(_current_file_path);
     }
 }
 
-void FileManager::saveAs()
+bool FileManager::saveAs()
 {
     QString file_name = QFileDialog::getSaveFileName(
                 MainWindow::getInstance(),
@@ -80,8 +80,9 @@ void FileManager::saveAs()
 
     if(file_name.size() > 0)
     {
-        saveToFile(file_name);
+        return saveToFile(file_name);
     }
+    return false;
 }
 
 void FileManager::newFile()
@@ -91,7 +92,7 @@ void FileManager::newFile()
     process.startDetached(current_exe);
 }
 
-void FileManager::saveToFile(QString file_name)
+bool FileManager::saveToFile(QString file_name)
 {
     QString source_code = SourceCodeManager::getInstance()->getSourceCode();
     QVector<QString> history = HistoryManager::getInstance()->getHistory();
@@ -103,6 +104,7 @@ void FileManager::saveToFile(QString file_name)
         file.saveToFile(file_name);
         setCurrentFilePath(file_name);
         setHasUnsavedData(false);
+        return true;
     }
     catch(std::exception e)
     {
@@ -113,6 +115,7 @@ void FileManager::saveToFile(QString file_name)
         msgBox.setDefaultButton(QMessageBox::Ok);
         msgBox.exec();
     }
+    return false;
 }
 
 void FileManager::sourceCodeChanged()

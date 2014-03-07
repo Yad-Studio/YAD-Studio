@@ -233,8 +233,10 @@ void MainWindow::closeEvent(QCloseEvent * event)
 
         if(ret == QMessageBox::Save)
         {
-            FileManager::getInstance()->save();
-            QMainWindow::closeEvent(event);
+            if(FileManager::getInstance()->save())
+                QMainWindow::closeEvent(event);
+            else
+                event->ignore();
         }
         else if(ret == QMessageBox::Discard)
         {
