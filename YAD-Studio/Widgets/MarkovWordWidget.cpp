@@ -30,7 +30,7 @@ void MarkovWordWidget::addHighlight(int from,
                   int length,
                   HighlightType type)
 {
-    QString text = ui->word->text();
+    QString text = ui->word->toPlainText();
     QString begin = text.left(from);
     QString middle = text.mid(from,length);
     QString end = text.mid(from+length,text.size());

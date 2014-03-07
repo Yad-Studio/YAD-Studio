@@ -23,12 +23,18 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout" stretch="4,1">
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_3" stretch="1000,1,1">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="leftMargin">
        <number>0</number>
       </property>
       <item>
        <widget class="EditorWindowWidget" name="editorWindow" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -44,10 +50,24 @@
        </widget>
       </item>
       <item>
-       <widget class="RunWidget" name="runWidget" native="true"/>
+       <widget class="RunWidget" name="runWidget" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
       </item>
       <item>
-       <widget class="DebugRunWidget" name="debugRun" native="true"/>
+       <widget class="DebugRunWidget" name="debugRun" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
