@@ -51,7 +51,9 @@ public slots:
 
     void onContinueButtonClicked();
     void onNextButtonClicked();
-    void onStopButoonCliked();
+    void onStopButtonCliked();
+
+    void onCloseButtonClicked();
 
 signals:
     //the signal should be triggered when Next Step button is clicked.
