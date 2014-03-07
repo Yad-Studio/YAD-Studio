@@ -96,6 +96,7 @@ bool MarkovRunManager::findAndApplyNextRule()
                                               word,
                                               _steps_made);
         }
+        return false;
     }
 
     ++_steps_made;
