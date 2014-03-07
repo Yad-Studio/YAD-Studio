@@ -32,7 +32,7 @@ public slots:
 
     void lineNumberAreaPaintEvent(QPaintEvent *event);
     int lineNumberAreaWidth();
-
+    void breakPointPress(QMouseEvent* event);
 protected:
     void resizeEvent(QResizeEvent *event);
 
@@ -52,9 +52,25 @@ signals:
      * @brief  when _can_run changes.
      */
     void canRun(bool);
+
+    void breakPointAdded(int line_number);
+    void breakPointRemoved(int line_number);
+
+    /**
+     * @brief when user sets cursor to the line with error
+     * @param line_number
+     * @param error
+     */
+    void lineFocusWithError(int line_number, CompilerError error);// -
+
+    /**
+     * @brief when user sets cursor to the line without error
+     * @param line_number
+     */
+    void lineFocusWithoutError(int line_number);
 private:
-
-
+    void toggleBreakPoint(int line_number);
+    void notifyAboutCurrentLineErrors();
     void setCanRun(bool new_value);
 
     /**
@@ -69,7 +85,7 @@ private:
     /**
      * @brief list of active break points
      */
-    QVector<int> _breakpoints;
+    QSet<int> _breakpoints;
 
     /**
      * @brief if the are no errors it should be true and false otherwise.
@@ -79,6 +95,9 @@ private:
     bool _can_run;
 
     QString _last_source_code;
+
+    QSet<int> _lines_with_errors;
+    QMap<int, CompilerError> _errors_map;
 
     QWidget *lineNumberArea;
     QPair<int, int> m_countCache;
@@ -108,6 +127,11 @@ public:
 protected:
     void paintEvent(QPaintEvent *event) {
         codeEditor->lineNumberAreaPaintEvent(event);
+    }
+
+    void mousePressEvent(QMouseEvent * event)
+    {
+        codeEditor->breakPointPress(event);
     }
 
 private:

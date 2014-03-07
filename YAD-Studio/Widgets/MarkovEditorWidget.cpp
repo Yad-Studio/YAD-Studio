@@ -6,6 +6,8 @@
 #include <QTextBlock>
 
 #include "Logic/MarkovParser.h"
+static int break_point_width = 10;
+static int break_point_padding = 3;
 
 MarkovEditorWidget::MarkovEditorWidget(QWidget *parent) :
     QPlainTextEdit(parent),
@@ -39,6 +41,7 @@ MarkovEditorWidget::MarkovEditorWidget(QWidget *parent) :
 
     //Line numbers
     lineNumberArea = new LineNumberArea(this);
+    lineNumberArea->setCursor(Qt::PointingHandCursor);
 
     connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth()));
     connect(this, SIGNAL(updateRequest(QRect,int)), this, SLOT(updateLineNumberArea(QRect,int)));
@@ -59,7 +62,7 @@ int MarkovEditorWidget::lineNumberAreaWidth()
         ++digits;
     }
 
-    int space = 3 + _line_number_metrics.width(QLatin1Char('9')) * digits + 3;
+    int space = break_point_padding*2 + 3 + _line_number_metrics.width(QLatin1Char('9')) * digits + break_point_width;
 
     return space;
 }
@@ -95,20 +98,7 @@ void MarkovEditorWidget::resizeEvent(QResizeEvent *e)
 
 int getLineNumber(QTextCursor cursor)
 {
-    cursor.movePosition(QTextCursor::StartOfLine);
-
-    int lines = 1;
-    while(cursor.positionInBlock()>0) {
-        cursor.movePosition(QTextCursor::Up);
-        lines++;
-    }
-    QTextBlock block = cursor.block().previous();
-
-    while(block.isValid()) {
-        lines += block.lineCount();
-        block = block.previous();
-    }
-    return lines;
+    return cursor.block().blockNumber()+1;
 }
 
 void MarkovEditorWidget::highlightCurrentLine()
@@ -118,7 +108,9 @@ void MarkovEditorWidget::highlightCurrentLine()
     {
         _current_line = current_line;
         update();
+        notifyAboutCurrentLineErrors();
     }
+
 
 //    QList<QTextEdit::ExtraSelection> extraSelections;
 
@@ -145,6 +137,8 @@ void MarkovEditorWidget::lineNumberAreaPaintEvent(QPaintEvent *event)
     QPainter painter(lineNumberArea);
     painter.fillRect(event->rect(), palette.color(QPalette::Window));
 
+
+
     QTextBlock block = firstVisibleBlock();
     int blockNumber = block.blockNumber();
     int top = (int) blockBoundingGeometry(block).translated(contentOffset()).top();
@@ -155,9 +149,32 @@ void MarkovEditorWidget::lineNumberAreaPaintEvent(QPaintEvent *event)
     {
         if (block.isVisible() && bottom >= event->rect().top())
         {
-            bool is_current_line = (_current_line == (blockNumber+1));
+            int line_number = (blockNumber+1);
+            bool is_current_line = (_current_line == line_number);
+            bool is_break_point = (_breakpoints.find(line_number) != _breakpoints.end());
+
+            bool is_error = (_lines_with_errors.find(line_number) != _lines_with_errors.end());
+
+            if(is_error)
+            {
+                //painter.setBrush(QColor(255, 216, 216));
+                QRect err(0, top, lineNumberArea->width(), bottom-top);
+                painter.fillRect(err, QColor(255, 216, 216));
+            }
+
+            if(is_break_point)
+            {
+                float height = _line_number_metrics.height();
+
+                QRectF bp(break_point_padding, top + (height-break_point_width) / 2,
+                       break_point_width, break_point_width);
+                painter.setBrush(Qt::red);
+                painter.setPen(Qt::red);
+                painter.drawEllipse(bp);
+            }
 
             QString number = QString::number(blockNumber + 1);
+
             painter.setPen(palette.color(QPalette::Dark));
             if(is_current_line)
             {
@@ -177,6 +194,50 @@ void MarkovEditorWidget::lineNumberAreaPaintEvent(QPaintEvent *event)
         top = bottom;
         bottom = top + (int) blockBoundingRect(block).height();
         ++blockNumber;
+    }
+}
+
+void MarkovEditorWidget::breakPointPress(QMouseEvent* event)
+{
+    QTextBlock block = firstVisibleBlock();
+    int blockNumber = block.blockNumber() + 1;
+    int top = (int) blockBoundingGeometry(block).translated(contentOffset()).top();
+    int bottom = top + (int) blockBoundingRect(block).height();
+
+    int y = event->y();
+
+    while(block.isValid() && y > bottom)
+    {
+
+        blockNumber++;
+        block = block.next();
+        top = bottom;
+        bottom = top + (int) blockBoundingRect(block).height();
+    }
+
+    if(y > bottom)
+    {
+        blockNumber = -1;
+    }
+
+    if(blockNumber > 0)
+        toggleBreakPoint(blockNumber);
+
+}
+
+void MarkovEditorWidget::toggleBreakPoint(int line_number)
+{
+    if(_breakpoints.find(line_number) == _breakpoints.end())
+    {
+        emit breakPointAdded(line_number);
+        _breakpoints.insert(line_number);
+        update();
+    }
+    else
+    {
+        emit breakPointRemoved(line_number);
+        _breakpoints.remove(line_number);
+        update();
     }
 }
 
@@ -227,6 +288,7 @@ void MarkovEditorWidget::userChangedSourceCode()
     {
         emit markovAlgorithmChanged(_algorithm);
         setCanRun(true);
+        updateErrors();
     }
     else
     {
@@ -237,11 +299,35 @@ void MarkovEditorWidget::userChangedSourceCode()
 
 void MarkovEditorWidget::updateErrors()
 {
+    _errors_map.clear();
+    _lines_with_errors.clear();
     for(int i=0; i<_errors.size(); ++i)
     {
-        CompilerError err = _errors[i];
-        qDebug() << "Error: " << err.getErrorNumber() << " line: " << err.getLineNumber() <<
-                    "Title: " << err.getErrorTitle() << err.getErrorDescription();
 
+        CompilerError err = _errors[i];
+        _lines_with_errors.insert(err.getLineNumber());
+
+        if(_errors_map.find(err.getLineNumber()) != _errors_map.end())
+        {
+            _errors_map.insert(err.getLineNumber(), err);
+        }
+//        qDebug() << "Error: " << err.getErrorNumber() << " line: " << err.getLineNumber() <<
+//                    "Title: " << err.getErrorTitle() << err.getErrorDescription();
+
+    }
+    update();
+    notifyAboutCurrentLineErrors();
+
+}
+
+void MarkovEditorWidget::notifyAboutCurrentLineErrors()
+{
+    if(_lines_with_errors.find(_current_line) != _lines_with_errors.end())
+    {
+        emit lineFocusWithError(_current_line, _errors_map[_current_line]);
+    }
+    else
+    {
+        emit lineFocusWithoutError(_current_line);
     }
 }
