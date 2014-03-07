@@ -8,7 +8,30 @@ DebugRunWidget::DebugRunWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    if(!isVisible())
+        setVisible(true);
+
     debugStarted("");
+
+    connect(ui->closeButton,
+            SIGNAL(clicked()),
+            this,
+            SLOT(onCloseButtonClicked()));
+
+    connect(ui->nextButton,
+            SIGNAL(clicked()),
+            this,
+            SLOT(onNextButtonClicked()));
+
+    connect(ui->stopButton,
+            SIGNAL(clicked()),
+            this,
+            SLOT(onStopButtonCliked()));
+
+    connect(ui->continueButton,
+            SIGNAL(clicked()),
+            this,
+            SLOT(onContinueButtonClicked()));
 }
 
 DebugRunWidget::~DebugRunWidget()
@@ -17,6 +40,9 @@ DebugRunWidget::~DebugRunWidget()
 }
 void DebugRunWidget::debugStarted(QString input_word)
 {
+    if(!isVisible())
+        setVisible(true);
+
     ui->inputWidget->setWord(input_word);
 
     ui->output->setVisible(false);
@@ -136,15 +162,23 @@ void DebugRunWidget::breakPointReached(int line_number)
 }
 void DebugRunWidget::onContinueButtonClicked()
 {
-
+    emit continueClicked();
+    emit removeBreakPoint();
 }
 
 void DebugRunWidget::onNextButtonClicked()
 {
-
+    emit nextStepClicked();
+    emit removeBreakPoint();
 }
 
-void DebugRunWidget::onStopButoonCliked()
+void DebugRunWidget::onStopButtonCliked()
 {
+    emit stopClicked();
+    emit removeBreakPoint();
+}
 
+void DebugRunWidget::onCloseButtonClicked()
+{
+    setVisible(false);
 }
