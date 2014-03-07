@@ -12,7 +12,8 @@ MarkovEditorWidget::MarkovEditorWidget(QWidget *parent) :
     _can_run(false),
     _last_source_code(""),
     m_countCache(-1, -1),
-    _line_number_metrics(_line_number_font)
+    _line_number_metrics(_line_number_font),
+    _current_line(-1)
 {
     connect(this, SIGNAL(textChanged()), this, SLOT(userChangedSourceCode()));
 
@@ -39,11 +40,11 @@ MarkovEditorWidget::MarkovEditorWidget(QWidget *parent) :
     //Line numbers
     lineNumberArea = new LineNumberArea(this);
 
-    connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth(int)));
+    connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth()));
     connect(this, SIGNAL(updateRequest(QRect,int)), this, SLOT(updateLineNumberArea(QRect,int)));
     connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightCurrentLine()));
 
-    updateLineNumberAreaWidth(0);
+    updateLineNumberAreaWidth();
     highlightCurrentLine();
 }
 
@@ -63,7 +64,7 @@ int MarkovEditorWidget::lineNumberAreaWidth()
     return space;
 }
 
-void MarkovEditorWidget::updateLineNumberAreaWidth(int /* newBlockCount */)
+void MarkovEditorWidget::updateLineNumberAreaWidth()
 {
     setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
 }
@@ -74,14 +75,14 @@ void MarkovEditorWidget::updateLineNumberArea(const QRect &rect, int dy)
         lineNumberArea->scroll(0, dy);
     }
     else if (m_countCache.first != blockCount()
-               || m_countCache.second != textCursor().block().lineCount()) {
+             || m_countCache.second != textCursor().block().lineCount()) {
         lineNumberArea->update(0, rect.y(), lineNumberArea->width(), rect.height());
         m_countCache.first = blockCount();
         m_countCache.second = textCursor().block().lineCount();
     }
 
     if (rect.contains(viewport()->rect()))
-        updateLineNumberAreaWidth(0);
+        updateLineNumberAreaWidth();
 }
 
 void MarkovEditorWidget::resizeEvent(QResizeEvent *e)
@@ -92,24 +93,50 @@ void MarkovEditorWidget::resizeEvent(QResizeEvent *e)
     lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
 }
 
+int getLineNumber(QTextCursor cursor)
+{
+    cursor.movePosition(QTextCursor::StartOfLine);
+
+    int lines = 1;
+    while(cursor.positionInBlock()>0) {
+        cursor.movePosition(QTextCursor::Up);
+        lines++;
+    }
+    QTextBlock block = cursor.block().previous();
+
+    while(block.isValid()) {
+        lines += block.lineCount();
+        block = block.previous();
+    }
+    return lines;
+}
+
 void MarkovEditorWidget::highlightCurrentLine()
 {
-    QList<QTextEdit::ExtraSelection> extraSelections;
-
-    if (!isReadOnly()) {
-        QTextEdit::ExtraSelection selection;
-
-        QColor lineColor = QColor(Qt::yellow).lighter(160);
-
-        selection.format.setBackground(lineColor);
-        selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-        selection.cursor = textCursor();
-        selection.cursor.clearSelection();
-        extraSelections.append(selection);
+    int current_line = getLineNumber(textCursor());
+    if(_current_line != current_line)
+    {
+        _current_line = current_line;
+        update();
     }
 
-    setExtraSelections(extraSelections);
+//    QList<QTextEdit::ExtraSelection> extraSelections;
+
+//    if (!isReadOnly()) {
+//        QTextEdit::ExtraSelection selection;
+
+//        QColor lineColor = QColor(Qt::yellow).lighter(160);
+
+//        selection.format.setBackground(lineColor);
+//        selection.format.setProperty(QTextFormat::FullWidthSelection, true);
+//        selection.cursor = textCursor();
+//        selection.cursor.clearSelection();
+//        extraSelections.append(selection);
+//    }
+
+//    setExtraSelections(extraSelections);
 }
+
 
 void MarkovEditorWidget::lineNumberAreaPaintEvent(QPaintEvent *event)
 {
@@ -123,13 +150,25 @@ void MarkovEditorWidget::lineNumberAreaPaintEvent(QPaintEvent *event)
     int top = (int) blockBoundingGeometry(block).translated(contentOffset()).top();
     int bottom = top + (int) blockBoundingRect(block).height();
 
+
     while (block.isValid() && top <= event->rect().bottom())
     {
         if (block.isVisible() && bottom >= event->rect().top())
         {
+            bool is_current_line = (_current_line == (blockNumber+1));
+
             QString number = QString::number(blockNumber + 1);
             painter.setPen(palette.color(QPalette::Dark));
-            painter.setFont(_line_number_font);
+            if(is_current_line)
+            {
+                _line_number_font.setBold(true);
+                painter.setFont(_line_number_font);
+                _line_number_font.setBold(false);
+            }
+            else
+            {
+                painter.setFont(_line_number_font);
+            }
             painter.drawText(0, top, lineNumberArea->width(), fontMetrics().height(),
                              Qt::AlignRight, number);
         }

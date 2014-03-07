@@ -84,11 +84,12 @@ private:
     QPair<int, int> m_countCache;
     QFont _line_number_font;
     QFontMetrics _line_number_metrics;
+    int _current_line;
 private slots:
     void userChangedSourceCode();
     void updateErrors();
 
-    void updateLineNumberAreaWidth(int newBlockCount);
+    void updateLineNumberAreaWidth();
     void highlightCurrentLine();
     void updateLineNumberArea(const QRect &, int);
 };
