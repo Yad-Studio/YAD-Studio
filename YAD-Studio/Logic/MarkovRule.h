@@ -12,6 +12,7 @@ public:
     const QString& getLeftPart() const;
     const QString& getRightPart() const;
     int getLineNumber() const;
+    const QString getFullRule() const;
 
     void setFinalRule(bool is_final);
     void setLeftPart(const QString& str);
