@@ -196,9 +196,12 @@ void DebugRunWidget::debugStepFinished(int step_number,
 
     //int from_2 = after_rule_applied.indexOf(applied_rule.getRightPart());
     //int length_from_2 = applied_rule.getRightPart().size();
-    ui->outputWidget->addHighlight(rule_res.start_index,
-                                   applied_rule.getRightPart().size(),
-                                   MarkovWordWidget::HighlightType::After);
+    if(applied_rule.getRightPart() != "$")
+    {
+        ui->outputWidget->addHighlight(rule_res.start_index,
+                                       applied_rule.getRightPart().size(),
+                                       MarkovWordWidget::HighlightType::After);
+    }
 }
 const QString DebugRunWidget::colorWord(const QString &word,
                                         int begin,
