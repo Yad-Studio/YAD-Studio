@@ -59,6 +59,11 @@ public slots:
                             const QString &sub_str,
                             const QString &color);
 
+    const QString colorWord(const QString &word,
+                                        int begin,
+                                        int length,
+                                        const QString &color);
+
     void onContinueButtonClicked();
     void onNextButtonClicked();
     void onStopButtonCliked();
