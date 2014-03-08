@@ -124,7 +124,7 @@ void DebugRunWidget::debugFailed(QString input_word,
     ui->stepsNumber->setVisible(true);
     ui->stepsNumber->setText(QString::number(steps_made));
 
-    ui->errorDescription->setText(error.getFullErrorInfo());
+    ui->errorDescription->setText(tr("<b>%1: %2</b><br>%3").arg(QString::number(error.getErrorNumber())).arg(error.getErrorTitle()).arg(error.getErrorDescription()));
 
     QPalette palette = ui->error->palette();
     palette.setColor(ui->error->foregroundRole(), Qt::red);
@@ -192,7 +192,12 @@ const QString DebugRunWidget::colorWord(const QString &word,
     res+="<font color=\"";
     res+=color;
     res+="\">";
-    res+=word.mid(begin, begin + length);
+
+    int index = 0;
+    if(begin>0)
+        index = 1;
+
+    res+=word.mid(begin,length);
     res+="</font>";
     res+=word.mid(begin + length, word.size());
     return res;
@@ -207,7 +212,7 @@ const QString DebugRunWidget::colorWord(const QString& word,
     res+="<font color='";
     res+=color;
     res+="'>";
-    res+=word.mid(index, index + sub_str.size());
+    res+=word.mid(index, sub_str.size());
     res+="</font>";
     res+=word.mid(index + sub_str.size(), word.size());
     return res;
