@@ -66,6 +66,8 @@ private:
     //This function return true if the next should be made and false otherwise.
     bool findAndApplyNextRule();
 
+    bool _stop_on_next_step;
+
     int getStepNumberOfValue(QString word);
     bool choseAndUseRule(QString &word, MarkovRule &rule);
 

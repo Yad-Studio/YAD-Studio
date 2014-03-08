@@ -14,7 +14,8 @@ MarkovRunManager::MarkovRunManager():
     _input_word(""),
     _steps_made(0),
     _word_after_last_step(""),
-    _is_debug_mode(false)
+    _is_debug_mode(false),
+    _stop_on_next_step(false)
 {
 }
 
@@ -165,15 +166,7 @@ bool MarkovRunManager::findAndApplyNextRule()
     _steps_history.insert(StepResult(_word_after_last_step,_steps_made));
 
 
-    if(_is_debug_mode)
-    {
-        if(_break_points.contains(rule.getLineNumber()))
-        {
-            emit debugBreakPointReached(rule.getLineNumber());
-            QCoreApplication::processEvents();
-            return false;
-        }
-    }
+
 
     //If rule is final then emit debugFinishSuccess or
     //runWithoutDebugFinishSuccess depending on run mode.
@@ -196,6 +189,20 @@ bool MarkovRunManager::findAndApplyNextRule()
             QCoreApplication::processEvents();
         }
         return false;
+    }
+    else
+    {
+        if(_is_debug_mode)
+        {
+            if(_stop_on_next_step ||
+                    _break_points.contains(rule.getLineNumber()))
+            {
+                _stop_on_next_step = false;
+                emit debugBreakPointReached(rule.getLineNumber());
+                QCoreApplication::processEvents();
+                return false;
+            }
+        }
     }
 
     return true;
@@ -303,6 +310,7 @@ void MarkovRunManager::removeBreakPoint(int line_number)
 
 void MarkovRunManager::debugNextStep()
 {
+    _stop_on_next_step = true;
     findAndApplyNextRule();
 }
 
