@@ -11,7 +11,16 @@ DebugRunWidget::DebugRunWidget(QWidget *parent) :
     if(!isVisible())
         setVisible(true);
 
-    debugStarted("");
+    //debugStarted("");
+
+    //Set font
+    QFont font;
+    font.setFamily("Courier");
+    font.setStyleHint(QFont::Monospace);
+    font.setFixedPitch(true);
+    font.setPointSize(8);
+
+    ui->debugLog->setFont(font);
 
 
     connect(ui->closeButton,
@@ -34,7 +43,7 @@ DebugRunWidget::DebugRunWidget(QWidget *parent) :
             this,
             SLOT(onContinueButtonClicked()));
 
-    debugStepFinished(3,"aaab","bab",MarkovRule("aa","b"));
+    //debugStepFinished(3,"aaab","bab",MarkovRule("aa","b"));
 }
 
 DebugRunWidget::~DebugRunWidget()
@@ -154,13 +163,33 @@ void DebugRunWidget::debugStepFinished(int step_number,
 
     ui->ruleText->setText(tr("%1 -> %2").arg(applied_rule.getLeftPart()).arg(applied_rule.getRightPart()));
 
-    //ad info to Debug Log
-//    Step #{number_of_step}
-//    Before: {word_before_rule_applied}
-//    Rule: {rule}
-//    After: {word_after_rule_applied}
-    // <font color='red'>Some text</font>
-    ui->debugLog->setText(tr("Step #%1<br> <#ff0000> Before : %2<br>Rule: %3<br>After: %4<br>").arg(QString::number(step_number)).arg(before_rule_applied).arg(applied_rule.getFullRule()).arg(after_rule_applied));
+    QString before = colorWord(before_rule_applied,applied_rule.getLeftPart(),"red");
+    QString after = colorWord(after_rule_applied, applied_rule.getRightPart(), "green");
+
+    ui->debugLog->setText(tr("<b>Step&nbsp;#%1</b><br>Rule:&nbsp;&nbsp;&nbsp;%2<br>Before:&nbsp;%3<br>After:&nbsp;&nbsp;%4<br>").arg(QString::number(step_number)).arg(applied_rule.getFullRule()).arg(before).arg(after));
+
+    //change color in MarkovWordWidget
+    int from = before_rule_applied.indexOf(applied_rule.getLeftPart());
+    int length_from = applied_rule.getLeftPart().size();
+    ui->inputWidget->addHighlight(from,length_from,MarkovWordWidget::HighlightType::Before);
+
+    int from_2 = after_rule_applied.indexOf(applied_rule.getRightPart());
+    int length_from_2 = applied_rule.getRightPart().size();
+    ui->outputWidget->addHighlight(from_2,length_from_2, MarkovWordWidget::HighlightType::After);
+}
+const QString DebugRunWidget::colorWord(const QString& word,
+                                        const QString& sub_str,
+                                        const QString& color)
+{
+    int index = word.indexOf(sub_str);
+    QString res = word.mid(0,index);
+    res+="<font color='";
+    res+=color;
+    res+="'>";
+    res+=word.mid(index, index + sub_str.size());
+    res+="</font>";
+    res+=word.mid(index + sub_str.size(), word.size());
+    return res;
 }
 
 void DebugRunWidget::breakPointReached(int line_number)

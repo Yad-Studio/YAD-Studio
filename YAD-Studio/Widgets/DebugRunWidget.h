@@ -49,6 +49,16 @@ public slots:
     //by showing buttons.
     void breakPointReached(int line_number);
 
+    /**
+     * @brief colorWord
+     * @param word
+     * @param sub_str
+     * @return find subString in String and color it
+     */
+    const QString colorWord(const QString &word,
+                            const QString &sub_str,
+                            const QString &color);
+
     void onContinueButtonClicked();
     void onNextButtonClicked();
     void onStopButtonCliked();
