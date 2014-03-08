@@ -177,8 +177,10 @@ void DebugRunWidget::debugStepFinished(int step_number,
 
     ui->ruleText->setText(tr("%1 -> %2").arg(applied_rule.getLeftPart()).arg(applied_rule.getRightPart()));
 
-    //QString before = colorWord(before_rule_applied,applied_rule.getLeftPart(),"red");
-    QString after = colorWord(after_rule_applied, applied_rule.getRightPart(), "green");
+
+    QString after = colorWord(before_rule_applied,
+                              applied_rule,
+                              "green");
 
     MarkovAlgorithm::RuleFitResult rule_res = MarkovAlgorithm::isRuleFits(before_rule_applied,applied_rule);
     QString before = colorWord(before_rule_applied,rule_res.start_index,rule_res.length,"red");
@@ -203,11 +205,6 @@ const QString DebugRunWidget::colorWord(const QString &word,
     res+="<font color=\"";
     res+=color;
     res+="\">";
-
-    int index = 0;
-    if(begin>0)
-        index = 1;
-
     res+=word.mid(begin,length);
     res+="</font>";
     res+=word.mid(begin + length, word.size());
@@ -215,17 +212,20 @@ const QString DebugRunWidget::colorWord(const QString &word,
 }
 
 const QString DebugRunWidget::colorWord(const QString& word,
-                                        const QString& sub_str,
+                                        MarkovRule& applied_rule,
                                         const QString& color)
 {
-    int index = word.indexOf(sub_str);
-    QString res = word.mid(0,index);
-    res+="<font color='";
+
+    MarkovAlgorithm::RuleFitResult rule_res =
+            MarkovAlgorithm::isRuleFits(word, applied_rule);
+
+    QString res = word.mid(0,rule_res.start_index);
+    res+="<font color=\"";
     res+=color;
-    res+="'>";
-    res+=word.mid(index, sub_str.size());
+    res+="\">";
+    res+=applied_rule.getRightPart();
     res+="</font>";
-    res+=word.mid(index + sub_str.size(), word.size());
+    res+=word.mid(rule_res.start_index + rule_res.length, word.size());
     return res;
 }
 

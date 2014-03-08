@@ -56,7 +56,7 @@ public slots:
      * @return find subString in String and color it
      */
     const QString colorWord(const QString &word,
-                            const QString &sub_str,
+                            MarkovRule &applied_rule,
                             const QString &color);
 
     const QString colorWord(const QString &word,
