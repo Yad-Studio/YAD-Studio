@@ -1,5 +1,6 @@
 #include "DebugRunWidget.h"
 #include "ui_DebugRunWidget.h"
+#include "Logic/MarkovAlgorithm.h"
 
 
 DebugRunWidget::DebugRunWidget(QWidget *parent) :
@@ -72,6 +73,8 @@ void DebugRunWidget::debugStarted(QString input_word)
     ui->stopButton->setVisible(false);
     ui->continueButton->setVisible(false);
     ui->nextButton->setVisible(false);
+
+    ui->debugLog->clear();
 }
 
 void DebugRunWidget::debugSuccess(QString input_word,
@@ -163,10 +166,13 @@ void DebugRunWidget::debugStepFinished(int step_number,
 
     ui->ruleText->setText(tr("%1 -> %2").arg(applied_rule.getLeftPart()).arg(applied_rule.getRightPart()));
 
-    QString before = colorWord(before_rule_applied,applied_rule.getLeftPart(),"red");
+    //QString before = colorWord(before_rule_applied,applied_rule.getLeftPart(),"red");
     QString after = colorWord(after_rule_applied, applied_rule.getRightPart(), "green");
 
-    ui->debugLog->setText(tr("<b>Step&nbsp;#%1</b><br>Rule:&nbsp;&nbsp;&nbsp;%2<br>Before:&nbsp;%3<br>After:&nbsp;&nbsp;%4<br>").arg(QString::number(step_number)).arg(applied_rule.getFullRule()).arg(before).arg(after));
+    MarkovAlgorithm::RuleFitResult rule_res = MarkovAlgorithm::isRuleFits(before_rule_applied,applied_rule);
+    QString before = colorWord(before_rule_applied,rule_res.start_index,rule_res.length,"red");
+
+    ui->debugLog->append(tr("<b>Step&nbsp;#%1</b><br>Rule:&nbsp;&nbsp;&nbsp;%2<br>Before:&nbsp;%3<br>After:&nbsp;&nbsp;%4<br>").arg(QString::number(step_number)).arg(applied_rule.getFullRule()).arg(before).arg(after));
 
     //change color in MarkovWordWidget
     int from = before_rule_applied.indexOf(applied_rule.getLeftPart());
@@ -177,6 +183,21 @@ void DebugRunWidget::debugStepFinished(int step_number,
     int length_from_2 = applied_rule.getRightPart().size();
     ui->outputWidget->addHighlight(from_2,length_from_2, MarkovWordWidget::HighlightType::After);
 }
+const QString DebugRunWidget::colorWord(const QString &word,
+                                        int begin,
+                                        int length,
+                                        const QString &color)
+{
+    QString res = word.mid(0,begin);
+    res+="<font color=\"";
+    res+=color;
+    res+="\">";
+    res+=word.mid(begin, begin + length);
+    res+="</font>";
+    res+=word.mid(begin + length, word.size());
+    return res;
+}
+
 const QString DebugRunWidget::colorWord(const QString& word,
                                         const QString& sub_str,
                                         const QString& color)
