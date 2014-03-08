@@ -14,19 +14,19 @@ class MarkovWordWidget : public QWidget
 public:
     explicit MarkovWordWidget(QWidget *parent = 0);
     ~MarkovWordWidget();
-    
-private:
-    Ui::MarkovWordWidget *ui;
 
-    QString _word;
-
-    enum HighlightType
+    enum class HighlightType
     {
         //red
         Before,
         //green
         After
     };
+    
+private:
+    Ui::MarkovWordWidget *ui;
+
+    QString _word;
 
 public slots:
     //changes the text inside. Removes all previously set highlights
