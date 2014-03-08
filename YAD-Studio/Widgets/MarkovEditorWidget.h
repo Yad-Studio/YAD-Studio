@@ -15,13 +15,19 @@ class MarkovEditorWidget : public QPlainTextEdit
 public:
     explicit MarkovEditorWidget(QWidget *parent = 0);
     ~MarkovEditorWidget();
+
+    void lineNumberAreaPaintEvent(QPaintEvent *event);
+    int lineNumberAreaWidth();
+    void breakPointPress(QMouseEvent* event);
+
 public slots:
 
     /**
      * @brief when source code from file is loaded this slot will be called.
      * Source code should be put to QTextEditor.
      * @param source_code
-     * @param user_change if true then change in source will be treated like user has changet id
+     * @param user_change if true then change in source will be treated
+     * like user has changet id
      */
     void newSourceCode(QString source_code, bool system_change=true);
 
@@ -30,9 +36,19 @@ public slots:
      */
     void deleteSelection();
 
-    void lineNumberAreaPaintEvent(QPaintEvent *event);
-    int lineNumberAreaWidth();
-    void breakPointPress(QMouseEvent* event);
+    /**
+     * @brief highlights line with light blue color.
+     * Only one line can be highlighted in given time.
+     * @param line_number
+     */
+    void showLineHighlight(int line_number);
+
+    /**
+     * @brief removes highlight from the line.
+     */
+    void removeLineHighlight();
+
+
 protected:
     void resizeEvent(QResizeEvent *event);
 

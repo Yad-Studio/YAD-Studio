@@ -100,6 +100,44 @@ int getLineNumber(QTextCursor cursor)
 {
     return cursor.block().blockNumber()+1;
 }
+void MarkovEditorWidget::showLineHighlight(int line_number)
+{
+    QList<QTextEdit::ExtraSelection> extraSelections;
+
+    if (!isReadOnly())
+    {
+        QTextEdit::ExtraSelection selection;
+
+        QColor lineColor = QColor(216, 239, 255);
+
+        QTextBlock block = document()->begin();
+
+        int line = 1;
+        while (block.isValid() && line < line_number)
+        {
+            block = block.next();
+            line++;
+        }
+
+        if(block.isValid())
+        {
+            QTextCursor cursor(block);
+            selection.format.setBackground(lineColor);
+            selection.format.setProperty(QTextFormat::FullWidthSelection, true);
+            selection.cursor = cursor;
+            selection.cursor.clearSelection();
+            extraSelections.append(selection);
+        }
+    }
+
+    setExtraSelections(extraSelections);
+}
+
+void MarkovEditorWidget::removeLineHighlight()
+{
+    QList<QTextEdit::ExtraSelection> extraSelections;
+    setExtraSelections(extraSelections);
+}
 
 void MarkovEditorWidget::highlightCurrentLine()
 {
@@ -111,22 +149,6 @@ void MarkovEditorWidget::highlightCurrentLine()
         notifyAboutCurrentLineErrors();
     }
 
-
-//    QList<QTextEdit::ExtraSelection> extraSelections;
-
-//    if (!isReadOnly()) {
-//        QTextEdit::ExtraSelection selection;
-
-//        QColor lineColor = QColor(Qt::yellow).lighter(160);
-
-//        selection.format.setBackground(lineColor);
-//        selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-//        selection.cursor = textCursor();
-//        selection.cursor.clearSelection();
-//        extraSelections.append(selection);
-//    }
-
-//    setExtraSelections(extraSelections);
 }
 
 
