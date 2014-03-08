@@ -202,6 +202,11 @@ void DebugRunWidget::debugStepFinished(int step_number,
                                        applied_rule.getRightPart().size(),
                                        MarkovWordWidget::HighlightType::After);
     }
+
+    //Auto scroll
+    QTextCursor c = ui->debugLog->textCursor();
+    c.movePosition(QTextCursor::End);
+    ui->debugLog->setTextCursor(c);
 }
 const QString DebugRunWidget::colorWord(const QString &word,
                                         int begin,
