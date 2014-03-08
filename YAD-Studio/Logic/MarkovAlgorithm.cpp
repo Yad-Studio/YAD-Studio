@@ -46,7 +46,7 @@ QString MarkovAlgorithm::useRule(QString input_word,
     res+= rule.getRightPart();
     res+=input_word.mid(rule_fits.start_index+rule_fits.length,
                         input_word.size());
-
+    res = res.replace("$", "");
     return res;
 }
 

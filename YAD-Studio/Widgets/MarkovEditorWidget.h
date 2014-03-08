@@ -2,6 +2,8 @@
 #define MARKOVEDITORWIDGET_H
 
 #include <QPlainTextEdit>
+#include <QSyntaxHighlighter>
+
 #include "Logic/CompilerError.h"
 #include "Logic/MarkovAlgorithm.h"
 
@@ -120,6 +122,18 @@ private:
     QFont _line_number_font;
     QFontMetrics _line_number_metrics;
     int _current_line;
+
+    class MarkovHighliter : public QSyntaxHighlighter
+    {
+    public:
+        MarkovHighliter(MarkovEditorWidget *editor);
+        void highlightBlock(const QString & text);
+    private:
+        MarkovEditorWidget* _editor;
+    };
+
+    MarkovHighliter _highlighter;
+
 private slots:
     void userChangedSourceCode();
     void updateErrors();
@@ -153,5 +167,7 @@ protected:
 private:
     MarkovEditorWidget *codeEditor;
 };
+
+
 
 #endif // MARKOVEDITORWIDGET_H

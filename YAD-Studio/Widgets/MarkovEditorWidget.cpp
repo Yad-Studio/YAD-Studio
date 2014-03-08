@@ -15,7 +15,8 @@ MarkovEditorWidget::MarkovEditorWidget(QWidget *parent) :
     _last_source_code(""),
     m_countCache(-1, -1),
     _line_number_metrics(_line_number_font),
-    _current_line(-1)
+    _current_line(-1),
+    _highlighter(this)
 {
     connect(this, SIGNAL(textChanged()), this, SLOT(userChangedSourceCode()));
 
@@ -49,6 +50,104 @@ MarkovEditorWidget::MarkovEditorWidget(QWidget *parent) :
 
     updateLineNumberAreaWidth();
     highlightCurrentLine();
+}
+
+MarkovEditorWidget::MarkovHighliter::MarkovHighliter(MarkovEditorWidget *editor)
+    : QSyntaxHighlighter(editor->document()),
+      _editor(editor)
+{}
+
+void MarkovEditorWidget::MarkovHighliter::highlightBlock(const QString& text)
+{
+    QColor comments_color(137, 137, 137);
+    QColor alphabet_color(36,165,255);
+    QColor system_symbol(0,128,0);
+    QColor normal_rule(224,116,1);
+    QColor final_rule(222,31,0);
+
+    //Alphabet
+    {
+        QTextCharFormat symbols;
+        symbols.setForeground(alphabet_color);
+        symbols.setFontWeight(QFont::Bold);
+        QString pattern = "["+QRegExp::escape(_editor->_algorithm.getAlphabet().getAllChars())+"]+";
+        QRegExp expression(pattern);
+        int index = text.indexOf(expression);
+        while(index >= 0)
+        {
+            int length = expression.matchedLength();
+            setFormat(index, length, symbols);
+            index = text.indexOf(expression, index + length);
+        }
+    }
+
+
+    //System symbols
+    {
+        QTextCharFormat system;
+        system.setForeground(system_symbol);
+        system.setFontWeight(QFont::Bold);
+
+        QString pattern = "[T= \\{\\},]+";
+        QRegExp expression(pattern);
+        int index = text.indexOf(expression);
+        while(index >= 0)
+        {
+            int length = expression.matchedLength();
+            setFormat(index, length, system);
+            index = text.indexOf(expression, index + length);
+        }
+    }
+
+    //Rule
+    {
+        QTextCharFormat system;
+        system.setForeground(normal_rule);
+        system.setFontWeight(QFont::Bold);
+
+        QString pattern = "->";
+        QRegExp expression(pattern);
+        int index = text.indexOf(expression);
+        while(index >= 0)
+        {
+            int length = expression.matchedLength();
+            setFormat(index, length, system);
+            index = text.indexOf(expression, index + length);
+        }
+    }
+
+    //Final
+    {
+        QTextCharFormat system;
+        system.setForeground(final_rule);
+        system.setFontWeight(QFont::Bold);
+
+        QString pattern = "->\\.";
+        QRegExp expression(pattern);
+        int index = text.indexOf(expression);
+        while(index >= 0)
+        {
+            int length = expression.matchedLength();
+            setFormat(index, length, system);
+            index = text.indexOf(expression, index + length);
+        }
+    }
+
+    //Comments
+    {
+        QTextCharFormat comments;
+        comments.setForeground(comments_color);
+        comments.setFontItalic(true);
+
+        QString pattern = "//.*$";
+        QRegExp expression(pattern);
+        int index = text.indexOf(expression);
+        if(index >= 0)
+        {
+            int length = expression.matchedLength();
+            setFormat(index, length, comments);
+        }
+    }
 }
 
 int MarkovEditorWidget::lineNumberAreaWidth()
@@ -189,7 +288,7 @@ void MarkovEditorWidget::lineNumberAreaPaintEvent(QPaintEvent *event)
                 float height = _line_number_metrics.height();
 
                 QRectF bp(break_point_padding, top + (height-break_point_width) / 2,
-                       break_point_width, break_point_width);
+                          break_point_width, break_point_width);
                 painter.setBrush(Qt::red);
                 painter.setPen(Qt::red);
                 painter.drawEllipse(bp);
@@ -304,19 +403,36 @@ void MarkovEditorWidget::userChangedSourceCode()
     _last_source_code = source_code;
 
 
-    bool res = MarkovParser::parseSourceCode(source_code, _algorithm, _errors);
+    MarkovAlgorithm alg;
+    bool res = MarkovParser::parseSourceCode(source_code, alg, _errors);
+
+    bool rehighlight_needed = false;
+    if(alg.getAlphabet().getAllChars() != _algorithm.getAlphabet().getAllChars())
+        rehighlight_needed = true;
+
+    _algorithm = alg;
 
     if(res)
     {
+
         emit markovAlgorithmChanged(_algorithm);
         setCanRun(true);
         updateErrors();
+
+
     }
     else
     {
+        bool rehighlight_needed = false;
+        if(alg.getAlphabet().getAllChars() != _algorithm.getAlphabet().getAllChars())
+            rehighlight_needed = true;
+
         setCanRun(false);
         updateErrors();
     }
+
+    if(rehighlight_needed)
+        _highlighter.rehighlight();
 }
 
 void MarkovEditorWidget::updateErrors()
@@ -333,8 +449,8 @@ void MarkovEditorWidget::updateErrors()
         {
             _errors_map.insert(err.getLineNumber(), err);
         }
-//        qDebug() << "Error: " << err.getErrorNumber() << " line: " << err.getLineNumber() <<
-//                    "Title: " << err.getErrorTitle() << err.getErrorDescription();
+        //        qDebug() << "Error: " << err.getErrorNumber() << " line: " << err.getLineNumber() <<
+        //                    "Title: " << err.getErrorTitle() << err.getErrorDescription();
 
     }
     update();

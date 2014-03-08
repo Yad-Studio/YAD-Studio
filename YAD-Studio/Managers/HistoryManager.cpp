@@ -18,7 +18,7 @@ QVector<QString> HistoryManager::getHistory()
 
 void HistoryManager::addToHistory(QString input_word)
 {
-    if(!_history.contains(input_word))
+    if(input_word.size() && !_history.contains(input_word))
         _history.push_back(input_word);
 
     emit historyChanged(_history);

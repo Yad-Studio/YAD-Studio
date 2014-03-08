@@ -4,7 +4,7 @@
 
 namespace Parser
 {
-    static QString forbidden_symbols(">-. ");
+    static QString forbidden_symbols(">-. T={}");
 }
 using namespace Parser;
 
