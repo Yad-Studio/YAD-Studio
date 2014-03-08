@@ -106,6 +106,12 @@ void DebugRunWidget::debugSuccess(QString input_word,
     ui->stopButton->setVisible(false);
     ui->continueButton->setVisible(false);
     ui->nextButton->setVisible(false);
+
+    emit removeBreakPoint();
+    //Auto scroll
+    QTextCursor c = ui->debugLog->textCursor();
+    c.movePosition(QTextCursor::End);
+    ui->debugLog->setTextCursor(c);
 }
 
 void DebugRunWidget::debugFailed(QString input_word,
@@ -144,6 +150,12 @@ void DebugRunWidget::debugFailed(QString input_word,
     ui->stopButton->setVisible(false);
     ui->continueButton->setVisible(false);
     ui->nextButton->setVisible(false);
+
+    emit removeBreakPoint();
+    //Auto scroll
+    QTextCursor c = ui->debugLog->textCursor();
+    c.movePosition(QTextCursor::End);
+    ui->debugLog->setTextCursor(c);
 }
 
 void DebugRunWidget::debugStepFinished(int step_number,

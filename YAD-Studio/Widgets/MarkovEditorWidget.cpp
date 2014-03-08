@@ -16,7 +16,8 @@ MarkovEditorWidget::MarkovEditorWidget(QWidget *parent) :
     m_countCache(-1, -1),
     _line_number_metrics(_line_number_font),
     _current_line(-1),
-    _highlighter(this)
+    _highlighter(this),
+    _highlighted_number(-1)
 {
     connect(this, SIGNAL(textChanged()), this, SLOT(userChangedSourceCode()));
 
@@ -201,6 +202,7 @@ int getLineNumber(QTextCursor cursor)
 }
 void MarkovEditorWidget::showLineHighlight(int line_number)
 {
+    _highlighted_number = line_number;
     //removeLineHighlight();
     QList<QTextEdit::ExtraSelection> extraSelections;
 
@@ -231,6 +233,7 @@ void MarkovEditorWidget::showLineHighlight(int line_number)
     }
 
     setExtraSelections(extraSelections);
+    this->update();
 }
 
 void MarkovEditorWidget::removeLineHighlight()
@@ -290,8 +293,18 @@ void MarkovEditorWidget::lineNumberAreaPaintEvent(QPaintEvent *event)
 
                 QRectF bp(break_point_padding, top + (height-break_point_width) / 2,
                           break_point_width, break_point_width);
-                painter.setBrush(Qt::red);
-                painter.setPen(Qt::red);
+
+                if(_highlighted_number == line_number)
+                {
+                    QColor color(35, 164, 255);
+                    painter.setBrush(color);
+                    painter.setPen(color);
+                }
+                else
+                {
+                    painter.setBrush(Qt::red);
+                    painter.setPen(Qt::red);
+                }
                 painter.drawEllipse(bp);
             }
 

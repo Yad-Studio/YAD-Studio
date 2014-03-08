@@ -45,6 +45,13 @@ public slots:
      */
     void copyAvailable(bool);
 
+    void canRunAlgorithm(bool);
+    void runStarted();
+    void runFinished();
+
+    void debugInputStarted();
+    void debugInputFinished();
+
 signals:
     void undo();
     void redo();
@@ -59,11 +66,15 @@ signals:
     void saveAs();
 
 private:
+    bool _can_run;
+    bool _is_running;
+    bool _is_debug_input;
     Ui::MainWindow *ui;
     bool _has_unsaved_data;
     QString _current_file;
     static MainWindow* _window;
     void updateWindowTitle();
+    void updateDebugMenu();
 private slots:
     void newHistoryLoaded(QVector<QString>);
 };

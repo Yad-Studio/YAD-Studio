@@ -27,7 +27,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     _has_unsaved_data(true),
-    _current_file("")
+    _current_file(""),
+    _can_run(false),
+    _is_running(false),
+    _is_debug_input(false)
 {
     ui->setupUi(this);
 
@@ -45,6 +48,8 @@ MainWindow::MainWindow(QWidget *parent) :
                      tr("Markov Algorithm File"),
                      ".yad",
                      1);
+
+    updateDebugMenu();
 
     //Connect MainWindow menu
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
@@ -199,6 +204,37 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->editorWindow, SIGNAL(breakPointRemoved(int)),
             run_manager, SLOT(removeBreakPoint(int)));
 
+    //Connect top menu
+    connect(run_manager, SIGNAL(runWithoutDebugStarted(QString)),
+            this, SLOT(runStarted()));
+    connect(run_manager, SIGNAL(debugStarted(QString)),
+            this, SLOT(runStarted()));
+    connect(run_manager, SIGNAL(runWithoutDebugFinishFail(QString,RunError,int)),
+            this, SLOT(runFinished()));
+    connect(run_manager, SIGNAL(runWithoutDebugFinishSuccess(QString,QString,int)),
+            this, SLOT(runFinished()));
+    connect(run_manager, SIGNAL(debugFinishFail(QString,RunError,int)),
+            this, SLOT(runFinished()));
+    connect(run_manager, SIGNAL(debugFinishSuccess(QString,QString,int)),
+            this, SLOT(runFinished()));
+    connect(run_manager, SIGNAL(canRunSourceCode(bool)),
+            this, SLOT(canRunAlgorithm(bool)));
+    connect(run_manager, SIGNAL(debugBreakPointReached(int)),
+            this, SLOT(debugInputStarted()));
+    connect(run_manager, SIGNAL(debugStepFinished(int,QString,QString,MarkovRule)),
+            this, SLOT(debugInputFinished()));
+
+    connect(ui->actionRun, SIGNAL(triggered()),
+            ui->input, SLOT(runCliked()));
+    connect(ui->actionDebug, SIGNAL(triggered()),
+            ui->input, SLOT(runWithDebugClicked()));
+    connect(ui->actionNext_Step, SIGNAL(triggered()),
+            run_manager, SLOT(debugNextStep()));
+    connect(ui->actionContinue, SIGNAL(triggered()),
+            run_manager, SLOT(debugContinue()));
+    connect(ui->actionStop_Debug, SIGNAL(triggered()),
+            run_manager, SLOT(debugStop()));
+
     //Read file to open from command line
     QStringList arguments = QCoreApplication::arguments();
     if(arguments.size() >= 2)
@@ -212,6 +248,80 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
 }
+
+void MainWindow::canRunAlgorithm(bool v)
+{
+    if(_can_run != v)
+    {
+        _can_run = v;
+        updateDebugMenu();
+    }
+}
+
+void MainWindow::runStarted()
+{
+    if(!_is_running)
+    {
+        _is_running = true;
+        updateDebugMenu();
+    }
+}
+
+void MainWindow::runFinished()
+{
+    if(_is_running)
+    {
+        _is_running = false;
+        updateDebugMenu();
+    }
+    debugInputFinished();
+}
+
+void MainWindow::debugInputStarted()
+{
+    if(!_is_debug_input)
+    {
+        _is_debug_input = true;
+        updateDebugMenu();
+    }
+}
+
+void MainWindow::debugInputFinished()
+{
+    if(_is_debug_input)
+    {
+        _is_debug_input = false;
+        updateDebugMenu();
+    }
+}
+
+void MainWindow::updateDebugMenu()
+{
+    if(_is_running || !_can_run)
+    {
+        ui->actionRun->setEnabled(false);
+        ui->actionDebug->setEnabled(false);
+    }
+    else
+    {
+        ui->actionRun->setEnabled(true);
+        ui->actionDebug->setEnabled(true);
+    }
+
+    if(_is_debug_input)
+    {
+        ui->actionNext_Step->setEnabled(true);
+        ui->actionContinue->setEnabled(true);
+        ui->actionStop_Debug->setEnabled(true);
+    }
+    else
+    {
+        ui->actionNext_Step->setEnabled(false);
+        ui->actionContinue->setEnabled(false);
+        ui->actionStop_Debug->setEnabled(false);
+    }
+}
+
 void MainWindow::newHistoryLoaded(QVector<QString> history)
 {
     HistoryManager::getInstance()->clearHistory();

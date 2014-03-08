@@ -140,20 +140,23 @@
     <property name="title">
      <string>Help</string>
     </property>
-    <widget class="QMenu" name="menuLanguage">
-     <property name="title">
-      <string>Language</string>
-     </property>
-     <addaction name="actionEnglish"/>
-     <addaction name="actionUkrainian"/>
-    </widget>
     <addaction name="actionAbout"/>
     <addaction name="actionTutorial"/>
+   </widget>
+   <widget class="QMenu" name="menuDebug">
+    <property name="title">
+     <string>Debug</string>
+    </property>
+    <addaction name="actionRun"/>
+    <addaction name="actionDebug"/>
     <addaction name="separator"/>
-    <addaction name="menuLanguage"/>
+    <addaction name="actionNext_Step"/>
+    <addaction name="actionContinue"/>
+    <addaction name="actionStop_Debug"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuAbout"/>
+   <addaction name="menuDebug"/>
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionNew">
@@ -282,6 +285,43 @@
    </property>
    <property name="text">
     <string>Ukrainian</string>
+   </property>
+  </action>
+  <action name="actionRun">
+   <property name="text">
+    <string>Run</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
+  <action name="actionDebug">
+   <property name="text">
+    <string>Debug</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+F5</string>
+   </property>
+  </action>
+  <action name="actionNext_Step">
+   <property name="text">
+    <string>Next Step</string>
+   </property>
+   <property name="shortcut">
+    <string>F10</string>
+   </property>
+  </action>
+  <action name="actionContinue">
+   <property name="text">
+    <string>Continue</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
+  <action name="actionStop_Debug">
+   <property name="text">
+    <string>Stop Debug</string>
    </property>
   </action>
  </widget>

@@ -122,6 +122,7 @@ private:
     QFont _line_number_font;
     QFontMetrics _line_number_metrics;
     int _current_line;
+    int _highlighted_number;
 
     class MarkovHighliter : public QSyntaxHighlighter
     {
