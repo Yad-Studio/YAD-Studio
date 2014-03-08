@@ -176,6 +176,17 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(run_manager, SIGNAL(runWithoutDebugStarted(QString)),
             ui->debugRun, SLOT(hide()));
 
+    //Connect DebugRunWidget and EditorWindowWidget
+    connect(ui->debugRun, SIGNAL(removeBreakPoint()),
+            ui->editorWindow, SLOT(removeLineHighlight()));
+    connect(ui->debugRun, SIGNAL(showBreakPoint(int)),
+            ui->editorWindow, SLOT(showLineHighlight(int)));
+
+    //Connect MarkovRunManager and EditorWindowWidget
+    connect(ui->editorWindow, SIGNAL(breakPointAdded(int)),
+            run_manager, SLOT(addBreakPoint(int)));
+    connect(ui->editorWindow, SIGNAL(breakPointRemoved(int)),
+            run_manager, SLOT(removeBreakPoint(int)));
 
     //Read file to open from command line
     QStringList arguments = QCoreApplication::arguments();
