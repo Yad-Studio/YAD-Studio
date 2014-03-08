@@ -36,7 +36,7 @@ void MarkovWordWidget::addHighlight(int from,
     QString end = text.mid(from+length,text.size());
 
     QString color = "\"green\"";
-    if (type == HighlightType::Before)
+    if (type == Before)
         color = "\"red\"";
 
 

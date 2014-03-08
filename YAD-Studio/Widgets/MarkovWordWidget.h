@@ -15,7 +15,7 @@ public:
     explicit MarkovWordWidget(QWidget *parent = 0);
     ~MarkovWordWidget();
 
-    enum class HighlightType
+    enum HighlightType
     {
         //red
         Before,

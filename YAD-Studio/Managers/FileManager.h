@@ -2,6 +2,7 @@
 #define FILEMANAGER_H
 #include <QString>
 #include <QObject>
+#include <QVector>
 /**
  * @brief The class is responsible for saving files, listening for changes.
  */

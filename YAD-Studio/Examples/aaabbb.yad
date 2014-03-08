@@ -1,0 +1,24 @@
+//Program prints yes if in string of format 'aaabbb' there are same number of a and b
+
+//Alphabet
+T = {a,b,!,y,e,s,n,o}
+ 
+//Remove equal number of a and b
+ab -> $
+
+//If only a or only b remaining mark them
+a -> !
+b -> !
+
+//Remain only one symbol
+!! -> !
+
+//If we have mark the output no
+! ->. no
+
+//Else output yes
+$ ->. yes
+
+
+//=========History========//
+//aaaaabbbb

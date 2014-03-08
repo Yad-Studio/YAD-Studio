@@ -192,7 +192,7 @@ void DebugRunWidget::debugStepFinished(int step_number,
     //int length_from = applied_rule.getLeftPart().size();
     ui->inputWidget->addHighlight(rule_res.start_index,
                                   rule_res.length,
-                                  MarkovWordWidget::HighlightType::Before);
+                                  MarkovWordWidget::Before);
 
     //int from_2 = after_rule_applied.indexOf(applied_rule.getRightPart());
     //int length_from_2 = applied_rule.getRightPart().size();
@@ -200,7 +200,7 @@ void DebugRunWidget::debugStepFinished(int step_number,
     {
         ui->outputWidget->addHighlight(rule_res.start_index,
                                        applied_rule.getRightPart().size(),
-                                       MarkovWordWidget::HighlightType::After);
+                                       MarkovWordWidget::After);
     }
 
     //Auto scroll

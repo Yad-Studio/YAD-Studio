@@ -1,10 +1,10 @@
 #include "FileManager.h"
-#include <QException>
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QCoreApplication>
 #include <QProcess>
-
+#include <exception>
+#include <QVector>
 #include "Logic/YadFile.h"
 #include "Managers/HistoryManager.h"
 #include "Managers/SourceCodeManager.h"
