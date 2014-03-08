@@ -201,6 +201,7 @@ int getLineNumber(QTextCursor cursor)
 }
 void MarkovEditorWidget::showLineHighlight(int line_number)
 {
+    //removeLineHighlight();
     QList<QTextEdit::ExtraSelection> extraSelections;
 
     if (!isReadOnly())

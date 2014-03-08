@@ -240,20 +240,29 @@ void DebugRunWidget::breakPointReached(int line_number)
 }
 void DebugRunWidget::onContinueButtonClicked()
 {
-    emit continueClicked();
     emit removeBreakPoint();
+    QCoreApplication::processEvents();
+
+    emit continueClicked();
+
 }
 
 void DebugRunWidget::onNextButtonClicked()
 {
-    emit nextStepClicked();
     emit removeBreakPoint();
+    QCoreApplication::processEvents();
+
+    emit nextStepClicked();
+
 }
 
 void DebugRunWidget::onStopButtonCliked()
 {
-    emit stopClicked();
     emit removeBreakPoint();
+    QCoreApplication::processEvents();
+
+    emit stopClicked();
+
 }
 
 void DebugRunWidget::onCloseButtonClicked()
