@@ -31,6 +31,9 @@ public slots:
     void cut();
     void deleteSelection();
 
+    void showLineHighlight(int line_number);
+    void removeLineHighlight();
+
 signals:
     void canRun(bool);
     void sourceCodeChanged(QString);
@@ -39,6 +42,8 @@ signals:
     void undoAvailable(bool);
     void copyAvailable(bool);
 
+    void breakPointAdded(int line_number);
+    void breakPointRemoved(int line_number);
 private:
     Ui::EditorWindowWidget *ui;
 };

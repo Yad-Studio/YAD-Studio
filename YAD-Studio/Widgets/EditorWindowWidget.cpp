@@ -20,11 +20,27 @@ EditorWindowWidget::EditorWindowWidget(QWidget *parent) :
             this, SIGNAL(undoAvailable(bool)));
     connect(ui->plainTextEdit, SIGNAL(copyAvailable(bool)),
             this, SIGNAL(copyAvailable(bool)));
+
+    connect(ui->plainTextEdit, SIGNAL(breakPointAdded(int)),
+            this, SIGNAL(breakPointAdded(int)));
+    connect(ui->plainTextEdit, SIGNAL(breakPointRemoved(int)),
+            this, SIGNAL(breakPointRemoved(int)));
 }
 
 EditorWindowWidget::~EditorWindowWidget()
 {
     delete ui;
+}
+
+
+void EditorWindowWidget::showLineHighlight(int line_number)
+{
+    ui->plainTextEdit->showLineHighlight(line_number);
+}
+
+void EditorWindowWidget::removeLineHighlight()
+{
+    ui->plainTextEdit->removeLineHighlight();
 }
 
 void EditorWindowWidget::newSourceCode(QString new_source)
