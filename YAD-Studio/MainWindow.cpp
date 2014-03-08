@@ -9,6 +9,8 @@
 #include "Widgets/InputWidget.h"
 #include "Widgets/HistoryWidget.h"
 #include "Widgets/RunWidget.h"
+#include "Widgets/DebugRunWidget.h"
+
 #include "Managers/HistoryManager.h"
 #include "Managers/FileManager.h"
 #include "Managers/MarkovRunManager.h"
@@ -29,6 +31,9 @@ MainWindow::MainWindow(QWidget *parent) :
     copyAvailable(false);
 
     _window = this;
+
+    ui->debugRun->setVisible(false);
+    ui->runWidget->setVisible(false);
 
     //Connect MainWindow menu
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
@@ -147,6 +152,29 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->runWidget, SLOT(runFailed(QString,RunError,int)));
     connect(run_manager, SIGNAL(runWithoutDebugFinishSuccess(QString,QString,int)),
             ui->runWidget, SLOT(runSuccess(QString,QString,int)));
+    connect(run_manager, SIGNAL(debugStarted(QString)),
+            ui->runWidget, SLOT(hide()));
+
+    //Connect DebugRunWidget and MarkovRunManager
+    connect(ui->debugRun, SIGNAL(nextStepClicked()),
+            run_manager, SLOT(debugNextStep()));
+    connect(ui->debugRun, SIGNAL(continueClicked()),
+            run_manager, SLOT(debugContinue()));
+    connect(ui->debugRun, SIGNAL(stopClicked()),
+            run_manager, SLOT(debugStop()));
+
+    connect(run_manager, SIGNAL(debugStarted(QString)),
+            ui->debugRun, SLOT(debugStarted(QString)));
+    connect(run_manager, SIGNAL(debugFinishSuccess(QString,QString,int)),
+            ui->debugRun, SLOT(debugSuccess(QString,QString,int)));
+    connect(run_manager, SIGNAL(debugFinishFail(QString,RunError,int)),
+            ui->debugRun, SLOT(debugFailed(QString,RunError,int)));
+    connect(run_manager, SIGNAL(debugStepFinished(int,QString,QString,MarkovRule)),
+            ui->debugRun, SLOT(debugStepFinished(int,QString,QString,MarkovRule)));
+    connect(run_manager, SIGNAL(debugBreakPointReached(int)),
+            ui->debugRun, SLOT(breakPointReached(int)));
+    connect(run_manager, SIGNAL(runWithoutDebugStarted(QString)),
+            ui->debugRun, SLOT(hide()));
 
 
     //Read file to open from command line

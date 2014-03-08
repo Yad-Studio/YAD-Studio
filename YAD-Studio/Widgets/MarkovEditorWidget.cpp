@@ -53,7 +53,7 @@ MarkovEditorWidget::MarkovEditorWidget(QWidget *parent) :
 
 int MarkovEditorWidget::lineNumberAreaWidth()
 {
-    int digits = 3;
+    int digits = 2;
     int max = qMax(1, blockCount());
     max /= 100;
 

@@ -73,8 +73,8 @@ bool MarkovRunManager::findAndApplyNextRule()
 {
     if(_word_after_last_step.size()>2000)
     {
-        QString description = tr("Result can not be longer than 2000 symbols. On step #%1 input become %2")
-                .arg(_steps_made, _word_after_last_step.size());
+        QString description = tr("Result can not be longer than 2000 symbols. On step #%1 input become %2 symbols long")
+                .arg(_steps_made).arg(_word_after_last_step.size());
         RunError error(tr("Too long result"),
                        description,
                        101);
