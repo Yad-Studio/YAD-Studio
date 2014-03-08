@@ -188,13 +188,17 @@ void DebugRunWidget::debugStepFinished(int step_number,
     ui->debugLog->append(tr("<b>Step&nbsp;#%1</b><br>Rule:&nbsp;&nbsp;&nbsp;%2<br>Before:&nbsp;%3<br>After:&nbsp;&nbsp;%4<br>").arg(QString::number(step_number)).arg(applied_rule.getFullRule()).arg(before).arg(after));
 
     //change color in MarkovWordWidget
-    int from = before_rule_applied.indexOf(applied_rule.getLeftPart());
-    int length_from = applied_rule.getLeftPart().size();
-    ui->inputWidget->addHighlight(from,length_from,MarkovWordWidget::HighlightType::Before);
+    //int from = before_rule_applied.indexOf(applied_rule.getLeftPart());
+    //int length_from = applied_rule.getLeftPart().size();
+    ui->inputWidget->addHighlight(rule_res.start_index,
+                                  rule_res.length,
+                                  MarkovWordWidget::HighlightType::Before);
 
-    int from_2 = after_rule_applied.indexOf(applied_rule.getRightPart());
-    int length_from_2 = applied_rule.getRightPart().size();
-    ui->outputWidget->addHighlight(from_2,length_from_2, MarkovWordWidget::HighlightType::After);
+    //int from_2 = after_rule_applied.indexOf(applied_rule.getRightPart());
+    //int length_from_2 = applied_rule.getRightPart().size();
+    ui->outputWidget->addHighlight(rule_res.start_index,
+                                   applied_rule.getRightPart().size(),
+                                   MarkovWordWidget::HighlightType::After);
 }
 const QString DebugRunWidget::colorWord(const QString &word,
                                         int begin,
