@@ -1,5 +1,5 @@
 #include "MarkovRunManager.h"
-
+#include <QCoreApplication>
 
 MarkovRunManager* MarkovRunManager::_instance = nullptr;
 
@@ -82,10 +82,12 @@ bool MarkovRunManager::findAndApplyNextRule()
         if(_is_debug_mode)
         {
             emit debugFinishFail(_input_word,error,_steps_made);
+            QCoreApplication::processEvents();
         }
         else
         {
             emit runWithoutDebugFinishFail(_input_word,error,_steps_made);
+            QCoreApplication::processEvents();
         }
         return false;
     }
@@ -105,12 +107,14 @@ bool MarkovRunManager::findAndApplyNextRule()
             emit debugFinishSuccess(_input_word,
                                     word,
                                     _steps_made);
+            QCoreApplication::processEvents();
         }
         else
         {
             emit runWithoutDebugFinishSuccess(_input_word,
                                               word,
                                               _steps_made);
+            QCoreApplication::processEvents();
         }
         return false;
     }
@@ -125,6 +129,7 @@ bool MarkovRunManager::findAndApplyNextRule()
                                _word_after_last_step,
                                word,
                                rule);
+        QCoreApplication::processEvents();
     }
 
     _word_after_last_step = word;
@@ -146,10 +151,12 @@ bool MarkovRunManager::findAndApplyNextRule()
         if(_is_debug_mode)
         {
             emit debugFinishFail(_input_word,error,_steps_made);
+            QCoreApplication::processEvents();
         }
         else
         {
             emit runWithoutDebugFinishFail(_input_word,error,_steps_made);
+            QCoreApplication::processEvents();
         }
 
         return false;
@@ -163,6 +170,7 @@ bool MarkovRunManager::findAndApplyNextRule()
         if(_break_points.contains(rule.getLineNumber()))
         {
             emit debugBreakPointReached(rule.getLineNumber());
+            QCoreApplication::processEvents();
             return false;
         }
     }
@@ -178,12 +186,14 @@ bool MarkovRunManager::findAndApplyNextRule()
             emit debugFinishSuccess(_input_word,
                                     _word_after_last_step,
                                     _steps_made);
+            QCoreApplication::processEvents();
         }
         else
         {
             emit runWithoutDebugFinishSuccess(_input_word,
                                               _word_after_last_step,
                                               _steps_made);
+            QCoreApplication::processEvents();
         }
         return false;
     }
@@ -226,6 +236,7 @@ void MarkovRunManager::runWithoutDebug(QString input_word)
     _is_debug_mode = false;
 
     emit runWithoutDebugStarted(input_word);
+    QCoreApplication::processEvents();
 
     QChar test;
     if(hasSymbolsNotInAlphabet(input_word,
@@ -235,6 +246,7 @@ void MarkovRunManager::runWithoutDebug(QString input_word)
         emit runWithoutDebugFinishFail(input_word,
                                        notInAlphabet(test, _algorithm.getAlphabet()),
                                        0);
+        QCoreApplication::processEvents();
     }
     else
     {
@@ -243,6 +255,7 @@ void MarkovRunManager::runWithoutDebug(QString input_word)
             if(_steps_made%100 == 0)
             {
                 emit runStepsMade(_steps_made);
+                QCoreApplication::processEvents();
             }
         }
     }
@@ -257,6 +270,7 @@ void MarkovRunManager::runWithDebug(QString input_word)
     _is_debug_mode = true;
 
     emit debugStarted(input_word);
+    QCoreApplication::processEvents();
 
     QChar test;
     if(hasSymbolsNotInAlphabet(input_word,
@@ -266,6 +280,7 @@ void MarkovRunManager::runWithDebug(QString input_word)
         emit debugFinishFail(input_word,
                              notInAlphabet(test, _algorithm.getAlphabet()),
                              0);
+        QCoreApplication::processEvents();
     }
     else
     {
@@ -305,11 +320,13 @@ void MarkovRunManager::debugStop()
     {
         RunError error("Debug stopped","Stoped by the user",103);
         emit debugFinishFail(_input_word,error,_steps_made);
+        QCoreApplication::processEvents();
     }
     else
     {
         RunError error("Debug stopped","Stoped by the user",103);
         emit runWithoutDebugFinishFail(_input_word, error,_steps_made);
+        QCoreApplication::processEvents();
     }
 }
 bool operator<(const StepResult& a, const StepResult& b)
