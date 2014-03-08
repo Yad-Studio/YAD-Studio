@@ -82,10 +82,13 @@ void DebugRunWidget::debugSuccess(QString input_word,
              int steps_made)
 {
     ui->title->setTitle(tr("Debug Finished"));
+
+    ui->input->setText(tr("Input: "));
     ui->inputWidget->setWord(input_word);
 
     ui->output->setVisible(true);
 
+    ui->output->setText("Output: ");
     ui->outputWidget->setVisible(true);
     ui->outputWidget->setWord(output_word);
 
@@ -109,6 +112,9 @@ void DebugRunWidget::debugFailed(QString input_word,
             RunError error,
             int steps_made)
 {
+    ui->title->setTitle(tr("Debug Finished"));
+
+    ui->input->setText(tr("Input: "));
     ui->inputWidget->setWord(input_word);
 
     ui->error->setVisible(true);
@@ -118,6 +124,7 @@ void DebugRunWidget::debugFailed(QString input_word,
     ui->ruleText->setVisible(false);
 
     ui->output->setVisible(false);
+    ui->output->setText(tr("Output: "));
     ui->outputWidget->setVisible(false);
 
     ui->steps->setVisible(true);
@@ -144,14 +151,18 @@ void DebugRunWidget::debugStepFinished(int step_number,
                   QString after_rule_applied,
                   MarkovRule applied_rule)
 {
+    ui->title->setTitle(tr("Step #%1").arg(step_number));
+
+    ui->input->setText(tr("Before: "));
     ui->inputWidget->setWord(before_rule_applied);
 
     ui->error->setVisible(false);
     ui->errorDescription->setVisible(false);
 
     ui->output->setVisible(true);
+    ui->output->setText("After: ");
     ui->outputWidget->setVisible(true);
-    ui->inputWidget->setWord(after_rule_applied);
+    ui->outputWidget->setWord(after_rule_applied);
 
     ui->steps->setVisible(true);
     ui->stepsNumber->setVisible(true);

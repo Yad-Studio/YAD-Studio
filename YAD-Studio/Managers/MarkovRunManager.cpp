@@ -283,14 +283,7 @@ void MarkovRunManager::addBreakPoint(int line_number)
 
 void MarkovRunManager::removeBreakPoint(int line_number)
 {
-    QSet<int>::iterator i = _break_points.begin();
-    while (i != _break_points.end())
-    {
-        if ((*i)== line_number)
-        {
-            i = _break_points.erase(i);
-        }
-    }
+    _break_points.remove(line_number);
 }
 
 void MarkovRunManager::debugNextStep()
@@ -310,12 +303,12 @@ void MarkovRunManager::debugStop()
 {
     if(_is_debug_mode)
     {
-        RunError error("Debug stopped by the user","",103);
+        RunError error("Debug stopped","Stoped by the user",103);
         emit debugFinishFail(_input_word,error,_steps_made);
     }
     else
     {
-        RunError error("Debug stopped by the user","",103);
+        RunError error("Debug stopped","Stoped by the user",103);
         emit runWithoutDebugFinishFail(_input_word, error,_steps_made);
     }
 }

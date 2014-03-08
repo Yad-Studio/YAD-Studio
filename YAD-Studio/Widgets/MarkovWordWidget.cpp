@@ -8,7 +8,7 @@ MarkovWordWidget::MarkovWordWidget(QWidget *parent) :
     ui->setupUi(this);
 
     //TODO: delete - it is only for testing
-    setWord("ababbba");
+    //setWord("ababbba");
 //    addHighlight(2,4,HighlightType::After);
 //    removeHighlight();
 //    addHighlight(2,8,HighlightType::After);
