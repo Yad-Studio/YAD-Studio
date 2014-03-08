@@ -8,7 +8,9 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = YAD-Studio
+RC_FILE = yad.rc
+
+TARGET = "Yad Studio"
 TEMPLATE = app
 INCLUDEPATH += $$PWD
 INCLUDEPATH += $$PWD/Widgets
