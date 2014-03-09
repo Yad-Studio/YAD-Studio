@@ -254,6 +254,75 @@ void MarkovEditorWidget::highlightCurrentLine()
 
 }
 
+int MarkovEditorWidget::getSelectedLines(QTextCursor cursor)
+{
+    int lines_number = 0;
+
+
+    QTextBlock b1 = document()->findBlock(cursor.selectionStart());
+    QTextBlock b2 = document()->findBlock(cursor.selectionEnd());
+
+    for (QTextBlock block = b1;
+         block.isValid() && b1 != b2;
+         block = block.next())
+    {
+        lines_number += block.lineCount();
+    }
+    return lines_number;
+}
+
+void MarkovEditorWidget::keyPressEvent(QKeyEvent* e)
+{
+
+    bool ignore_event = false;
+    if(e->key() == Qt::Key_Backtab
+            || (e->key() == Qt::Key_Tab && e->modifiers() == Qt::ShiftModifier)
+            )
+    {
+        qDebug() << "back tab";
+        //e->ignore();
+        QTextCursor cur = textCursor();
+
+        int lines_number = getSelectedLines(cur);
+
+        int start = cur.selectionStart();
+        int end = cur.selectionEnd();
+
+        if(lines_number == 0)
+        {
+            //One selection
+            if(start == end && start > 0)
+            {
+                QChar cPrev = toPlainText().at(start-1);
+                if(cPrev.isSpace())
+                {
+                    cur.deletePreviousChar();
+                    cur.setPosition(start-1);
+                    setTextCursor(cur);
+
+                    setFocus();
+                    ignore_event = true;
+                }
+            }
+        }
+        else
+        {
+            //Multiple lines
+        }
+
+
+
+    }
+
+    if(ignore_event)
+    {
+        e->accept();
+    }
+    else
+    {
+        QPlainTextEdit::keyPressEvent(e);
+    }
+}
 
 void MarkovEditorWidget::lineNumberAreaPaintEvent(QPaintEvent *event)
 {

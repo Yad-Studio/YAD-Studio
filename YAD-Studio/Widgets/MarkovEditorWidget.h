@@ -53,7 +53,7 @@ public slots:
 
 protected:
     void resizeEvent(QResizeEvent *event);
-
+    void keyPressEvent ( QKeyEvent * e );
 signals:
     /**
      * @brief if any changes where done to source code
@@ -134,7 +134,7 @@ private:
     };
 
     MarkovHighliter _highlighter;
-
+    int getSelectedLines(QTextCursor cursor);
 private slots:
     void userChangedSourceCode();
     void updateErrors();
