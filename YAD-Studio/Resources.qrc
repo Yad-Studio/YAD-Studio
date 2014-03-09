@@ -1,14 +1,18 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>save-dark.png</file>
-        <file>save-light.png</file>
-        <file>debug-dark.png</file>
-        <file>debug-light.png</file>
-        <file>run-dark.png</file>
-        <file>run-light.png</file>
-        <file>debug-mid.png</file>
-        <file>run-mid.png</file>
-        <file>close-dark.png</file>
-        <file>close-light.png</file>
+        <file>Icons/save-dark.png</file>
+        <file>Icons/save-light.png</file>
+        <file>Icons/debug-dark.png</file>
+        <file>Icons/debug-light.png</file>
+        <file>Icons/run-dark.png</file>
+        <file>Icons/run-light.png</file>
+        <file>Icons/debug-mid.png</file>
+        <file>Icons/run-mid.png</file>
+        <file>Icons/close-dark.png</file>
+        <file>Icons/close-light.png</file>
+        <file>Icons/next-dark.png</file>
+        <file>Icons/next-light.png</file>
+        <file>Icons/stop-dark.png</file>
+        <file>Icons/stop-light.png</file>
     </qresource>
 </RCC>

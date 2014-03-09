@@ -5,7 +5,8 @@
 
 DebugRunWidget::DebugRunWidget(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::DebugRunWidget)
+    ui(new Ui::DebugRunWidget),
+    _debug_pause(false)
 {
     ui->setupUi(this);
 
@@ -84,14 +85,14 @@ void DebugRunWidget::debugSuccess(QString input_word,
     if(!isVisible())
         setVisible(true);
 
-    ui->title->setTitle(tr("Debug Finished"));
+    ui->title->setText(tr("Debug Successful"));
 
-    ui->input->setText(tr("Input: "));
+    ui->input->setText(tr("Input "));
     ui->inputWidget->setWord(input_word);
 
     ui->output->setVisible(true);
 
-    ui->output->setText("Output: ");
+    ui->output->setText("Output ");
     ui->outputWidget->setVisible(true);
     ui->outputWidget->setWord(output_word);
 
@@ -124,9 +125,9 @@ void DebugRunWidget::debugFailed(QString input_word,
     if(!isVisible())
         setVisible(true);
 
-    ui->title->setTitle(tr("Debug Finished"));
+    ui->title->setText(tr("Debug Failed"));
 
-    ui->input->setText(tr("Input: "));
+    ui->input->setText(tr("Input "));
     ui->inputWidget->setWord(input_word);
 
     ui->error->setVisible(true);
@@ -136,7 +137,7 @@ void DebugRunWidget::debugFailed(QString input_word,
     ui->ruleText->setVisible(false);
 
     ui->output->setVisible(false);
-    ui->output->setText(tr("Output: "));
+    ui->output->setText(tr("Output "));
     ui->outputWidget->setVisible(false);
 
     ui->steps->setVisible(true);
@@ -172,16 +173,16 @@ void DebugRunWidget::debugStepFinished(int step_number,
     if(!isVisible())
         setVisible(true);
 
-    ui->title->setTitle(tr("Step #%1").arg(step_number));
+    ui->title->setText(tr("Step #%1").arg(step_number));
 
-    ui->input->setText(tr("Before: "));
+    ui->input->setText(tr("Before "));
     ui->inputWidget->setWord(before_rule_applied);
 
     ui->error->setVisible(false);
     ui->errorDescription->setVisible(false);
 
     ui->output->setVisible(true);
-    ui->output->setText("After: ");
+    ui->output->setText(tr("After "));
     ui->outputWidget->setVisible(true);
     ui->outputWidget->setWord(after_rule_applied);
 
@@ -223,8 +224,9 @@ void DebugRunWidget::debugStepFinished(int step_number,
     //int length_from_2 = applied_rule.getRightPart().size();
     if(applied_rule.getRightPart() != "$")
     {
+        QString right_part = applied_rule.getRightPart();
         ui->outputWidget->addHighlight(rule_res.start_index,
-                                       applied_rule.getRightPart().size(),
+                                       right_part.replace("$","").size(),
                                        MarkovWordWidget::After);
     }
 
@@ -268,6 +270,8 @@ const QString DebugRunWidget::colorWord(const QString& word,
 
 void DebugRunWidget::breakPointReached(int line_number)
 {
+    _debug_pause = true;
+
     //it is enought - because previously the debugStepFinished was called
     ui->stopButton->setVisible(true);
     ui->continueButton->setVisible(true);
@@ -277,6 +281,7 @@ void DebugRunWidget::breakPointReached(int line_number)
 }
 void DebugRunWidget::onContinueButtonClicked()
 {
+    _debug_pause = false;
     emit removeBreakPoint();
     QCoreApplication::processEvents();
 
@@ -286,6 +291,7 @@ void DebugRunWidget::onContinueButtonClicked()
 
 void DebugRunWidget::onNextButtonClicked()
 {
+    _debug_pause = false;
     emit removeBreakPoint();
     QCoreApplication::processEvents();
 
@@ -295,6 +301,7 @@ void DebugRunWidget::onNextButtonClicked()
 
 void DebugRunWidget::onStopButtonCliked()
 {
+    _debug_pause = false;
     emit removeBreakPoint();
     QCoreApplication::processEvents();
 
@@ -306,5 +313,8 @@ void DebugRunWidget::onStopButtonCliked()
 void DebugRunWidget::onCloseButtonClicked()
 {
     setVisible(false);
-    MarkovRunManager::getInstance()->terminateRun();
+    if(_debug_pause)
+        onStopButtonCliked();
+    else
+        MarkovRunManager::getInstance()->terminateRun();
 }

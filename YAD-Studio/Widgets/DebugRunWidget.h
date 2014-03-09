@@ -2,6 +2,9 @@
 #define DEBUGRUNWIDGET_H
 
 #include <QWidget>
+#include <QStyleOption>
+#include <QPainter>
+
 #include "Logic/MarkovRule.h"
 #include "Logic/RunError.h"
 
@@ -19,7 +22,7 @@ public:
     
 private:
     Ui::DebugRunWidget *ui;
-
+    bool _debug_pause;
 public slots:
 
     //should clear all previously set data
@@ -98,6 +101,14 @@ signals:
     //This signal should be emitted when the breakPointReached slot
     //is called.
     void showBreakPoint(int line_number);
+protected:
+    void paintEvent(QPaintEvent *)
+    {
+        QStyleOption opt;
+        opt.init(this);
+        QPainter p(this);
+        style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+    }
 };
 
 #endif // DEBUGRUNWIDGET_H

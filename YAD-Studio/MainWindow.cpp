@@ -247,7 +247,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     else
     {
-        source_manager->setNewSourceCodeFromFile(tr("//Alphabet\nT = {}\n\n//Rules\n//a -> b"));
+        source_manager->setNewSourceCodeFromFile(tr("//Alphabet\nT = {a, b}\n\n//Rules\nab -> a\na ->. b"));
     }
 
 }

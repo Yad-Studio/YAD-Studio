@@ -243,6 +243,9 @@ void MarkovEditorWidget::removeLineHighlight()
 {
     QList<QTextEdit::ExtraSelection> extraSelections;
     setExtraSelections(extraSelections);
+
+    _highlighted_number = -1;
+    update();
 }
 
 void MarkovEditorWidget::highlightCurrentLine()

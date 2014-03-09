@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true">
 
-InputWidget, HistoryWidget, RunWidget {
+InputWidget, HistoryWidget, RunWidget, DebugRunWidget {
 	background-color: #f1f1f1;
 }
 
@@ -25,7 +25,8 @@ InputWidget, HistoryWidget, RunWidget {
 	color: #424242;
 }
 
-InputWidget &gt; QPushButton {
+InputWidget &gt; QPushButton, 
+#continueButton, #nextButton, #stopButton {
 	background: none;
 	border: 2px solid #666666;
 	border-radius: 22px;
@@ -53,13 +54,15 @@ InputWidget &gt; QPushButton:disabled {
 	border-color: #c7c7c7;
 }
 
-InputWidget &gt; QPushButton:hover, HistoryWidget &gt; QToolButton:hover, #closeButton:hover  {
+InputWidget &gt; QPushButton:hover, HistoryWidget &gt; QToolButton:hover, #closeButton:hover,
+#continueButton:hover, #nextButton:hover, #stopButton:hover  {
 	background-color: #4ea6ea;
 	border-color: #4ea6ea;
 	color: #fff;
 }
 
-InputWidget &gt; QPushButton:pressed, HistoryWidget &gt; QToolButton:pressed, #closeButton:pressed{
+InputWidget &gt; QPushButton:pressed, HistoryWidget &gt; QToolButton:pressed, #closeButton:pressed,
+#continueButton:pressed, #nextButton:pressed, #stopButton:pressed {
 	background-color: #207abf;
 	border-color: #207abf;
 	padding:0;
@@ -72,56 +75,81 @@ InputWidget &gt; #lineEdit {
 }
 
 InputWidget &gt; #saveButton {
-	image: url(:/icons/save-dark.png);
+	image: url(:/icons/Icons/save-dark.png);
 }
 
 #closeButton {
-	image: url(:/icons/close-dark.png);
+	image: url(:/icons/Icons/close-dark.png);
 }
 
 #closeButton:hover, #closeButton:pressed  {
-	image: url(:/icons/close-light.png);
+	image: url(:/icons/Icons/close-light.png);
 }
 
 InputWidget &gt; #saveButton:hover, InputWidget &gt; #saveButton:pressed {
-	image: url(:/icons/save-light.png);
+	image: url(:/icons/Icons/save-light.png);
 }
 
 InputWidget &gt; #runButton {
-	image: url(:/icons/run-dark.png);
+	image: url(:/icons/Icons/run-dark.png);
 }
 
+#stopButton {
+	image: url(:/icons/Icons/stop-dark.png);
+}
+#stopButton:pressed, #stopButton:hover {
+	image: url(:/icons/Icons/stop-light.png);
+}
+
+#nextButton {
+	image: url(:/icons/Icons/next-dark.png);
+}
+#nextButton:pressed, #nextButton:hover {
+	image: url(:/icons/Icons/next-light.png);
+}
+
+
 InputWidget &gt; #runButton:hover, InputWidget &gt; #runButton:pressed {
-	image: url(:/icons/run-light.png);
+	image: url(:/icons/Icons/run-light.png);
 }
 
 InputWidget &gt; #runButton:disabled {
-	image: url(:/icons/run-mid.png);
+	image: url(:/icons/Icons/run-mid.png);
 }
 
-InputWidget &gt; #runWithDebug {
-	image: url(:/icons/debug-dark.png);
+InputWidget &gt; #runWithDebug, #continueButton {
+	image: url(:/icons/Icons/debug-dark.png);
 }
 
-InputWidget &gt; #runWithDebug:hover, InputWidget &gt; #runWithDebug:pressed {
-	image: url(:/icons/debug-light.png);
+InputWidget &gt; #runWithDebug:hover, InputWidget &gt; #runWithDebug:pressed, 
+#continueButton:pressed, #continueButton:hover {
+	image: url(:/icons/Icons/debug-light.png);
 }
 
 InputWidget &gt; #runWithDebug:disabled {
-	image: url(:/icons/debug-mid.png);
+	image: url(:/icons/Icons/debug-mid.png);
 }
 
-RunWidget &gt; #inputWord, RunWidget &gt; #outputWord, RunWidget &gt; #errorTitle, 
-RunWidget &gt; #errorDescription
+RunWidget &gt; #inputWord, 
+RunWidget &gt; #outputWord, 
+RunWidget &gt; #errorTitle, 
+#errorDescription,
+DebugRunWidget &gt; #error,
+DebugRunWidget &gt; #input,
+DebugRunWidget &gt; #output
 {
 	font-size: 14px;
 }
 
-RunWidget &gt; #steps, RunWidget &gt; #stepsNumber {
+DebugRunWidget &gt; #rule,
+DebugRunWidget &gt; #ruleText
+{
+	font-size: 18px;
+}
+
+
+#steps, #stepsNumber {
 	font-size: 16px;
-	/*padding-left: 0px;
-	padding-top: 3px;
-	padding-bottom: 3px;*/
 }
 
 QMainWindow {
@@ -151,7 +179,7 @@ QMainWindow {
      <number>0</number>
     </property>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <layout class="QVBoxLayout" name="verticalLayout_3" stretch="2,0,1">
       <property name="spacing">
        <number>11</number>
       </property>

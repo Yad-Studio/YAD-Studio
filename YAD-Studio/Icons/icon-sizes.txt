@@ -1,0 +1,8 @@
+For windows:
+16, 20, 24, 32, 32, 40, 48, 64, 256
+
+For big button:
+20x20
+
+For small button: 
+10x10
