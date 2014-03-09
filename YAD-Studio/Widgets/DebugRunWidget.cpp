@@ -189,7 +189,6 @@ void DebugRunWidget::debugStepFinished(int step_number,
 
     ui->ruleText->setText(tr("%1 -> %2").arg(applied_rule.getLeftPart()).arg(applied_rule.getRightPart()));
 
-
     QString after = colorWord(before_rule_applied,
                               applied_rule,
                               "green");
@@ -197,7 +196,12 @@ void DebugRunWidget::debugStepFinished(int step_number,
     MarkovAlgorithm::RuleFitResult rule_res = MarkovAlgorithm::isRuleFits(before_rule_applied,applied_rule);
     QString before = colorWord(before_rule_applied,rule_res.start_index,rule_res.length,"red");
 
-    ui->debugLog->append(tr("<b>Step&nbsp;#%1</b><br>Rule:&nbsp;&nbsp;&nbsp;%2<br>Before:&nbsp;%3<br>After:&nbsp;&nbsp;%4<br>").arg(QString::number(step_number)).arg(applied_rule.getFullRule()).arg(before).arg(after));
+    QString rule="";
+    if(!applied_rule.isFinalRule())
+        rule=(tr("%1 -> %2").arg(applied_rule.getLeftPart()).arg(applied_rule.getRightPart()));
+    else
+        rule=(tr("%1 ->. %2").arg(applied_rule.getLeftPart()).arg(applied_rule.getRightPart()));
+    ui->debugLog->append(tr("<b>Step&nbsp;#%1</b><br>Rule:&nbsp;&nbsp;&nbsp;%2<br>Before:&nbsp;%3<br>After:&nbsp;&nbsp;%4<br>").arg(QString::number(step_number)).arg(rule).arg(before).arg(after));
 
     //change color in MarkovWordWidget
     //int from = before_rule_applied.indexOf(applied_rule.getLeftPart());
