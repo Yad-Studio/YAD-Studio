@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DOCUMENT Type="Advanced Installer" CreateVersion="10.9.1" version="10.9.1" Modules="simple" RootPath="." Language="en" Id="{DE2A0A7C-7864-4136-A0B1-C9C21A9E4714}">
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
+    <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
+    <ROW Property="ALLUSERS" Value="1" MultiBuildValue="DefaultBuild:2"/>
+    <ROW Property="ARPCOMMENTS" Value="Yad Studio - Markov algorithms IDE and interpreter" ValueLocId="*"/>
+    <ROW Property="ARPNOMODIFY" MultiBuildValue="DefaultBuild:1"/>
+    <ROW Property="ARPNOREPAIR" Value="1"/>
+    <ROW Property="ARPPRODUCTICON" Value="yadicon.exe" Type="8"/>
+    <ROW Property="ARPURLINFOABOUT" Value="http://yad-studio.github.io/"/>
+    <ROW Property="CTRLS" Value="2"/>
+    <ROW Property="MSIFASTINSTALL" MultiBuildValue="DefaultBuild:1"/>
+    <ROW Property="Manufacturer" Value="Andrii Chaika, Sirenko Diana, Yura Grischenko"/>
+    <ROW Property="ProductCode" Value="1033:{3E010952-4CAF-4DCF-88B3-ED6C83E956AF} " Type="16"/>
+    <ROW Property="ProductLanguage" Value="1033"/>
+    <ROW Property="ProductName" Value="Yad Studio"/>
+    <ROW Property="ProductVersion" Value="1.0.0" Type="32"/>
+    <ROW Property="REBOOT" MultiBuildValue="DefaultBuild:ReallySuppress"/>
+    <ROW Property="RUNAPPLICATION" Value="1" Type="4"/>
+    <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
+    <ROW Property="UpgradeCode" Value="{7534E7C0-E7A7-45FB-87F1-20C3783B5214}"/>
+    <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsType9XDisplay" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+    <ROW Property="WindowsTypeNT40Display" MultiBuildValue="DefaultBuild:Windows NT 4.0" ValueLocId="-"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
+    <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
+    <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
+    <ROW Directory="examples_Dir" Directory_Parent="APPDIR" DefaultDir="examples"/>
+    <ROW Directory="images_Dir" Directory_Parent="tutorial_Dir" DefaultDir="images"/>
+    <ROW Directory="javascripts_Dir" Directory_Parent="tutorial_Dir" DefaultDir="JAVASC~1|javascripts"/>
+    <ROW Directory="stylesheets_Dir" Directory_Parent="tutorial_Dir" DefaultDir="STYLES~1|stylesheets"/>
+    <ROW Directory="tutorial_Dir" Directory_Parent="APPDIR" DefaultDir="tutorial"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
+    <ROW Component="ProductInformation" ComponentId="{A60806AE-334B-4CC1-B757-EFBD45E5B34F}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
+    <ROW Component="QtCore4.dll" ComponentId="{0B74D012-CD1D-4932-B7A1-745E759C0A89}" Directory_="APPDIR" Attributes="0" KeyPath="QtCore4.dll"/>
+    <ROW Component="QtGui4.dll" ComponentId="{47A49FD5-A573-498B-861F-209BDA1C5B66}" Directory_="APPDIR" Attributes="0" KeyPath="QtGui4.dll"/>
+    <ROW Component="YadStudio.exe" ComponentId="{52871E49-CAC2-4DB7-94B8-042B51B72571}" Directory_="APPDIR" Attributes="0" KeyPath="YadStudio.exe"/>
+    <ROW Component="_" ComponentId="{D8BFD67C-3602-459B-B25B-857127C0CB8D}" Directory_="APPDIR" Attributes="4" KeyPath="_"/>
+    <ROW Component="__1" ComponentId="{12BF999B-C835-4F4B-8C63-93513B8F0056}" Directory_="APPDIR" Attributes="4" KeyPath="__1"/>
+    <ROW Component="__2" ComponentId="{2E409AF5-842E-40C7-9126-056383E42E03}" Directory_="APPDIR" Attributes="4" KeyPath="__2"/>
+    <ROW Component="__3" ComponentId="{7EB1B04F-ACC2-4AA1-A64A-C6884D1600C3}" Directory_="APPDIR" Attributes="4" KeyPath="__3"/>
+    <ROW Component="aaabbb.yad" ComponentId="{88977ACA-C8F5-4AC1-A013-6A875936245F}" Directory_="examples_Dir" Attributes="0" KeyPath="aaabbb.yad" Type="0"/>
+    <ROW Component="bg_hr.png" ComponentId="{0DED5949-ED05-444A-963C-2431AAE8E9CE}" Directory_="images_Dir" Attributes="0" KeyPath="bg_hr.png" Type="0"/>
+    <ROW Component="git" ComponentId="{F8C7EA2A-7FEC-4D52-9856-C07D56228DE7}" Directory_="tutorial_Dir" Attributes="0" KeyPath="git" Type="0"/>
+    <ROW Component="local_to_web.js" ComponentId="{BE5166FA-0498-4DCE-AC06-B84CA508B304}" Directory_="javascripts_Dir" Attributes="0" KeyPath="local_to_web.js" Type="0"/>
+    <ROW Component="msvcp100.dll" ComponentId="{A885CC15-231F-420B-9D05-FD8B025B65F5}" Directory_="APPDIR" Attributes="0" KeyPath="msvcp100.dll"/>
+    <ROW Component="msvcr100.dll" ComponentId="{63860DEA-266B-4215-AC3C-BEFA481B225A}" Directory_="APPDIR" Attributes="0" KeyPath="msvcr100.dll"/>
+    <ROW Component="pygment_trac.css" ComponentId="{8FA9FE5C-8FD4-4377-BE40-1E308581D554}" Directory_="stylesheets_Dir" Attributes="0" KeyPath="pygment_trac.css" Type="0"/>
+    <ROW Component="tutorial.html" ComponentId="{551FE6CE-21A6-4364-9F0A-F3362BE4D798}" Directory_="APPDIR" Attributes="0" KeyPath="tutorial.html" Type="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="ProductInformation QtCore4.dll QtGui4.dll YadStudio.exe _ __1 __2 __3 aaabbb.yad bg_hr.png git local_to_web.js msvcp100.dll msvcr100.dll pygment_trac.css tutorial.html"/>
+    <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
+    <ROW File="QtCore4.dll" Component_="QtCore4.dll" FileName="QtCore4.dll" Attributes="0" SourcePath="build\QtCore4.dll" SelfReg="false" NextFile="QtGui4.dll"/>
+    <ROW File="QtGui4.dll" Component_="QtGui4.dll" FileName="QtGui4.dll" Attributes="0" SourcePath="build\QtGui4.dll" SelfReg="false" NextFile="tutorial.html"/>
+    <ROW File="YadStudio.exe" Component_="YadStudio.exe" FileName="YADSTU~1.EXE|Yad Studio.exe" Attributes="0" SourcePath="build\Yad Studio.exe" SelfReg="false" NextFile="git" DigSign="true"/>
+    <ROW File="aaabbb.yad" Component_="aaabbb.yad" FileName="aaabbb.yad" Attributes="0" SourcePath="build\examples\aaabbb.yad" SelfReg="false" NextFile="example1.yad"/>
+    <ROW File="bg_hr.png" Component_="bg_hr.png" FileName="bg_hr.png" Attributes="0" SourcePath="build\tutorial\images\bg_hr.png" SelfReg="false" NextFile="blacktocat.png"/>
+    <ROW File="blacktocat.png" Component_="bg_hr.png" FileName="BLACKT~1.PNG|blacktocat.png" Attributes="0" SourcePath="build\tutorial\images\blacktocat.png" SelfReg="false" NextFile="icon_download.png"/>
+    <ROW File="example1.yad" Component_="aaabbb.yad" FileName="example1.yad" Attributes="0" SourcePath="build\examples\example1.yad" SelfReg="false" NextFile="example2.yad"/>
+    <ROW File="example2.yad" Component_="aaabbb.yad" FileName="example2.yad" Attributes="0" SourcePath="build\examples\example2.yad" SelfReg="false"/>
+    <ROW File="git" Component_="git" FileName="GIT~1|.git" Attributes="0" SourcePath="build\tutorial\.git" SelfReg="false" NextFile="bg_hr.png"/>
+    <ROW File="icon_download.png" Component_="bg_hr.png" FileName="ICON_D~1.PNG|icon_download.png" Attributes="0" SourcePath="build\tutorial\images\icon_download.png" SelfReg="false" NextFile="logo.png"/>
+    <ROW File="index.html" Component_="git" FileName="INDEX~1.HTM|index.html" Attributes="0" SourcePath="build\tutorial\index.html" SelfReg="false" NextFile="local_to_web.js"/>
+    <ROW File="local_to_web.js" Component_="local_to_web.js" FileName="LOCAL_~1.JS|local_to_web.js" Attributes="0" SourcePath="build\tutorial\javascripts\local_to_web.js" SelfReg="false" NextFile="main.js"/>
+    <ROW File="logo.png" Component_="bg_hr.png" FileName="logo.png" Attributes="0" SourcePath="build\tutorial\images\logo.png" SelfReg="false" NextFile="sprite_download.png"/>
+    <ROW File="main.js" Component_="local_to_web.js" FileName="main.js" Attributes="0" SourcePath="build\tutorial\javascripts\main.js" SelfReg="false" NextFile="params.json"/>
+    <ROW File="msvcp100.dll" Component_="msvcp100.dll" FileName="msvcp100.dll" Attributes="0" SourcePath="build\msvcp100.dll" SelfReg="false" NextFile="msvcr100.dll"/>
+    <ROW File="msvcr100.dll" Component_="msvcr100.dll" FileName="msvcr100.dll" Attributes="0" SourcePath="build\msvcr100.dll" SelfReg="false" NextFile="aaabbb.yad"/>
+    <ROW File="params.json" Component_="git" FileName="PARAMS~1.JSO|params.json" Attributes="0" SourcePath="build\tutorial\params.json" SelfReg="false" NextFile="pygment_trac.css"/>
+    <ROW File="pygment_trac.css" Component_="pygment_trac.css" FileName="PYGMEN~1.CSS|pygment_trac.css" Attributes="0" SourcePath="build\tutorial\stylesheets\pygment_trac.css" SelfReg="false" NextFile="stylesheet.css"/>
+    <ROW File="sprite_download.png" Component_="bg_hr.png" FileName="SPRITE~1.PNG|sprite_download.png" Attributes="0" SourcePath="build\tutorial\images\sprite_download.png" SelfReg="false" NextFile="index.html"/>
+    <ROW File="stylesheet.css" Component_="pygment_trac.css" FileName="STYLES~1.CSS|stylesheet.css" Attributes="0" SourcePath="build\tutorial\stylesheets\stylesheet.css" SelfReg="false" NextFile="msvcp100.dll"/>
+    <ROW File="tutorial.html" Component_="tutorial.html" FileName="TUTORI~1.HTM|tutorial.html" Attributes="0" SourcePath="build\tutorial.html" SelfReg="false" NextFile="YadStudio.exe"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
+    <ROW BuildKey="DefaultBuild" BuildName="DefaultBuild" BuildOrder="1" BuildType="0" PackageFolder="..\build-Setup" PackageFileName="Yad-Studio-Setup" Languages="en" InstallationType="4" UseLargeSchema="true"/>
+    <ATTRIBUTE name="CurrentBuild" value="DefaultBuild"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
+    <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
+    <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
+    <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
+    <ROW Fragment="FolderDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\FolderDlg.aip"/>
+    <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceTypeDlg.aip"/>
+    <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
+    <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
+    <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
+    <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
+    <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
+    <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
+    <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRemoveDlg.aip"/>
+    <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRepairDlg.aip"/>
+    <ROW Fragment="WelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\WelcomeDlg.aip"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
+    <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
+    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="FolderDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="99"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="198"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="202"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="197"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="101"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="501"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceWelcomeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RemoveButton" Event="NewDialog" Argument="VerifyRemoveDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RepairButton" Event="NewDialog" Argument="VerifyRepairDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="1"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Repair" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="399" Options="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="299" Options="1"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
+    <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="203"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
+    <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
+    <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
+    <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
+    <ROW Action="AI_LaunchApp" Type="1" Source="aicustact.dll" Target="[#YadStudio.exe]"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
+    <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
+    <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
+    <ROW Action="AI_ResolveLocalizedCredentials" Type="1" Source="aicustact.dll" Target="GetLocalizedCredentials"/>
+    <ROW Action="AI_SETMIXINSTLOCATION" Type="1" Source="aicustact.dll" Target="MixedAllUsersInstallLocation"/>
+    <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
+    <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="DefaultBuild:[ProgramFilesFolder][ProductName]"/>
+    <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
+    <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
+    <ROW Name="yadicon.exe" SourcePath="..\YAD-Studio\Icons\yad-icon.ico" Index="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
+    <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1501"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
+    <ROW Action="AI_ResolveLocalizedCredentials" Sequence="51"/>
+    <ROW Action="AI_SETMIXINSTLOCATION" Sequence="748"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
+    <ROW Action="AI_ResolveLocalizedCredentials" Sequence="52"/>
+    <ROW Action="AI_DpiContentScale" Sequence="51"/>
+    <ROW Action="AI_SETMIXINSTLOCATION" Sequence="748"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
+    <ROW Condition="(VersionNT &lt;&gt; 400)" Description="[ProductName] cannot be installed on the following Windows versions: [WindowsTypeNT40Display]" DescriptionLocId="AI.LaunchCondition.NoNT40" IsPredefined="true" Builds="DefaultBuild"/>
+    <ROW Condition="VersionNT" Description="[ProductName] cannot be installed on [WindowsType9XDisplay]" DescriptionLocId="AI.LaunchCondition.No9X" IsPredefined="true" Builds="DefaultBuild"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
+    <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
+    <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
+    <ROW Registry="_" Root="1" Key="Software\.yad" Value="Yad.Markov.File" Component_="_"/>
+    <ROW Registry="__1" Root="1" Key="Software\Yad.Markov.File" Value="Markov Algorithm File" Component_="__1"/>
+    <ROW Registry="__2" Root="1" Key="Software\Yad.Markov.File\DefaultIcon" Value="&quot;[APPDIR]\Yad Studio.exe&quot;,1" Component_="__2"/>
+    <ROW Registry="__3" Root="1" Key="Software\Yad.Markov.File\shell\Open\command" Value="&quot;[APPDIR]\Yad Studio.exe&quot; %1" Component_="__3"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
+    <ATTRIBUTE name="UsedTheme" value="classic"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="[|ProductVersion]" Attributes="257" ActionProperty="OLDPRODUCTS"/>
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+  </COMPONENT>
+</DOCUMENT>

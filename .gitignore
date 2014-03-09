@@ -15,3 +15,5 @@
 build-*/
 *.user
 YAD-Studio/docs/html/
+
+Distribution/*-setup-cache/
