@@ -45,6 +45,10 @@ HistoryWidget &gt; QToolButton, #closeButton {
 	height: 20px;
 }
 
+MarkovWordWidget &gt; *{
+	background-color: #f1f1f1;
+}
+
 InputWidget &gt; QPushButton:disabled {
 	border-color: #c7c7c7;
 }
@@ -105,6 +109,19 @@ InputWidget &gt; #runWithDebug:hover, InputWidget &gt; #runWithDebug:pressed {
 
 InputWidget &gt; #runWithDebug:disabled {
 	image: url(:/icons/debug-mid.png);
+}
+
+RunWidget &gt; #inputWord, RunWidget &gt; #outputWord, RunWidget &gt; #errorTitle, 
+RunWidget &gt; #errorDescription
+{
+	font-size: 14px;
+}
+
+RunWidget &gt; #steps, RunWidget &gt; #stepsNumber {
+	font-size: 16px;
+	/*padding-left: 0px;
+	padding-top: 3px;
+	padding-bottom: 3px;*/
 }
 
 QMainWindow {

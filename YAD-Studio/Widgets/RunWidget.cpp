@@ -70,7 +70,7 @@ void RunWidget::runSuccess(QString input_word,
 
     ui->outputWord->setVisible(true);
     ui->outputWidget->setVisible(true);
-    ui->outputWord->setText("Output Word:");
+    ui->outputWord->setText(tr("Output Word"));
     ui->outputWidget->setWord(output_word);
 
     ui->errorDescription->setVisible(false);
@@ -91,7 +91,7 @@ void RunWidget::runFailed(QString input_word,
 
     ui->errorDescription->setVisible(true);
     ui->errorTitle->setVisible(true);
-    ui->errorTitle->setText("Error");
+    ui->errorTitle->setText(tr("Error"));
     //ui->errorDescription->setText(error.getFullErrorInfo());
 
     ui->errorDescription->setText(tr("<b>%1: %2</b><br>%3").arg(QString::number(error.getErrorNumber())).arg(error.getErrorTitle()).arg(error.getErrorDescription()));

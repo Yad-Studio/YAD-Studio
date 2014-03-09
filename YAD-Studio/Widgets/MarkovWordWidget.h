@@ -27,7 +27,7 @@ private:
     Ui::MarkovWordWidget *ui;
 
     QString _word;
-
+    int _line_height;
 public slots:
     //changes the text inside. Removes all previously set highlights
     void setWord(const QString& word);
