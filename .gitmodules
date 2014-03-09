@@ -1,0 +1,3 @@
+[submodule "Distribution/build/tutorial"]
+	path = Distribution/build/tutorial
+	url = git@github.com:Yad-Studio/Yad-Studio.github.io.git
