@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     Managers/SourceCodeManager.cpp \
     Managers/HistoryManager.cpp \
     Managers/FileManager.cpp \
-    Managers/MarkovRunManager.cpp
+    Managers/MarkovRunManager.cpp \
+    AboutWindow.cpp
 
 HEADERS  += MainWindow.h \
     Widgets/MarkovWordWidget.h \
@@ -56,7 +57,8 @@ HEADERS  += MainWindow.h \
     Managers/SourceCodeManager.h \
     Managers/HistoryManager.h \
     Managers/FileManager.h \
-    Managers/MarkovRunManager.h
+    Managers/MarkovRunManager.h \
+    AboutWindow.h
 
 FORMS    += MainWindow.ui \
     Widgets/MarkovWordWidget.ui \
@@ -65,7 +67,8 @@ FORMS    += MainWindow.ui \
     Widgets/InputWidget.ui \
     Widgets/HistoryWidget.ui \
     Widgets/LineInfoWidget.ui \
-    Widgets/EditorWindowWidget.ui
+    Widgets/EditorWindowWidget.ui \
+    AboutWindow.ui
 
 RESOURCES += \
     Resources.qrc

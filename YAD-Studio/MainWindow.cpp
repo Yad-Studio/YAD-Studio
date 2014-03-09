@@ -9,6 +9,7 @@
 #include <QUrl>
 #include <QDir>
 
+#include "AboutWindow.h"
 #include "Widgets/InputWidget.h"
 #include "Widgets/HistoryWidget.h"
 #include "Widgets/RunWidget.h"
@@ -71,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSave, SIGNAL(triggered()), this, SIGNAL(save()));
     connect(ui->actionSave_As, SIGNAL(triggered()), this, SIGNAL(saveAs()));
     connect(ui->actionTutorial, SIGNAL(triggered()), this, SLOT(tutorial()));
+    connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 
     //Connect InputWidget and HistoryManager
     HistoryManager* history_manager = HistoryManager::getInstance();
@@ -258,6 +260,11 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::initStyles()
 {
 
+}
+void MainWindow::about()
+{
+    AboutWindow* about_window = new AboutWindow(this);
+    about_window->show();
 }
 
 void MainWindow::tutorial()
