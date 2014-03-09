@@ -5,6 +5,9 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QDir>
 
 #include "Widgets/InputWidget.h"
 #include "Widgets/HistoryWidget.h"
@@ -67,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionOpen, SIGNAL(triggered()), this, SIGNAL(open()));
     connect(ui->actionSave, SIGNAL(triggered()), this, SIGNAL(save()));
     connect(ui->actionSave_As, SIGNAL(triggered()), this, SIGNAL(saveAs()));
+    connect(ui->actionTutorial, SIGNAL(triggered()), this, SLOT(tutorial()));
 
     //Connect InputWidget and HistoryManager
     HistoryManager* history_manager = HistoryManager::getInstance();
@@ -253,6 +257,18 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 void MainWindow::initStyles()
 {
+
+}
+
+void MainWindow::tutorial()
+{
+
+    QDir path(QCoreApplication::applicationDirPath());
+    QString file_path = path.filePath("tutorial.html");
+
+    QUrl url = QUrl::fromLocalFile(file_path);
+    qDebug() << url;
+    QDesktopServices::openUrl(url);
 
 }
 

@@ -52,6 +52,7 @@ public slots:
     void debugInputStarted();
     void debugInputFinished();
 
+    void tutorial();
 signals:
     void undo();
     void redo();
