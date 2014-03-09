@@ -75,6 +75,7 @@ private:
     static MainWindow* _window;
     void updateWindowTitle();
     void updateDebugMenu();
+    void initStyles();
 private slots:
     void newHistoryLoaded(QVector<QString>);
 };

@@ -14,14 +14,91 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#saveButton, #runWithDebug, #runButton {
-	min-width: 50px;
-    min-height: 28px;
-	color: red;
-}</string>
+   <string notr="true">
+
+InputWidget {
+	background-color: #f1f1f1;
+}
+
+InputWidget &gt; #title {
+	font-size: 20px;
+	color: #424242;
+}
+
+InputWidget &gt; QPushButton {
+	background: none;
+	border: 2px solid #666666;
+	border-radius: 20px;
+
+	width: 40px;
+	height: 40px;
+}
+
+InputWidget &gt; QPushButton:hover {
+	background-color: #4ea6ea;
+	border-color: #4ea6ea;
+}
+
+InputWidget &gt; QPushButton:pressed{
+	background-color: #207abf;
+	border-color: #207abf;
+}
+
+InputWidget &gt; #lineEdit {
+	font-size: 17px;
+
+}
+
+InputWidget &gt; #saveButton {
+	image: url(:/icons/save-dark.png);
+}
+
+InputWidget &gt; #saveButton:hover, InputWidget &gt; #saveButton:pressed {
+	image: url(:/icons/save-light.png);
+}
+
+InputWidget &gt; #runButton {
+	image: url(:/icons/run-dark.png);
+}
+
+InputWidget &gt; #runButton:hover, InputWidget &gt; #runButton:pressed {
+	image: url(:/icons/run-light.png);
+}
+
+InputWidget &gt; #runWithDebug {
+	image: url(:/icons/debug-dark.png);
+}
+
+InputWidget &gt; #runWithDebug:hover, InputWidget &gt; #runWithDebug:pressed {
+	image: url(:/icons/debug-light.png);
+}
+
+QMainWindow {
+	background-color:#fff;
+}
+
+</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout" stretch="4,1">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="leftMargin">
@@ -72,18 +149,50 @@
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="rightColumn">
       <property name="spacing">
-       <number>7</number>
+       <number>11</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>11</number>
+      </property>
+      <property name="topMargin">
+       <number>11</number>
+      </property>
+      <property name="rightMargin">
+       <number>11</number>
+      </property>
+      <property name="bottomMargin">
+       <number>11</number>
       </property>
       <item>
-       <widget class="InputWidget" name="input" native="true"/>
+       <widget class="InputWidget" name="input" native="true">
+        <property name="maximumSize">
+         <size>
+          <width>300</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+       </widget>
       </item>
       <item>
-       <widget class="HistoryWidget" name="history" native="true"/>
+       <widget class="HistoryWidget" name="history" native="true">
+        <property name="maximumSize">
+         <size>
+          <width>300</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
       <item>
        <spacer name="verticalSpacer">

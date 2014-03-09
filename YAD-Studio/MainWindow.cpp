@@ -34,10 +34,13 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    initStyles();
     updateWindowTitle();
     redoAvailable(false);
     undoAvailable(false);
     copyAvailable(false);
+
+
 
     _window = this;
 
@@ -246,6 +249,10 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         source_manager->setNewSourceCodeFromFile(tr("//Alphabet\nT = {}\n\n//Rules\n//a -> b"));
     }
+
+}
+void MainWindow::initStyles()
+{
 
 }
 

@@ -2,6 +2,8 @@
 #define INPUTWIDGET_H
 
 #include <QWidget>
+#include <QStyleOption>
+#include <QPainter>
 
 namespace Ui {
 class InputWidget;
@@ -57,6 +59,14 @@ private:
     Ui::InputWidget *ui;
 
     bool _can_run_algorythm;
+protected:
+    void paintEvent(QPaintEvent *)
+    {
+        QStyleOption opt;
+        opt.init(this);
+        QPainter p(this);
+        style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+    }
 
 };
 

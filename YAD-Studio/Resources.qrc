@@ -5,4 +5,12 @@
         <file>save.png</file>
         <file>close.png</file>
     </qresource>
+    <qresource prefix="/icons">
+        <file>save-dark.png</file>
+        <file>save-light.png</file>
+        <file>debug-dark.png</file>
+        <file>debug-light.png</file>
+        <file>run-dark.png</file>
+        <file>run-light.png</file>
+    </qresource>
 </RCC>
