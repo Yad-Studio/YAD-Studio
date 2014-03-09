@@ -1,6 +1,7 @@
 #include "EditorWindowWidget.h"
 #include "ui_EditorWindowWidget.h"
 #include "MarkovEditorWidget.h"
+#include "LineInfoWidget.h"
 
 EditorWindowWidget::EditorWindowWidget(QWidget *parent) :
     QWidget(parent),
@@ -25,6 +26,11 @@ EditorWindowWidget::EditorWindowWidget(QWidget *parent) :
             this, SIGNAL(breakPointAdded(int)));
     connect(ui->plainTextEdit, SIGNAL(breakPointRemoved(int)),
             this, SIGNAL(breakPointRemoved(int)));
+
+    connect(ui->plainTextEdit, SIGNAL(lineFocusWithError(int,CompilerError)),
+            ui->widget, SLOT(lineWithErrorFocus(int, CompilerError)));
+    connect(ui->plainTextEdit, SIGNAL(lineFocusWithoutError(int)),
+            ui->widget, SLOT(lineWithoutErrorFocus(int)));
 }
 
 EditorWindowWidget::~EditorWindowWidget()
