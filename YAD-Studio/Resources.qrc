@@ -1,8 +1,5 @@
 <RCC>
     <qresource prefix="/new/prefix1">
-        <file>debug.png</file>
-        <file>run.png</file>
-        <file>save.png</file>
         <file>close.png</file>
     </qresource>
     <qresource prefix="/icons">
@@ -12,5 +9,7 @@
         <file>debug-light.png</file>
         <file>run-dark.png</file>
         <file>run-light.png</file>
+        <file>debug-mid.png</file>
+        <file>run-mid.png</file>
     </qresource>
 </RCC>

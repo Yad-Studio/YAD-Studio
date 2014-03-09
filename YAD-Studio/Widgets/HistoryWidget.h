@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include "QListWidgetItem"
+#include <QStyleOption>
+#include <QPainter>
 
 namespace Ui {
 class HistoryWidget;
@@ -39,6 +41,15 @@ signals:
     //There is no need to delete word manually from the list
     //as historyChanged will be called automatically.
     void removeFromHistory(QString word);
+
+protected:
+    void paintEvent(QPaintEvent *)
+    {
+        QStyleOption opt;
+        opt.init(this);
+        QPainter p(this);
+        style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+    }
 };
 
 #endif // HISTORYWIDGET_H
