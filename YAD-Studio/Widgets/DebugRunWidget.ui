@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>467</width>
+    <width>473</width>
     <height>300</height>
    </rect>
   </property>
@@ -127,12 +127,7 @@
     </widget>
    </item>
    <item row="0" column="2">
-    <widget class="QToolButton" name="closeButton">
-     <property name="icon">
-      <iconset resource="../Resources.qrc">
-       <normaloff>:/new/prefix1/close.png</normaloff>:/new/prefix1/close.png</iconset>
-     </property>
-    </widget>
+    <widget class="QToolButton" name="closeButton"/>
    </item>
   </layout>
  </widget>
@@ -144,8 +139,6 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

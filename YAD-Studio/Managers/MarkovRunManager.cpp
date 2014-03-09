@@ -15,7 +15,8 @@ MarkovRunManager::MarkovRunManager():
     _steps_made(0),
     _word_after_last_step(""),
     _is_debug_mode(false),
-    _stop_on_next_step(false)
+    _stop_on_next_step(false),
+    _terminate_on_next_step(false)
 {
 }
 
@@ -72,6 +73,14 @@ bool MarkovRunManager::choseAndUseRule(QString& word,
 
 bool MarkovRunManager::findAndApplyNextRule()
 {
+    if(_terminate_on_next_step)
+    {
+        _terminate_on_next_step = false;
+        debugStop();
+        QCoreApplication::processEvents();
+        return false;
+    }
+
     if(_word_after_last_step.size()>2000)
     {
         QString description = tr("Result can not be longer than 2000 symbols. On step #%1 input become %2 symbols long")
@@ -236,6 +245,7 @@ bool hasSymbolsNotInAlphabet(QString input_word,
 
 void MarkovRunManager::runWithoutDebug(QString input_word)
 {
+    _terminate_on_next_step = false;
     _steps_made = 0;
     _steps_history.clear();
     _input_word = input_word;
@@ -270,6 +280,7 @@ void MarkovRunManager::runWithoutDebug(QString input_word)
 
 void MarkovRunManager::runWithDebug(QString input_word)
 {
+    _terminate_on_next_step = false;
     _steps_made = 0;
     _steps_history.clear();
     _input_word = input_word;
@@ -320,6 +331,10 @@ void MarkovRunManager::debugContinue()
     {
 
     }
+}
+void MarkovRunManager::terminateRun()
+{
+    _terminate_on_next_step = true;
 }
 
 void MarkovRunManager::debugStop()

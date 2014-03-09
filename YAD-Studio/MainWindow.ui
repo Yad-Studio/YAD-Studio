@@ -16,11 +16,11 @@
   <property name="styleSheet">
    <string notr="true">
 
-InputWidget, HistoryWidget {
+InputWidget, HistoryWidget, RunWidget {
 	background-color: #f1f1f1;
 }
 
-InputWidget &gt; #title, HistoryWidget &gt; #title {
+#title {
 	font-size: 20px;
 	color: #424242;
 }
@@ -34,7 +34,7 @@ InputWidget &gt; QPushButton {
 	height: 40px;
 }
 
-HistoryWidget &gt; QToolButton {
+HistoryWidget &gt; QToolButton, #closeButton {
 	background: none;
 	border: 2px solid #666666;
 	border-radius: 13px;
@@ -49,13 +49,13 @@ InputWidget &gt; QPushButton:disabled {
 	border-color: #c7c7c7;
 }
 
-InputWidget &gt; QPushButton:hover, HistoryWidget &gt; QToolButton:hover  {
+InputWidget &gt; QPushButton:hover, HistoryWidget &gt; QToolButton:hover, #closeButton:hover  {
 	background-color: #4ea6ea;
 	border-color: #4ea6ea;
 	color: #fff;
 }
 
-InputWidget &gt; QPushButton:pressed, HistoryWidget &gt; QToolButton:pressed{
+InputWidget &gt; QPushButton:pressed, HistoryWidget &gt; QToolButton:pressed, #closeButton:pressed{
 	background-color: #207abf;
 	border-color: #207abf;
 	padding:0;
@@ -69,6 +69,14 @@ InputWidget &gt; #lineEdit {
 
 InputWidget &gt; #saveButton {
 	image: url(:/icons/save-dark.png);
+}
+
+#closeButton {
+	image: url(:/icons/close-dark.png);
+}
+
+#closeButton:hover, #closeButton:pressed  {
+	image: url(:/icons/close-light.png);
 }
 
 InputWidget &gt; #saveButton:hover, InputWidget &gt; #saveButton:pressed {
@@ -127,8 +135,17 @@ QMainWindow {
     </property>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <property name="spacing">
+       <number>11</number>
+      </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>11</number>
+      </property>
+      <property name="topMargin">
+       <number>11</number>
+      </property>
+      <property name="bottomMargin">
+       <number>11</number>
       </property>
       <item>
        <widget class="EditorWindowWidget" name="editorWindow" native="true">

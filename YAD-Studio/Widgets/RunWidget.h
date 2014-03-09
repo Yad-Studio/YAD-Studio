@@ -3,6 +3,8 @@
 
 #include "Logic/RunError.h"
 #include <QWidget>
+#include <QStyleOption>
+#include <QPainter>
 
 namespace Ui {
 class RunWidget;
@@ -32,6 +34,14 @@ public slots:
                    int steps_made);
 
     void onCloseClicked();
+protected:
+    void paintEvent(QPaintEvent *)
+    {
+        QStyleOption opt;
+        opt.init(this);
+        QPainter p(this);
+        style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+    }
 };
 
 #endif // RUNWIDGET_H

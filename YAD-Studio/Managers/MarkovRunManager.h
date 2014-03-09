@@ -70,7 +70,7 @@ private:
 
     int getStepNumberOfValue(QString word);
     bool choseAndUseRule(QString &word, MarkovRule &rule);
-
+    bool _terminate_on_next_step;
 public slots:
     //called when new compiled algorithm is available.
     void setAlgorithm(MarkovAlgorithm algorithm);
@@ -100,6 +100,8 @@ public slots:
     //called when user clicks Stop in debug window
     void debugStop();
 
+
+    void terminateRun();
 signals:
     //emited when setCanRunSourceCode is called
     void canRunSourceCode(bool);

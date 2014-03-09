@@ -48,10 +48,13 @@ void RunWidget::runStarted(QString input_word)
 
     ui->outputWord->setVisible(false);
     ui->outputWidget->setVisible(false);
+
+    ui->title->setText(tr("Running..."));
 }
 
 void RunWidget::runStepsMade(int steps_make)
 {
+    setVisible(true);
     ui->stepsNumber->setText(QString::number(steps_make));
 }
 
@@ -59,6 +62,7 @@ void RunWidget::runSuccess(QString input_word,
                 QString output_word,
                 int steps_made)
 {
+    setVisible(true);
     ui->inputWidget->setWord(input_word);
 
     ui->stepsNumber->setVisible(true);
@@ -71,12 +75,15 @@ void RunWidget::runSuccess(QString input_word,
 
     ui->errorDescription->setVisible(false);
     ui->errorTitle->setVisible(false);
+
+    ui->title->setText(tr("Run Successful"));
 }
 
 void RunWidget::runFailed(QString input_word,
                RunError error,
                int steps_made)
 {
+    setVisible(true);
     ui->inputWidget->setWord(input_word);
 
     ui->stepsNumber->setVisible(true);
@@ -99,10 +106,14 @@ void RunWidget::runFailed(QString input_word,
 
     ui->outputWord->setVisible(false);
     ui->outputWidget->setVisible(false);
+
+    ui->title->setText(tr("Run Failed"));
 }
+#include "Managers/MarkovRunManager.h"
 void RunWidget::onCloseClicked()
 {
     //this->close();
     setVisible(false);
+    MarkovRunManager::getInstance()->terminateRun();
     //hide();
 }

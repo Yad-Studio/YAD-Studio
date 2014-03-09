@@ -81,6 +81,9 @@ void DebugRunWidget::debugSuccess(QString input_word,
              QString output_word,
              int steps_made)
 {
+    if(!isVisible())
+        setVisible(true);
+
     ui->title->setTitle(tr("Debug Finished"));
 
     ui->input->setText(tr("Input: "));
@@ -118,6 +121,9 @@ void DebugRunWidget::debugFailed(QString input_word,
             RunError error,
             int steps_made)
 {
+    if(!isVisible())
+        setVisible(true);
+
     ui->title->setTitle(tr("Debug Finished"));
 
     ui->input->setText(tr("Input: "));
@@ -163,6 +169,9 @@ void DebugRunWidget::debugStepFinished(int step_number,
                   QString after_rule_applied,
                   MarkovRule applied_rule)
 {
+    if(!isVisible())
+        setVisible(true);
+
     ui->title->setTitle(tr("Step #%1").arg(step_number));
 
     ui->input->setText(tr("Before: "));
@@ -292,8 +301,10 @@ void DebugRunWidget::onStopButtonCliked()
     emit stopClicked();
 
 }
+#include "Managers/MarkovRunManager.h"
 
 void DebugRunWidget::onCloseButtonClicked()
 {
     setVisible(false);
+    MarkovRunManager::getInstance()->terminateRun();
 }
