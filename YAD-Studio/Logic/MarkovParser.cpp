@@ -140,8 +140,9 @@ void parseRule(int line_number, QString line,
             bool is_final = mid=="->.";
             MarkovRule rule(left_part, right_part, is_final, line_number);
             rules.push_back(rule);
-
+#ifndef QT_NO_DEBUG
             qDebug() << "Rule: " << left_part << is_final << right_part;
+#endif
         }
 
     }
@@ -163,7 +164,9 @@ bool parseAlphabet(int line_number, QString line, QVector<CompilerError>& errors
     else
     {
         QString letters_str = trim(rx_alphabet.cap(1));
+#ifndef QT_NO_DEBUG
         qDebug() << "Letters: " << letters_str;
+#endif
 
         if(letters_str.size() > 0)
         {
@@ -200,7 +203,9 @@ bool parseAlphabet(int line_number, QString line, QVector<CompilerError>& errors
             }
         }
         res = true;
+#ifndef QT_NO_DEBUG
         qDebug() << "Alphabet: " << alphabet_q;
+#endif
     }
     return res;
 }

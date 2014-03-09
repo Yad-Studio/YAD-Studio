@@ -5,6 +5,8 @@
 #include <QProcess>
 #include <exception>
 #include <QVector>
+#include <QDebug>
+
 #include "Logic/YadFile.h"
 #include "Managers/HistoryManager.h"
 #include "Managers/SourceCodeManager.h"
@@ -89,7 +91,8 @@ void FileManager::newFile()
 {
     QString current_exe = QCoreApplication::applicationFilePath();
     QProcess process;
-    process.startDetached(current_exe);
+    bool is_ok = process.startDetached(QString("\"%1\"").arg(current_exe));
+    qDebug() << "Run new: " << is_ok;
 }
 
 bool FileManager::saveToFile(QString file_name)
