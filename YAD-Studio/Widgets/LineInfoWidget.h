@@ -2,6 +2,9 @@
 #define LINEINFOWIDGET_H
 
 #include <QWidget>
+#include <QStyleOption>
+#include <QPainter>
+
 #include "Logic/CompilerError.h"
 namespace Ui {
 class LineInfoWidget;
@@ -23,6 +26,14 @@ public slots:
     
 private:
     Ui::LineInfoWidget *ui;
+protected:
+    void paintEvent(QPaintEvent *)
+    {
+        QStyleOption opt;
+        opt.init(this);
+        QPainter p(this);
+        style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+    }
 };
 
 #endif // LINEINFOWIDGET_H

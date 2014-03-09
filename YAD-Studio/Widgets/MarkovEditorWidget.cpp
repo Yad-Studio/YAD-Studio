@@ -335,7 +335,7 @@ void MarkovEditorWidget::lineNumberAreaPaintEvent(QPaintEvent *event)
     QPalette palette;
 
     QPainter painter(lineNumberArea);
-    painter.fillRect(event->rect(), palette.color(QPalette::Window));
+    painter.fillRect(event->rect(), QColor("#f0f0f0"));
 
 
 
@@ -534,7 +534,7 @@ void MarkovEditorWidget::updateErrors()
         CompilerError err = _errors[i];
         _lines_with_errors.insert(err.getLineNumber());
 
-        if(_errors_map.find(err.getLineNumber()) != _errors_map.end())
+        if(_errors_map.find(err.getLineNumber()) == _errors_map.end())
         {
             _errors_map.insert(err.getLineNumber(), err);
         }

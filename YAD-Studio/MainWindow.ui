@@ -147,6 +147,21 @@ DebugRunWidget &gt; #ruleText
 	font-size: 18px;
 }
 
+LineInfoWidget &gt; #line_number {
+	font-size: 20px;
+	color: #a0a0a0;
+}
+
+LineInfoWidget {
+	background-color: #f0f0f0;
+	border: 1px solid #828790;
+}
+
+MarkovEditorWidget
+{
+	border: 1px solid #828790;
+	border-bottom-width: 0px;
+}
 
 #steps, #stepsNumber {
 	font-size: 16px;
