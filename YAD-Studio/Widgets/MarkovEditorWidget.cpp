@@ -6,6 +6,8 @@
 #include <QTextBlock>
 
 #include "Logic/MarkovParser.h"
+
+
 static int break_point_width = 10;
 static int break_point_padding = 3;
 
@@ -48,6 +50,7 @@ MarkovEditorWidget::MarkovEditorWidget(QWidget *parent) :
     connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth()));
     connect(this, SIGNAL(updateRequest(QRect,int)), this, SLOT(updateLineNumberArea(QRect,int)));
     connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightCurrentLine()));
+
 
     updateLineNumberAreaWidth();
     highlightCurrentLine();

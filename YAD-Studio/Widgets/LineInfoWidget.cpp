@@ -6,9 +6,31 @@ LineInfoWidget::LineInfoWidget(QWidget *parent) :
     ui(new Ui::LineInfoWidget)
 {
     ui->setupUi(this);
+
 }
 
 LineInfoWidget::~LineInfoWidget()
 {
     delete ui;
+
+}
+
+void LineInfoWidget::lineWithErrorFocus(int line_number, CompilerError error){
+    ui->line_number->setText("Line #"+QString::number(line_number));
+    ui->error_title->setStyleSheet("QLabel { color : red; }");
+    ui->error_title->setText(error.getErrorTitle());
+    if(ui->error_description->isHidden())
+        ui->error_description->show();
+    ui->error_description->setStyleSheet("QLabel { color : red; }");
+    ui->error_description->setText(error.getErrorDescription());
+}
+
+void LineInfoWidget::lineWithoutErrorFocus(int line_number){
+    ui->error_title->setStyleSheet("QLabel { color : black; }");
+    ui->line_number->setText("Line #"+QString::number(line_number));
+    if(!ui->error_description->isHidden())
+        ui->error_description->hide();
+
+    ui->error_title->setAlignment(Qt::AlignVCenter);
+    ui->error_title->setText("Line is correct");
 }
