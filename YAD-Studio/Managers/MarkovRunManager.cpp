@@ -1,5 +1,6 @@
 #include "MarkovRunManager.h"
 #include <QCoreApplication>
+#include <QTime>
 
 MarkovRunManager* MarkovRunManager::_instance = nullptr;
 
@@ -150,7 +151,7 @@ bool MarkovRunManager::findAndApplyNextRule()
         if(last_step.size() > 30)
             last_step = last_step.mid(0, 30) + "...";
 
-        int prev_same_stem = getStepNumberOfValue(_input_word);
+        int prev_same_stem = getStepNumberOfValue(_word_after_last_step);
 
         QString description = tr("The result of step #%1 is same as on the step #%2\n('%3')")
                 .arg(prev_same_stem).arg(_steps_made).arg(last_step);
@@ -268,12 +269,17 @@ void MarkovRunManager::runWithoutDebug(QString input_word)
     }
     else
     {
+        QTime time;
+        time.start();
+
         while(findAndApplyNextRule())
         {
-            if(_steps_made%100 == 0)
+            int difference = time.elapsed();
+            if(difference > 100)
             {
                 emit runStepsMade(_steps_made);
                 QCoreApplication::processEvents();
+                time.start();
             }
         }
     }
