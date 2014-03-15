@@ -21,17 +21,20 @@ MarkovRunManager::MarkovRunManager():
 {
 }
 
-RunError notInAlphabet(QString letter, MarkovAlphabet alphabet_m)
+RunError notInAlphabet(QString letter, MarkovAlphabet alphabet_m, QString name="T")
 {
     QString old_alphabet = QObject::tr("%1").arg(letter);
-    QSet<QChar> alphabet = alphabet_m.getAlphabet();
-    foreach (const QChar value, alphabet)
-    {
-        old_alphabet += QObject::tr(", %1").arg(value);
-    }
+//    QSet<QChar> alphabet = alphabet_m.getAlphabet();
+//    foreach (const QChar value, alphabet)
+//    {
+//        old_alphabet += QObject::tr(", %1").arg(value);
+//    }
+    old_alphabet += ", " + alphabet_m.getSource();
 
     QString title=QObject::tr("Symbol '%1' is not in alphabet").arg(letter);
-    QString description=QObject::tr("You can add it to alphabet. Examples: 'T = {%1}'.").arg(old_alphabet);
+    QString description=QObject::tr("You can add it to alphabet. Examples: '%1 = {%2}'.")
+            .arg(name)
+            .arg(old_alphabet);
 
     return RunError(title, description, 305);
 }
@@ -257,17 +260,7 @@ void MarkovRunManager::runWithoutDebug(QString input_word)
     emit runWithoutDebugStarted(input_word);
     QCoreApplication::processEvents();
 
-    QChar test;
-    if(hasSymbolsNotInAlphabet(input_word,
-                               _algorithm.getAlphabet(),
-                               test))
-    {
-        emit runWithoutDebugFinishFail(input_word,
-                                       notInAlphabet(test, _algorithm.getAlphabet()),
-                                       0);
-        QCoreApplication::processEvents();
-    }
-    else
+    if(isInputValid(input_word))
     {
         QTime time;
         time.start();
@@ -284,6 +277,40 @@ void MarkovRunManager::runWithoutDebug(QString input_word)
         }
     }
 }
+bool MarkovRunManager::isInputValid(QString input_word)
+{
+    QChar test;
+    if(_algorithm.getInputAlphabet().isAuto())
+    {
+        if(hasSymbolsNotInAlphabet(input_word,
+                                   _algorithm.getAlphabet(),
+                                   test))
+        {
+            emit debugFinishFail(input_word,
+                                 notInAlphabet(test, _algorithm.getAlphabet()),
+                                 0);
+            QCoreApplication::processEvents();
+            return false;
+        }
+    }
+    else
+    {
+        if(hasSymbolsNotInAlphabet(input_word,
+                                   _algorithm.getInputAlphabet(),
+                                   test))
+        {
+            emit debugFinishFail(input_word,
+                                 notInAlphabet(test, _algorithm.getInputAlphabet(), "I"),
+                                 0);
+            QCoreApplication::processEvents();
+            return false;
+        }
+    }
+
+
+    return true;
+}
+
 void MarkovRunManager::doStartDebug(QString input_word, bool stop_at_first_step)
 {
     _stop_on_next_step = stop_at_first_step;
@@ -297,17 +324,8 @@ void MarkovRunManager::doStartDebug(QString input_word, bool stop_at_first_step)
     emit debugStarted(input_word);
     QCoreApplication::processEvents();
 
-    QChar test;
-    if(hasSymbolsNotInAlphabet(input_word,
-                               _algorithm.getAlphabet(),
-                               test))
-    {
-        emit debugFinishFail(input_word,
-                             notInAlphabet(test, _algorithm.getAlphabet()),
-                             0);
-        QCoreApplication::processEvents();
-    }
-    else
+
+    if(isInputValid(input_word))
     {
 
         while(findAndApplyNextRule())

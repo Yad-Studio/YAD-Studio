@@ -1,9 +1,11 @@
 #include "MarkovAlgorithm.h"
 
 MarkovAlgorithm::MarkovAlgorithm(MarkovAlphabet alphabet,
-                                 QVector<MarkovRule> rules)
+                                 QVector<MarkovRule> rules,
+                                 MarkovAlphabet input_alphabet)
     : _alphabet(alphabet),
-      _rules(rules)
+      _rules(rules),
+      _input_alphabet(input_alphabet)
 {
 
 }
@@ -66,7 +68,10 @@ const MarkovRule* MarkovAlgorithm::getRuleFor(QString input) const
 
     return res;
 }
-
+const MarkovAlphabet& MarkovAlgorithm::getInputAlphabet() const
+{
+    return _input_alphabet;
+}
 const MarkovAlphabet& MarkovAlgorithm::getAlphabet() const
 {
     return _alphabet;

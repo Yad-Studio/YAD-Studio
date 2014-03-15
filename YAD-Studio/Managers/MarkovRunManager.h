@@ -73,6 +73,8 @@ private:
     bool _terminate_on_next_step;
 
     void doStartDebug(QString word, bool stop_at_first_step);
+
+    bool isInputValid(QString input_word);
 public slots:
     //called when new compiled algorithm is available.
     void setAlgorithm(MarkovAlgorithm algorithm);

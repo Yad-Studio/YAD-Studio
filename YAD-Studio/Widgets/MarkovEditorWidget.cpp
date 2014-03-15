@@ -75,6 +75,10 @@ void MarkovEditorWidget::MarkovHighliter::highlightBlock(const QString& text)
         symbols.setForeground(alphabet_color);
         symbols.setFontWeight(QFont::Bold);
         QString pattern = "["+QRegExp::escape(_editor->_algorithm.getAlphabet().getAllChars())+"]+";
+
+        if(_editor->_algorithm.getAlphabet().isAuto())
+            pattern = ".+";
+
         QRegExp expression(pattern);
         int index = text.indexOf(expression);
         while(index >= 0)
@@ -92,7 +96,7 @@ void MarkovEditorWidget::MarkovHighliter::highlightBlock(const QString& text)
         system.setForeground(system_symbol);
         system.setFontWeight(QFont::Bold);
 
-        QString pattern = "[T= \\{\\},]+";
+        QString pattern = "[TI= \\{\\},]+";
         QRegExp expression(pattern);
         int index = text.indexOf(expression);
         while(index >= 0)
