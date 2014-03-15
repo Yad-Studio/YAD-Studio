@@ -25,7 +25,7 @@ public:
     
 private:
     Ui::MarkovWordWidget *ui;
-
+    QString getWordLength();
     QString _word;
     int _line_height;
 public slots:

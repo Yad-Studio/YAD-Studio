@@ -20,9 +20,9 @@ public:
     
 private:
     Ui::HistoryWidget *ui;
+    QVector<QString> _history;
 
-
-
+    QStringList getSelectedItems();
 public slots:
     // the list in widget must be updated
     //(delete all previous history and write new QVector)

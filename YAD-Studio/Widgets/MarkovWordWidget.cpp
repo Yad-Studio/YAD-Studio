@@ -40,16 +40,20 @@ void MarkovWordWidget::setWord(const QString& word)
 {
     _word = word;
     if(_word.size() > 0)
-        ui->word->setText(tr("<font color=#000>%1</font>").arg(_word));
+        ui->word->setText(getWordLength() + tr("<font color=#000>%1</font>").arg(_word));
     else
         ui->word->setText(tr("<font color=#777777>[empty]</font>"));
+}
+QString MarkovWordWidget::getWordLength()
+{
+    return QString("<font color=#777777 style='font-size:10px;'>[%1]</font>").arg(_word.size());
 }
 
 void MarkovWordWidget::addHighlight(int from,
                   int length,
                   HighlightType type)
 {
-    QString text = ui->word->toPlainText();
+    QString text = _word;
     QString begin = text.left(from);
     QString middle = text.mid(from,length);
     QString end = text.mid(from+length,text.size());
@@ -60,7 +64,7 @@ void MarkovWordWidget::addHighlight(int from,
 
 
     QString text_code = "<font color="+color+">"+middle+"</font>";
-    ui->word->setText(begin + text_code + end);
+    ui->word->setText(getWordLength() + begin + text_code + end);
 
 }
 
