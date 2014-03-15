@@ -245,6 +245,7 @@ bool hasSymbolsNotInAlphabet(QString input_word,
 
 void MarkovRunManager::runWithoutDebug(QString input_word)
 {
+    _stop_on_next_step = false;
     _terminate_on_next_step = false;
     _steps_made = 0;
     _steps_history.clear();
@@ -277,9 +278,9 @@ void MarkovRunManager::runWithoutDebug(QString input_word)
         }
     }
 }
-
-void MarkovRunManager::runWithDebug(QString input_word)
+void MarkovRunManager::doStartDebug(QString input_word, bool stop_at_first_step)
 {
+    _stop_on_next_step = stop_at_first_step;
     _terminate_on_next_step = false;
     _steps_made = 0;
     _steps_history.clear();
@@ -307,6 +308,16 @@ void MarkovRunManager::runWithDebug(QString input_word)
         {
         }
     }
+}
+
+void MarkovRunManager::runWithDebug(QString input_word)
+{
+    doStartDebug(input_word, false);
+}
+
+void MarkovRunManager::runWithDebugStepByStep(QString input_word)
+{
+    doStartDebug(input_word, true);
 }
 
 void MarkovRunManager::addBreakPoint(int line_number)

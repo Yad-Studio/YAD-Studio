@@ -71,6 +71,8 @@ private:
     int getStepNumberOfValue(QString word);
     bool choseAndUseRule(QString &word, MarkovRule &rule);
     bool _terminate_on_next_step;
+
+    void doStartDebug(QString word, bool stop_at_first_step);
 public slots:
     //called when new compiled algorithm is available.
     void setAlgorithm(MarkovAlgorithm algorithm);
@@ -84,6 +86,8 @@ public slots:
 
     //starts running with debug.
     void runWithDebug(QString input_word);
+
+    void runWithDebugStepByStep(QString input_word);
 
     // add break point to set
     void addBreakPoint(int line_number);
