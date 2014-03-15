@@ -23,10 +23,10 @@ InputWidget::InputWidget(QWidget *parent) :
             SLOT(runWithDebugClicked()));
 
     //save clicked
-    connect(ui->saveButton,
+    connect(ui->runStepByStep,
             SIGNAL(clicked()),
             this,
-            SLOT(saveCliked()));
+            SLOT(runWithDebugStepByStepClicked()));
 }
 
 InputWidget::~InputWidget()
@@ -37,6 +37,7 @@ void InputWidget::runStarted()
 {
     ui->runButton->setEnabled(false);
     ui->runWithDebug->setEnabled(false);
+    ui->runStepByStep->setEnabled(false);
 }
 
 void InputWidget::runFinished()
@@ -45,11 +46,13 @@ void InputWidget::runFinished()
     {
         ui->runButton->setEnabled(true);
         ui->runWithDebug->setEnabled(true);
+        ui->runStepByStep->setEnabled(true);
     }
     else
     {
         ui->runButton->setEnabled(false);
         ui->runWithDebug->setEnabled(false);
+        ui->runStepByStep->setEnabled(false);
     }
 }
 
@@ -66,11 +69,13 @@ void InputWidget::canRunAlgorithm(bool can_run)
     {
         ui->runButton->setEnabled(false);
         ui->runWithDebug->setEnabled(false);
+        ui->runStepByStep->setEnabled(false);
     }
     else
     {
         ui->runButton->setEnabled(true);
         ui->runWithDebug->setEnabled(true);
+        ui->runStepByStep->setEnabled(true);
     }
 }
 void InputWidget::runCliked( )
@@ -83,6 +88,12 @@ void InputWidget::runWithDebugClicked()
     emit runWithDebug(ui->lineEdit->text());
     emit addToHistory(ui->lineEdit->text());
 }
+void InputWidget::runWithDebugStepByStepClicked()
+{
+    emit runWithDebugStepByStep(ui->lineEdit->text());
+    emit addToHistory(ui->lineEdit->text());
+}
+
 void InputWidget::saveCliked()
 {
     emit save();

@@ -37,18 +37,9 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QPushButton" name="saveButton">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
+      <widget class="QPushButton" name="runButton">
        <property name="toolTip">
-        <string>Save (Ctrl+S)</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
+        <string>Run (F5)</string>
        </property>
        <property name="text">
         <string/>
@@ -69,9 +60,9 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="runButton">
+      <widget class="QPushButton" name="runWithDebug">
        <property name="toolTip">
-        <string>Run (F5)</string>
+        <string>Debug (Shift+F5)</string>
        </property>
        <property name="text">
         <string/>
@@ -79,9 +70,18 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="runWithDebug">
+      <widget class="QPushButton" name="runStepByStep">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="toolTip">
-        <string>Debug (Shift+F5)</string>
+        <string>Debug Step By Step (F10)</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
        </property>
        <property name="text">
         <string/>

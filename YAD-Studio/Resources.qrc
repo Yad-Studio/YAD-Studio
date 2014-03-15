@@ -15,5 +15,6 @@
         <file>Icons/stop-dark.png</file>
         <file>Icons/stop-light.png</file>
         <file>Icons/logo.png</file>
+        <file>Icons/next-mid.png</file>
     </qresource>
 </RCC>

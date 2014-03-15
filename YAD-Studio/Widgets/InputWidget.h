@@ -38,6 +38,7 @@ public slots:
 
     void runCliked();
     void runWithDebugClicked();
+    void runWithDebugStepByStepClicked();
     void saveCliked();
 
 signals:
@@ -50,6 +51,8 @@ signals:
 
     //when button is clicked
     void save();
+
+    void runWithDebugStepByStep(QString input_word);
 
     //should be emitted when run or runWithDebug is emitted.
     //Used to notify HistoryStorage about new word.

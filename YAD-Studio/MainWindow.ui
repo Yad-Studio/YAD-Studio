@@ -107,11 +107,15 @@ InputWidget &gt; #runButton {
 	image: url(:/icons/Icons/stop-light.png);
 }
 
-#nextButton {
+#nextButton, #runStepByStep {
 	image: url(:/icons/Icons/next-dark.png);
 }
-#nextButton:pressed, #nextButton:hover {
+#nextButton:pressed, #nextButton:hover, #runStepByStep:pressed, #runStepByStep:hover {
 	image: url(:/icons/Icons/next-light.png);
+}
+
+#runStepByStep:disabled {
+	image: url(:/icons/Icons/next-mid.png);
 }
 
 
@@ -367,6 +371,7 @@ QMainWindow {
     </property>
     <addaction name="actionRun"/>
     <addaction name="actionDebug"/>
+    <addaction name="actionDebug_Step_By_Step"/>
     <addaction name="separator"/>
     <addaction name="actionNext_Step"/>
     <addaction name="actionContinue"/>
@@ -540,6 +545,14 @@ QMainWindow {
   <action name="actionStop_Debug">
    <property name="text">
     <string>Stop Debug</string>
+   </property>
+  </action>
+  <action name="actionDebug_Step_By_Step">
+   <property name="text">
+    <string>Debug Step By Step</string>
+   </property>
+   <property name="shortcut">
+    <string>F10</string>
    </property>
   </action>
  </widget>

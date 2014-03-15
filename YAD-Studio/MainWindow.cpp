@@ -127,6 +127,8 @@ MainWindow::MainWindow(QWidget *parent) :
             run_manager, SLOT(runWithDebug(QString)));
     connect(run_manager, SIGNAL(runWithoutDebugStarted(QString)),
             ui->input, SLOT(runStarted()));
+    connect(ui->input, SIGNAL(runWithDebugStepByStep(QString)),
+            run_manager, SLOT(runWithDebugStepByStep(QString)));
     connect(run_manager, SIGNAL(debugStarted(QString)),
             ui->input, SLOT(runStarted()));
     connect(run_manager, SIGNAL(runWithoutDebugFinishFail(QString,RunError,int)),
@@ -243,6 +245,8 @@ MainWindow::MainWindow(QWidget *parent) :
             run_manager, SLOT(debugContinue()));
     connect(ui->actionStop_Debug, SIGNAL(triggered()),
             run_manager, SLOT(debugStop()));
+    connect(ui->actionDebug_Step_By_Step, SIGNAL(triggered()),
+            ui->input, SLOT(runWithDebugStepByStepClicked()));
 
     //Read file to open from command line
     QStringList arguments = QCoreApplication::arguments();
@@ -331,11 +335,13 @@ void MainWindow::updateDebugMenu()
     {
         ui->actionRun->setEnabled(false);
         ui->actionDebug->setEnabled(false);
+        ui->actionDebug_Step_By_Step->setEnabled(false);
     }
     else
     {
         ui->actionRun->setEnabled(true);
         ui->actionDebug->setEnabled(true);
+        ui->actionDebug_Step_By_Step->setEnabled(true);
     }
 
     if(_is_debug_input)
