@@ -468,5 +468,5 @@ void registerFileType(const QString& documentId,
     settings.setValue(QString("%1/DefaultIcon/Default").arg(documentId),
                       QString("\"%1\",%2").arg(exe_name).arg(appIconIndex));
     settings.setValue(QString("%1/shell/Open/command/Default").arg(documentId),
-                      "\"" + exe_name + "\" %1");
+                      "\"" + exe_name + "\" \"%1\"");
 }
