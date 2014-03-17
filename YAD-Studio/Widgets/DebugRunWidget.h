@@ -23,6 +23,7 @@ public:
 private:
     Ui::DebugRunWidget *ui;
     bool _debug_pause;
+    bool _debug_finished;
 public slots:
 
     //should clear all previously set data

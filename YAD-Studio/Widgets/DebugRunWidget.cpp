@@ -6,7 +6,8 @@
 DebugRunWidget::DebugRunWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DebugRunWidget),
-    _debug_pause(false)
+    _debug_pause(false),
+    _debug_finished(false)
 {
     ui->setupUi(this);
 
@@ -56,7 +57,7 @@ void DebugRunWidget::debugStarted(QString input_word)
 {
     if(!isVisible())
         setVisible(true);
-
+    _debug_finished = false;
     ui->inputWidget->setWord(input_word);
 
     ui->output->setVisible(false);
@@ -84,7 +85,7 @@ void DebugRunWidget::debugSuccess(QString input_word,
 {
     if(!isVisible())
         setVisible(true);
-
+    _debug_finished = true;
     ui->title->setText(tr("Debug Successful"));
 
     ui->input->setText(tr("Input "));
@@ -124,7 +125,7 @@ void DebugRunWidget::debugFailed(QString input_word,
 {
     if(!isVisible())
         setVisible(true);
-
+    _debug_finished = true;
     ui->title->setText(tr("Debug Failed"));
 
     ui->input->setText(tr("Input "));
@@ -313,8 +314,11 @@ void DebugRunWidget::onStopButtonCliked()
 void DebugRunWidget::onCloseButtonClicked()
 {
     setVisible(false);
-    if(_debug_pause)
-        onStopButtonCliked();
-    else
-        MarkovRunManager::getInstance()->terminateRun();
+    if(!_debug_finished)
+    {
+        if(_debug_pause)
+            onStopButtonCliked();
+        else
+            MarkovRunManager::getInstance()->terminateRun();
+    }
 }

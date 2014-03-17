@@ -158,7 +158,10 @@ void HistoryWidget::historyChanged(QVector<QString> list)
     for(int i=0; i<list.size(); ++i)
     {
         QString w_len = QString("<span style='font-size:10px; color:#777777'>[%1] </span>").arg(list[i].size());
-        QString text = QString("<span style='font-size:16px'>%1</span>").arg(list[i]);
+        QString text_raw = list[i];
+        if(text_raw.size() > 20)
+            text_raw = text_raw.mid(0,20) + "...";
+        QString text = QString("<span style='font-size:16px'>%1</span>").arg(text_raw);
         stringList->append(w_len+text);
     }
 

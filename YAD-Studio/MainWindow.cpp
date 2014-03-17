@@ -202,6 +202,10 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->debugRun, SLOT(breakPointReached(int)));
     connect(run_manager, SIGNAL(runWithoutDebugStarted(QString)),
             ui->debugRun, SLOT(hide()));
+    connect(run_manager, SIGNAL(debugFinishFail(QString,RunError,int)),
+            ui->runWidget, SLOT(hide()));
+    connect(run_manager, SIGNAL(runWithoutDebugFinishFail(QString,RunError,int)),
+            ui->debugRun, SLOT(hide()));
 
     //Connect DebugRunWidget and EditorWindowWidget
     connect(ui->debugRun, SIGNAL(removeBreakPoint()),
