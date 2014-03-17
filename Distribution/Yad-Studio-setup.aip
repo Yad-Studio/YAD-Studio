@@ -26,6 +26,8 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
+    <ROW Directory="DesktopFolder" Directory_Parent="TARGETDIR" DefaultDir="DESKTO~1|DesktopFolder" IsPseudoRoot="1"/>
+    <ROW Directory="ProgramMenuFolder" Directory_Parent="TARGETDIR" DefaultDir="PROGRA~1|ProgramMenuFolder" IsPseudoRoot="1"/>
     <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
     <ROW Directory="examples_Dir" Directory_Parent="APPDIR" DefaultDir="examples"/>
     <ROW Directory="images_Dir" Directory_Parent="tutorial_Dir" DefaultDir="images"/>
@@ -42,13 +44,13 @@
     <ROW Component="__1" ComponentId="{12BF999B-C835-4F4B-8C63-93513B8F0056}" Directory_="APPDIR" Attributes="4" KeyPath="__1"/>
     <ROW Component="__2" ComponentId="{2E409AF5-842E-40C7-9126-056383E42E03}" Directory_="APPDIR" Attributes="4" KeyPath="__2"/>
     <ROW Component="__3" ComponentId="{7EB1B04F-ACC2-4AA1-A64A-C6884D1600C3}" Directory_="APPDIR" Attributes="4" KeyPath="__3"/>
-    <ROW Component="aaabbb.yad" ComponentId="{88977ACA-C8F5-4AC1-A013-6A875936245F}" Directory_="examples_Dir" Attributes="0" KeyPath="aaabbb.yad" Type="0"/>
-    <ROW Component="bg_hr.png" ComponentId="{0DED5949-ED05-444A-963C-2431AAE8E9CE}" Directory_="images_Dir" Attributes="0" KeyPath="bg_hr.png" Type="0"/>
-    <ROW Component="git" ComponentId="{F8C7EA2A-7FEC-4D52-9856-C07D56228DE7}" Directory_="tutorial_Dir" Attributes="0" KeyPath="git" Type="0"/>
-    <ROW Component="local_to_web.js" ComponentId="{BE5166FA-0498-4DCE-AC06-B84CA508B304}" Directory_="javascripts_Dir" Attributes="0" KeyPath="local_to_web.js" Type="0"/>
+    <ROW Component="aaabbb.yad" ComponentId="{B05B8E04-7D76-4515-8BC0-400121415148}" Directory_="examples_Dir" Attributes="0" KeyPath="aaabbb.yad" Type="0"/>
+    <ROW Component="bg_hr.png" ComponentId="{46D54EE4-0B03-44E2-878E-4206D9F8EF48}" Directory_="images_Dir" Attributes="0" KeyPath="bg_hr.png" Type="0"/>
+    <ROW Component="git" ComponentId="{CCA1199B-24C3-4E5A-A404-807129F78CA7}" Directory_="tutorial_Dir" Attributes="0" KeyPath="git" Type="0"/>
+    <ROW Component="local_to_web.js" ComponentId="{3FEED269-FB6C-433B-B2B7-01315D3A034E}" Directory_="javascripts_Dir" Attributes="0" KeyPath="local_to_web.js" Type="0"/>
     <ROW Component="msvcp100.dll" ComponentId="{A885CC15-231F-420B-9D05-FD8B025B65F5}" Directory_="APPDIR" Attributes="0" KeyPath="msvcp100.dll"/>
     <ROW Component="msvcr100.dll" ComponentId="{63860DEA-266B-4215-AC3C-BEFA481B225A}" Directory_="APPDIR" Attributes="0" KeyPath="msvcr100.dll"/>
-    <ROW Component="pygment_trac.css" ComponentId="{8FA9FE5C-8FD4-4377-BE40-1E308581D554}" Directory_="stylesheets_Dir" Attributes="0" KeyPath="pygment_trac.css" Type="0"/>
+    <ROW Component="pygment_trac.css" ComponentId="{410713FF-9D47-4B89-BBCC-D25D389F79BB}" Directory_="stylesheets_Dir" Attributes="0" KeyPath="pygment_trac.css" Type="0"/>
     <ROW Component="tutorial.html" ComponentId="{551FE6CE-21A6-4364-9F0A-F3362BE4D798}" Directory_="APPDIR" Attributes="0" KeyPath="tutorial.html" Type="0"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
@@ -58,24 +60,29 @@
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
     <ROW File="QtCore4.dll" Component_="QtCore4.dll" FileName="QtCore4.dll" Attributes="0" SourcePath="build\QtCore4.dll" SelfReg="false" NextFile="QtGui4.dll"/>
     <ROW File="QtGui4.dll" Component_="QtGui4.dll" FileName="QtGui4.dll" Attributes="0" SourcePath="build\QtGui4.dll" SelfReg="false" NextFile="tutorial.html"/>
-    <ROW File="YadStudio.exe" Component_="YadStudio.exe" FileName="YADSTU~1.EXE|Yad Studio.exe" Attributes="0" SourcePath="build\Yad Studio.exe" SelfReg="false" NextFile="git" DigSign="true"/>
+    <ROW File="YadStudio.exe" Component_="YadStudio.exe" FileName="YADSTU~1.EXE|Yad Studio.exe" Attributes="0" SourcePath="build\Yad Studio.exe" SelfReg="false" NextFile="msvcp100.dll" DigSign="true"/>
     <ROW File="aaabbb.yad" Component_="aaabbb.yad" FileName="aaabbb.yad" Attributes="0" SourcePath="build\examples\aaabbb.yad" SelfReg="false" NextFile="example1.yad"/>
     <ROW File="bg_hr.png" Component_="bg_hr.png" FileName="bg_hr.png" Attributes="0" SourcePath="build\tutorial\images\bg_hr.png" SelfReg="false" NextFile="blacktocat.png"/>
     <ROW File="blacktocat.png" Component_="bg_hr.png" FileName="BLACKT~1.PNG|blacktocat.png" Attributes="0" SourcePath="build\tutorial\images\blacktocat.png" SelfReg="false" NextFile="icon_download.png"/>
     <ROW File="example1.yad" Component_="aaabbb.yad" FileName="example1.yad" Attributes="0" SourcePath="build\examples\example1.yad" SelfReg="false" NextFile="example2.yad"/>
-    <ROW File="example2.yad" Component_="aaabbb.yad" FileName="example2.yad" Attributes="0" SourcePath="build\examples\example2.yad" SelfReg="false"/>
+    <ROW File="example2.yad" Component_="aaabbb.yad" FileName="example2.yad" Attributes="0" SourcePath="build\examples\example2.yad" SelfReg="false" NextFile="mirrow.yad"/>
     <ROW File="git" Component_="git" FileName="GIT~1|.git" Attributes="0" SourcePath="build\tutorial\.git" SelfReg="false" NextFile="bg_hr.png"/>
     <ROW File="icon_download.png" Component_="bg_hr.png" FileName="ICON_D~1.PNG|icon_download.png" Attributes="0" SourcePath="build\tutorial\images\icon_download.png" SelfReg="false" NextFile="logo.png"/>
     <ROW File="index.html" Component_="git" FileName="INDEX~1.HTM|index.html" Attributes="0" SourcePath="build\tutorial\index.html" SelfReg="false" NextFile="local_to_web.js"/>
     <ROW File="local_to_web.js" Component_="local_to_web.js" FileName="LOCAL_~1.JS|local_to_web.js" Attributes="0" SourcePath="build\tutorial\javascripts\local_to_web.js" SelfReg="false" NextFile="main.js"/>
-    <ROW File="logo.png" Component_="bg_hr.png" FileName="logo.png" Attributes="0" SourcePath="build\tutorial\images\logo.png" SelfReg="false" NextFile="sprite_download.png"/>
+    <ROW File="logo.png" Component_="bg_hr.png" FileName="logo.png" Attributes="0" SourcePath="build\tutorial\images\logo.png" SelfReg="false" NextFile="s1.png"/>
     <ROW File="main.js" Component_="local_to_web.js" FileName="main.js" Attributes="0" SourcePath="build\tutorial\javascripts\main.js" SelfReg="false" NextFile="params.json"/>
+    <ROW File="mirrow.yad" Component_="aaabbb.yad" FileName="mirrow.yad" Attributes="0" SourcePath="build\examples\mirrow.yad" SelfReg="false" NextFile="multiply.yad"/>
     <ROW File="msvcp100.dll" Component_="msvcp100.dll" FileName="msvcp100.dll" Attributes="0" SourcePath="build\msvcp100.dll" SelfReg="false" NextFile="msvcr100.dll"/>
     <ROW File="msvcr100.dll" Component_="msvcr100.dll" FileName="msvcr100.dll" Attributes="0" SourcePath="build\msvcr100.dll" SelfReg="false" NextFile="aaabbb.yad"/>
+    <ROW File="multiply.yad" Component_="aaabbb.yad" FileName="multiply.yad" Attributes="0" SourcePath="build\examples\multiply.yad" SelfReg="false" NextFile="git"/>
     <ROW File="params.json" Component_="git" FileName="PARAMS~1.JSO|params.json" Attributes="0" SourcePath="build\tutorial\params.json" SelfReg="false" NextFile="pygment_trac.css"/>
     <ROW File="pygment_trac.css" Component_="pygment_trac.css" FileName="PYGMEN~1.CSS|pygment_trac.css" Attributes="0" SourcePath="build\tutorial\stylesheets\pygment_trac.css" SelfReg="false" NextFile="stylesheet.css"/>
+    <ROW File="s1.png" Component_="bg_hr.png" FileName="s1.png" Attributes="0" SourcePath="build\tutorial\images\s1.png" SelfReg="false" NextFile="s2.png"/>
+    <ROW File="s2.png" Component_="bg_hr.png" FileName="s2.png" Attributes="0" SourcePath="build\tutorial\images\s2.png" SelfReg="false" NextFile="s3.png"/>
+    <ROW File="s3.png" Component_="bg_hr.png" FileName="s3.png" Attributes="0" SourcePath="build\tutorial\images\s3.png" SelfReg="false" NextFile="sprite_download.png"/>
     <ROW File="sprite_download.png" Component_="bg_hr.png" FileName="SPRITE~1.PNG|sprite_download.png" Attributes="0" SourcePath="build\tutorial\images\sprite_download.png" SelfReg="false" NextFile="index.html"/>
-    <ROW File="stylesheet.css" Component_="pygment_trac.css" FileName="STYLES~1.CSS|stylesheet.css" Attributes="0" SourcePath="build\tutorial\stylesheets\stylesheet.css" SelfReg="false" NextFile="msvcp100.dll"/>
+    <ROW File="stylesheet.css" Component_="pygment_trac.css" FileName="STYLES~1.CSS|stylesheet.css" Attributes="0" SourcePath="build\tutorial\stylesheets\stylesheet.css" SelfReg="false"/>
     <ROW File="tutorial.html" Component_="tutorial.html" FileName="TUTORI~1.HTM|tutorial.html" Attributes="0" SourcePath="build\tutorial.html" SelfReg="false" NextFile="YadStudio.exe"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
@@ -172,7 +179,11 @@
     <ROW Registry="_" Root="1" Key="Software\.yad" Value="Yad.Markov.File" Component_="_"/>
     <ROW Registry="__1" Root="1" Key="Software\Yad.Markov.File" Value="Markov Algorithm File" Component_="__1"/>
     <ROW Registry="__2" Root="1" Key="Software\Yad.Markov.File\DefaultIcon" Value="&quot;[APPDIR]\Yad Studio.exe&quot;,1" Component_="__2"/>
-    <ROW Registry="__3" Root="1" Key="Software\Yad.Markov.File\shell\Open\command" Value="&quot;[APPDIR]\Yad Studio.exe&quot; %1" Component_="__3"/>
+    <ROW Registry="__3" Root="1" Key="Software\Yad.Markov.File\shell\Open\command" Value="&quot;[APPDIR]\Yad Studio.exe&quot; &quot;%1&quot;" Component_="__3"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
+    <ROW Shortcut="YadStudio" Directory_="ProgramMenuFolder" Name="YADSTU~1|Yad Studio" Component_="YadStudio.exe" Target="[#YadStudio.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="YadStudio_1" Directory_="DesktopFolder" Name="YADSTU~1|Yad Studio" Component_="YadStudio.exe" Target="[#YadStudio.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
     <ATTRIBUTE name="UsedTheme" value="classic"/>
