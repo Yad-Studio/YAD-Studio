@@ -1,0 +1,56 @@
+//TASK: input consists of three letters: a,b,c
+//you should mirrow this string
+//EXAMPLES: abc --> cba
+//bcca --> accb
+
+//Alphabet (Used in algorithm)
+T = {a, b, c,A,B,C,S,E, *}
+
+//Input Alphabet (Used for input)
+I = {a,b,c}
+
+//Move * to the end
+*a -> a*
+*b -> b*
+*c -> c*
+* -> E
+
+//If SE are together finish execution
+SE ->. $
+
+//Move capital letters to the right
+Aa -> aA
+Ab -> bA
+Ac -> cA
+
+Ba -> aB
+Bb -> bB
+Bc -> cB
+
+Ca -> aC
+Cb -> bC
+Cc -> cC
+
+//Mirrow capital letters 
+AE -> Ea
+BE -> Eb
+CE -> Ec
+
+//Create capital letters
+Sa -> SA
+Sb -> SB
+Sc -> SC
+
+//Start processing
+$->S*
+
+
+//=========History========//
+//cab
+//cabbbb
+//cabbbbaaaabbbbaabbcccccc
+//abc
+//cabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccc
+//cabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccc
+//cabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccc
+//cabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccccabbbbaaaabbbbaabbcccccc

@@ -2,7 +2,8 @@
 
 //Alphabet
 T = {a,b,!,y,e,s,n,o}
- 
+I = {a,b} 
+
 //Remove equal number of a and b
 ab -> $
 
@@ -22,3 +23,4 @@ $ ->. yes
 
 //=========History========//
 //aaaaabbbb
+//aaabbb

@@ -1,0 +1,41 @@
+//TASK: Multiply two numbers
+//EXAMPLES: |||#|| --> |||||| //(3*2 = 6)
+
+//Alphabet
+T = {|, #, B, @, *, S,E, Q}
+//Input alphabet
+I = {|, #}
+
+//Move * to the end of the line
+*| -> |*
+*# -> @* //Replace # with @
+* -> E //When * arrived replace it with E
+
+SQ -> |S
+
+//Move B to the left and create copies of the | marked as Q
+SB -> S
+
+//If Q arrived to the left wright | to result
+|B -> BQ|
+//Move Q to the left
+|Q -> Q|
+
+//Replace one | at right to @ in left
+@| -> B@
+
+//If there are no more multiplication the clean buffer
+|E -> E
+@E -> E
+
+//When buffer is clear terminate
+SE ->. $
+
+//Start running
+$ -> S*
+
+
+//=========History========//
+//|||#||
+//|||#|||
+//|||#||||
