@@ -6,6 +6,13 @@
 
 QT       += core gui
 
+unix {
+    QMAKE_CXXFLAGS += -std=c++0x
+}
+win32-g++ {
+    QMAKE_CXXFLAGS += -std=c++0x
+}
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 RC_FILE = yad.rc
