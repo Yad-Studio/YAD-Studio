@@ -32,7 +32,7 @@ void YadFile::saveToFile(QString file_name) const
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         QString error = QObject::tr("Can't open file for writing.");
-        throw std::exception(error.toStdString().c_str());
+        throw std::runtime_error(error.toStdString().c_str());
     }
 
     QTextStream out(&file);
@@ -69,13 +69,13 @@ YadFile YadFile::readFromFile(QString file_name)
     if(!file.exists())
     {
         QString error = QObject::tr("File does not exists.");
-        throw std::exception(error.toStdString().c_str());
+        throw std::runtime_error(error.toStdString().c_str());
     }
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QString error = QObject::tr("Can't open file.");
-        throw std::exception(error.toStdString().c_str());
+        throw std::runtime_error(error.toStdString().c_str());
     }
 
     QTextStream in(&file);
@@ -85,7 +85,7 @@ YadFile YadFile::readFromFile(QString file_name)
     if(history_mark < 0)
     {
         QString error = QObject::tr("File is corrupted.");
-        throw std::exception(error.toStdString().c_str());
+        throw std::runtime_error(error.toStdString().c_str());
     }
 
     QString source = rstrip(content.mid(0,history_mark));
