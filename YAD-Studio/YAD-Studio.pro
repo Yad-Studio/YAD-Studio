@@ -17,6 +17,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 RC_FILE = yad.rc
 
+QMAKE_CXXFLAGS = -mmacosx-version-min=10.9 -std=gnu0x -stdlib=libc+
+CONFIG +=c++11
+
 TARGET = "Yad Studio"
 TEMPLATE = app
 INCLUDEPATH += $$PWD
