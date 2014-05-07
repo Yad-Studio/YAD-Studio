@@ -2,6 +2,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QStringList>
+#include <stdexcept>
 
 YadFile::YadFile(
         QString source_code,
